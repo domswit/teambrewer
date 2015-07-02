@@ -13,7 +13,7 @@ $scope.first_name2 = "test";
 
 function getData(){
 
-  var response = $http.get("http://localhost/trial/API/user-list.php",{
+  var response = $http.get("http://localhost/teambrewer/API/user-list.php",{
 
       'rand': new Date().getTime()
   });
