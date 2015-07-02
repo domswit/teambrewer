@@ -8,9 +8,8 @@ $efirst_name = mysql_real_escape_string($data->efirst_name);
 $elast_name = mysql_real_escape_string($data->elast_name);
 
 $ebirthdate = mysql_real_escape_string($data->ebirthdate);
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 

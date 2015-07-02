@@ -11,9 +11,8 @@ $data = json_decode(file_get_contents("php://input"));
 $form_username = mysql_real_escape_string($data->username);
 $form_password = mysql_real_escape_string($data->password);
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -27,12 +26,10 @@ $output = Array();
 $users = Array();
 
 if ($result->num_rows > 0) {
-    // output data of each row
+    /
     while($row = $result->fetch_assoc()) {
       
-		//echo "id: " . $row["user_id"]. " - Name: " . $row["first_name"]. " " . $row["last_name"]. "<br>";
 		
-		//array_push($users, $row);
     	array_push($users, $row);
 
     	$output['success'] = true;

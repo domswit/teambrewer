@@ -7,32 +7,20 @@ $scope.passw2 = '';
 $scope.updateData = {}
 
 $scope.first_name2 = "test";
-// $scope.users = [
-// {id:1, fName:'Hege',  lName:"Pege", email:"hegepege@email.com"},
-// {id:2, fName:'Kim',   lName:"Pim", email:"kimpim@email.com"},
-// {id:3, fName:'Sal',   lName:"Smith", email:"salsmith@email.com"},
-// {id:4, fName:'Jack',  lName:"Jones", email:"jonesjack@email.com"},
-// {id:5, fName:'John',  lName:"Doe", email:"doejohn@email.com"},
-// {id:6, fName:'Peter', lName:"Pan", email:"peterpan@email.com"}];
 
-/*$scope.userstest = {
-  '1': {fName: 'Hege', lName:"Pege", bdate:"12/11/96", email:"hegepege@email.com"},
-  '2': {fName: 'Kim', lName:"Pim", bdate:"4/30/96", email:"kimpim@email.com"},
-  '3': {fName:'Sal',   lName:"Smith", bdate:"5/21/92", email:"salsmith@email.com"},
-  '4': {fName:'Jack',  lName:"Jones", bdate:"2/2/92", email:"jonesjack@email.com"},
-  '5': {fName:'John',  lName:"Doe", bdate:"1/1/90", email:"doejohn@email.com"},
-  '6': {fName:'Peter', lName:"Pan", bdate:"6/8/89", email:"peterpan@email.com"},
-}; */
 
 
 
 function getData(){
 
-  var response = $http.get("http://localhost/trial/API/user-list.php");
+  var response = $http.get("http://localhost/trial/API/user-list.php",{
+
+      'rand': new Date().getTime()
+  });
 
   response.success(function(data, status, headers, config) {
       console.log(data.users);
-      //console.log($scope.userstest);
+      
       $scope.users = data.users;
   });
   response.error(function(data, status, headers, config) {
@@ -50,7 +38,7 @@ $scope.incomplete = false;
 
 $scope.editUser = function(id) {
 
-  //$scope.fName = "hi";
+  
   console.log(id);
   console.log($scope.users[id]);
   console.log($scope.users[id].user_id);
@@ -96,23 +84,5 @@ $scope.updateData = function(){
 
   }
 
-$scope.$watch('passw1',function() {$scope.test();});
-$scope.$watch('passw2',function() {$scope.test();});
-$scope.$watch('fName', function() {$scope.test();});
-$scope.$watch('lName', function() {$scope.test();});
-
-$scope.test = function() {
-  if ($scope.passw1 !== $scope.passw2) {
-    $scope.error = true;
-    } else {
-    $scope.error = false;
-  }
-  $scope.incomplete = false;
-  if ($scope.edit && (!$scope.fName.length ||
-  !$scope.lName.length ||
-  !$scope.passw1.length || !$scope.passw2.length)) {
-       $scope.incomplete = true;
-  }
-};
 
 });
