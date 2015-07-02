@@ -13,7 +13,7 @@ $scope.first_name2 = "test";
 
 function getData(){
 
-  var response = $http.get("http://localhost/trial/API/user-list.php",{
+  var response = $http.get("http://localhost/teambrewer/API/user-list.php",{
 
       'rand': new Date().getTime()
   });
@@ -78,9 +78,10 @@ $scope.updateData = function(){
       $http.post("API/insert.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate})
         .success(function(data,status,headers,config){
           console.log("nice");
+           getData();
         });
 
-      getData();
+     
 
   }
 
