@@ -9,7 +9,12 @@ $scope.updateData = {}
 $scope.first_name2 = "test";
 
 
-
+$(document).ready(function () {
+    $('#datetimepicker2').datetimepicker();
+    $("#datetimepicker2").on("dp.change", function (e) {
+      $scope.ebirthdate = e.date;
+    });
+});
 
 function getData(){
 
@@ -29,7 +34,22 @@ function getData(){
   });
 }
 
+function getTeams(){
+
+  var response = $http.get("http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime());
+
+  response.success(function(data, status, headers, config) {
+      console.log(data.teams);
+      
+      $scope.teams = data.teams;
+  });
+  response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+  });
+}
+
 getData();
+getTeams();
 
 
 
@@ -46,6 +66,7 @@ $scope.editUser = function(id) {
   console.log($scope.users[id].first_name);
   console.log($scope.users[id].last_name);
   console.log($scope.users[id].birthdate);
+  console.log($scope.users[id].team);
 
  $scope.user_id = $scope.users[id].user_id.toString();
  $scope.first_name = $scope.users[id].first_name.toString();
@@ -82,7 +103,7 @@ $scope.updateData = function(){
 }
   $scope.insertdata=function(){
 
-      $http.post("API/insert.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate})
+      $http.post("API/insert.php?rand=" + new Date().getTime(),{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate,'eteam':$scope.eteam})
         .success(function(data,status,headers,config){
           console.log("nice");
 <<<<<<< HEAD
