@@ -9,19 +9,10 @@ $scope.updateData = {}
 $scope.first_name2 = "test";
 
 
-$(document).ready(function () {
-    $('#datetimepicker2').datetimepicker();
-    $("#datetimepicker2").on("dp.change", function (e) {
-      $scope.ebirthdate = e.date;
-    });
-});
+
 
 function getData(){
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8c39197ab243105181c6553b13ce67ef0c2226de
   var response = $http.get("http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime());
 
   response.success(function(data, status, headers, config) {
@@ -34,22 +25,7 @@ function getData(){
   });
 }
 
-function getTeams(){
-
-  var response = $http.get("http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime());
-
-  response.success(function(data, status, headers, config) {
-      console.log(data.teams);
-      
-      $scope.teams = data.teams;
-  });
-  response.error(function(data, status, headers, config) {
-      alert("AJAX failed!");
-  });
-}
-
 getData();
-getTeams();
 
 
 
@@ -66,7 +42,6 @@ $scope.editUser = function(id) {
   console.log($scope.users[id].first_name);
   console.log($scope.users[id].last_name);
   console.log($scope.users[id].birthdate);
-  console.log($scope.users[id].team);
 
  $scope.user_id = $scope.users[id].user_id.toString();
  $scope.first_name = $scope.users[id].first_name.toString();
@@ -90,31 +65,20 @@ $scope.updateData = function(){
     })
     .success(function(data,status,headers,config){
       console.log(data);
-<<<<<<< HEAD
     getData();
       //popup here
     });
 
-=======
-      //popup here]
-      getData();
-    });
->>>>>>> 8c39197ab243105181c6553b13ce67ef0c2226de
 }
   $scope.insertdata=function(){
 
-      $http.post("API/insert.php?rand=" + new Date().getTime(),{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate,'eteam':$scope.eteam})
+      $http.post("API/insert.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate})
         .success(function(data,status,headers,config){
           console.log("nice");
-<<<<<<< HEAD
-      getData();
+    getData();
         });
 
 
-=======
-          getData();
-        });
->>>>>>> 8c39197ab243105181c6553b13ce67ef0c2226de
   }
 
 

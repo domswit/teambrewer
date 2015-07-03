@@ -4,7 +4,7 @@ $username = "root";
 $password = "";
 $dbname = "mydb";
 $data = json_decode(file_get_contents("php://input"));
-$team_name = mysql_real_escape_string($data->team_name);
+$name = mysql_real_escape_string($data->name);
 $team_id = mysql_real_escape_string($data->team_id);
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "UPDATE teams SET team_name='" . $team_name . "' WHERE team_id='" . $team_id . "'";
+$sql = "UPDATE teams SET name='" . $team_name . "' WHERE team_id='" . $team_id . "'";
 
 $output = Array();
 

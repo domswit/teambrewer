@@ -4,7 +4,7 @@ $username = "root";
 $password = "";
 $dbname = "mydb";
 $data = json_decode(file_get_contents("php://input"));
-$eteam_name = mysql_real_escape_string($data->eteam_name);
+$ename = mysql_real_escape_string($data->ename);
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO teams(`team_name`)VALUES('".$eteam_name."')";
+$sql = "INSERT INTO teams(`name`)VALUES('".$ename."')";
 
 $output = Array();
 

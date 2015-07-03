@@ -98,7 +98,7 @@
                                                             <div class="form-group">
                                                                 <label for='exe1'>Team Name</label>
 
-                                                                <input id="exe1" class="form-control" ng-model="eteam_name" placeholder="Team Name" value="pol">
+                                                                <input id="exe1" class="form-control" ng-model="ename" placeholder="Team Name" value="pol">
                                                             </div>
 
                                                         </form>            
@@ -125,7 +125,7 @@
                                     <th>Edit</th>
                               </tr></thead>
                               <tbody><tr ng-repeat="(key, user) in teams">
-                                <td>{{ user.team_name }}</td>
+                                <td>{{ user.name }}</td>
                                 <td>
                                 
                                 <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal" ng-click="editTeam(key)">
@@ -149,7 +149,7 @@
                                                                     <div class="form-group">
                                                                         <label>Team Name</label>
 
-                                                                        <input id="edit_team_name" class="form-control" ng-model="team_name" placeholder="Team Name">
+                                                                        <input id="edit_name" class="form-control" ng-model="name" placeholder="Team Name">
                                                                     </div>
                                                                 </form>
                                                                 </div>

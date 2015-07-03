@@ -50,21 +50,19 @@ $scope.updateData = function(){
     })
     .success(function(data,status,headers,config){
       console.log(data);
-      getData();
-
+    getData();
       //popup here
     });
+
 }
-$scope.insertdata=function(){
+  $scope.insertdata=function(){
 
-    $http.post("API/insert-team.php",{'eteam_name':$scope.eteam_name})
-      .success(function(data,status,headers,config){
-        console.log(data);
-        getData();
+      $http.post("API/insert-team.php",{'eteam_name':$scope.eteam_name})
+        .success(function(data,status,headers,config){
+          console.log(data);
+        });
 
-    });
 
-     
   }
 
 
