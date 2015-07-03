@@ -45,7 +45,7 @@ $scope.editUser = function(id) {
   console.log($scope.projects[id].project_name);
 
  $scope.project_id = $scope.projects[id].project_id.toString();
- $scope.project_name = $scope.projects[id].project_name.toString();
+ $scope.project_name = $scope.projects[id].name.toString();
  
 
 };

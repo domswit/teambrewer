@@ -15,7 +15,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "UPDATE projects SET project_name='" . $project_name .  "' WHERE project_id='" . $project_id . "'";
+$sql = "UPDATE projects SET name='" . $project_name .  "' WHERE project_id='" . $project_id . "'";
 
 $output = Array();
 
