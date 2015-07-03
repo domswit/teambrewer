@@ -1,0 +1,81 @@
+angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+$scope.fName = '';
+$scope.lName = '';
+$scope.passw1 = '';
+$scope.passw2 = '';
+
+$scope.updateData = {}
+
+$scope.first_name2 = "test";
+
+
+
+
+function getData(){
+
+
+  var response = $http.get("http://localhost/teambrewer/API/project-list.php?rand=" + new Date().getTime());
+
+  response.success(function(data, status, headers, config) {
+      console.log(data.projects);
+      
+      $scope.projects = data.projects;
+  });
+  response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+  });
+}
+
+getData();
+
+
+
+$scope.edit = true;
+$scope.error = false;
+$scope.incomplete = false; 
+
+
+
+$scope.editUser = function(id) {
+
+  
+  console.log(id);
+  console.log($scope.projects[id]);
+  console.log($scope.projects[id].project_id);
+  console.log($scope.projects[id].project_name);
+
+ $scope.project_id = $scope.projects[id].project_id.toString();
+ $scope.project_name = $scope.projects[id].project_name.toString();
+ 
+
+};
+
+$scope.updateData = function(){
+
+  var edit_project_id = $scope.project_id;
+  var edit_project_name = $('#edit_project_name').val();
+
+
+  $http.post("API/updateproject.php",{
+    'project_id': edit_project_id, 
+    'project_name': edit_project_name,
+   
+    })
+    .success(function(data,status,headers,config){
+      console.log(data);
+      //popup here]
+      getData();
+    });
+}
+  $scope.insertdata=function(){
+
+      $http.post("API/insertproject.php",{'eproject_name':$scope.eproject_name})
+        .success(function(data,status,headers,config){
+          console.log("nice");
+          getData();
+        });
+  }
+
+
+});
+

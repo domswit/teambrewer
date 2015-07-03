@@ -32,17 +32,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="Users.html">teambrewer</a>
+                <a class="navbar-brand" href="Users.html">Team Brewer</a>
             </div>
             
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
           
-                    <li>
+                  
+                   <li>
                         <a href="users.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> User Management</a>
                        
                     </li>
-                   <li>
+                    <li>
                         <a href="project.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> Project </a>
                        
                     </li>
@@ -59,13 +60,13 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Users
+                            Project
                         </h1>
                        
                     </div>
                 </div>
                     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#mydModal">
-                    <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Add User</button>
+                    <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Add Project</button>
                     </button>
                                 <div class="modal fade" id="mydModal" role="dialog">
                                     <div class="modal-dialog modal-md">
@@ -73,7 +74,7 @@
                                             <div class="modal-header modal-header-success" >
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                                                <h4 class="modal-title">Add User Information</h4>
+                                                <h4 class="modal-title">Add Project</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
@@ -85,29 +86,12 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for='exe1'>First Name</label>
+                                                                <label for='exe1'>Project Name</label>
 
-                                                                <input id="exe1" class="form-control" ng-model="efirst_name" placeholder="First Name" value="pol">
+                                                                <input id="exe1" class="form-control" ng-model="eproject_name" placeholder="Project Name" value="pol">
                                                             </div>
 
-                                                            <div class="form-group">
-                                                                <label for='exe2'>Last Name</label>
-                                                                <input id="exe2" class="form-control" ng-model="elast_name" placeholder="Last Name" value=" ">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Date of Birth</label>
-                                                                <div class='input-group date' id='datetimepicker2'>
-                                                                    <input type='text' class="form-control" ng-model="ebirthdate" placeholder="YYYY-MM-DD" id="edit_birthdate" value="">
-                                                                    <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                                    <script type="text/javascript">
-                                                                        $(document).ready(function () {
-                                                                            $('#datetimepicker2').datetimepicker();
-                                                                        });
-                                                                    </script>
+                                                            
                                                         </form>            
                                                     </div>
                                                 </div>
@@ -124,21 +108,19 @@
                                     </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>List of Users</h2>
+                        <h2>List of project</h2>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead><tr>
-                                    <th>User ID</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Birth Date</th>
+                                 
+                                    <th>Project ID</th>
+                                     <th>Project Name</th>
                                     <th>Edit</th>
                               </tr></thead>
-                              <tbody><tr ng-repeat="(key, user) in users">
-                                <td>{{ user.user_id }}</td>
-                                <td>{{ user.first_name }}</td>
-                                <td>{{ user.last_name }}</td>
-                                <td>{{ user.birthdate }}</td>
+                              <tbody><tr ng-repeat="(key, user) in projects">
+                                <td>{{ user.project_id }}</td>
+                                <td>{{ user.project_name }}</td>
+                                
                                 <td>
                                 
                                 
@@ -151,7 +133,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Edit User Information</h4>
+                                                <h4 class="modal-title">Edit Project </h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
@@ -161,39 +143,20 @@
                                                             
 
                                                             <div class="form-group">
-                                                                <label>First Name</label>
+                                                                <label>Project Name</label>
 
-                                                                <input id="edit_first_name" class="form-control" ng-model="first_name" placeholder="First Name">
+                                                                <input id="edit_project_name" class="form-control" ng-model="project_name" placeholder="Project Name">
                                                             </div>
 
-                                                            <div class="form-group">
-                                                                <label>Last Name</label>
-                                                                <input id="edit_last_name" class="form-control" ng-model="last_name" placeholder="Last Name">
-                                                            </div>
-
-                                                        
-
-                                                            <div class="form-group">
-                                                                <label>Date of Birth</label>
-                                                                <div class='input-group date' id='datetimepicker1'>
-                                                                    <input type='text' class="form-control" ng-model="birthdate" placeholder="YYYY-MM-DD" id="edit_birthdate">
-                                                                    <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                                    <script type="text/javascript">
-                                                                        $(document).ready(function () {
-                                                                            $('#datetimepicker1').datetimepicker();
-                                                                        });
-                                                                    </script>
-                                                            </div>
+                                                           
                                                         </div>
-                                                         <button type="button" ng-click="updateData()">Save Changes</button>
-                                                          
+                                                      
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
+
+                                                           <button type="submit" class="btn btn-default" data-dismiss="modal" ng-click="updateData()">Save Changes</button>
+                                                      
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close </button>
                                             </div>
                                         </form>
@@ -215,7 +178,7 @@
     <script type="text/javascript" src="css/bootstrap.css"></script>
     <script type="text/javascript" src="css/bootstrap-datetimepicker.min.css"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src = "users.js"></script>
+    <script src = "project.js"></script>
 </body>
 
 </html>
