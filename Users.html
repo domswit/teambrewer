@@ -50,9 +50,10 @@
           
                     <li>
                         <a href="users.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> User Management</a>
-                       
                     </li>
-                  
+                    <li>
+                        <a href="team.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-link"></i>Team</a>
+                    </li>
                 </ul>
             </div>
             
@@ -197,17 +198,18 @@
                                                                         });
                                                                     </script>
                                                             </div>
-                                                        </div>
-                                                            <button type="button" ng-click="updateData()">Save Changes</button>
-                                                          
+                                                        </form>
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close </button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button type="button" ng-click="updateData()" class="btn btn-primary" data-dismiss="modal">
+                                                <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Save</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Close</button>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
                                 </div>
                                 </td>
                               </tr></tbody>

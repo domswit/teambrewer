@@ -13,10 +13,7 @@ $scope.first_name2 = "test";
 
 function getData(){
 
-  var response = $http.get("http://localhost/teambrewer/API/user-list.php",{
-
-      'rand': new Date().getTime()
-  });
+  var response = $http.get("http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime());
 
   response.success(function(data, status, headers, config) {
       console.log(data.users);
@@ -68,19 +65,19 @@ $scope.updateData = function(){
     })
     .success(function(data,status,headers,config){
       console.log(data);
+    getData();
       //popup here
     });
 
-    getData();
 }
   $scope.insertdata=function(){
 
       $http.post("API/insert.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate})
         .success(function(data,status,headers,config){
           console.log("nice");
+      getData();
         });
 
-      getData();
 
   }
 
