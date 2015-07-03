@@ -18,6 +18,7 @@ $(document).ready(function () {
 
 function getData(){
 
+
   var response = $http.get("http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime());
 
   response.success(function(data, status, headers, config) {

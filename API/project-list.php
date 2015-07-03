@@ -11,25 +11,25 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM projects";
 
 $result = $conn->query($sql);
 
 
-$output = Array('success'=>true, 'users'=>null);
-$users = Array();
+$output = Array('success'=>true, 'projects'=>null);
+$projects = Array();
 if ($result->num_rows > 0) {
    
     while($row = $result->fetch_assoc()) {
       
-		
-    	$users[$row["user_id"]] = $row;
+    
+      $projects[$row["project_id"]] = $row;
     }
 } else {
     echo "0 results";
 }
 
-$output['users'] = $users;
+$output['projects'] = $projects;
 echo json_encode ($output);
 
 $conn->close();
