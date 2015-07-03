@@ -9,6 +9,12 @@ $scope.updateData = {}
 $scope.first_name2 = "test";
 
 
+$(document).ready(function () {
+    $('#datetimepicker2').datetimepicker();
+    $("#datetimepicker2").on("dp.change", function (e) {
+      $scope.ebirthdate = e.date;
+    });
+});
 
 
 function getData(){
@@ -25,7 +31,36 @@ function getData(){
   });
 }
 
+function getTeams(){
+
+  var response = $http.get("http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime());
+
+  response.success(function(data, status, headers, config) {
+      console.log(data.teams);
+      
+      $scope.teams = data.teams;
+  });
+  response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+  });
+}
+
+function getTeams(){
+
+  var response = $http.get("http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime());
+
+  response.success(function(data, status, headers, config) {
+      console.log(data.teams);
+      
+      $scope.teams = data.teams;
+  });
+  response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+  });
+}
+
 getData();
+getTeams();
 
 
 
