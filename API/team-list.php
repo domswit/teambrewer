@@ -11,25 +11,25 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM teams";
 
 $result = $conn->query($sql);
 
 
-$output = Array('success'=>true, 'users'=>null);
-$users = Array();
-if ($result->num_rows > 0) {
+$output = Array('success'=>true, 'teams'=>null);
+$teams = Array();
+if ($result ->num_rows > 0) {
    
-    while($row = $result->fetch_assoc()) {
+    while($row = $result -> fetch_assoc()) {
       
 		
-    	$users[$row["user_id"]] = $row;
+    	$teams[$row["team_id"]] = $row;
     }
 } else {
     echo "0 results";
 }
 
-$output['users'] = $users;
+$output['teams'] = $teams;
 echo json_encode ($output);
 
 $conn->close();
