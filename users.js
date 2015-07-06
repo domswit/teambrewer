@@ -10,6 +10,13 @@ $scope.first_name2 = "test";
 
 
 $(document).ready(function () {
+      $('.selectpicker').selectpicker({
+          style: 'btn-info',
+          size: 4
+      });
+});
+
+$(document).ready(function () {
     $('#datetimepicker2').datetimepicker();
     $("#datetimepicker2").on("dp.change", function (e) {
       $scope.ebirthdate = e.date;
