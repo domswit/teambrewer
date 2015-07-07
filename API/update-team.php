@@ -13,8 +13,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "UPDATE teams SET name='" . $team_name . "' WHERE team_id='" . $team_id . "'";
-
+$sql = "UPDATE teams SET name='" . $name . "' WHERE team_id='" . $team_id . "'";
 $output = Array();
 
 if ($conn->query($sql) === TRUE) {
