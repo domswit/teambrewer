@@ -73,13 +73,9 @@ function getData(){
   });
 }
 
-
-
 getAlloc();
 getData();
 getSched();
-
-
 
 $scope.edit = true;
 $scope.error = false;
@@ -99,14 +95,10 @@ $scope.editUser = function(id) {
 
   $scope.form_mode = 'update';
   $scope.form_title = "Edit User Information";
- 
   $scope.efromdate = $scope.sched[id].fromdate.toString();
   $scope.etodate = $scope.sched[id].todate.toString();
- //alert();
   $scope.ename = $scope.sched[id].user_id.toString();
-  $scope.ealloc = $scope.sched[id].allocation.toString();
- console.log($scope.sched[id].sched_id);
-$scope.sched_id = $scope.sched[id].sched_id.toString();
+  $scope.sched_id = $scope.sched[id].sched_id.toString();
 };
 
 $scope.savedata = function(){
@@ -141,18 +133,13 @@ $scope.updateData = function(){
     getSched();
       //popup here
     });
-
 }
   $scope.insertData=function(){
-
       $http.post("API/insert-sched.php",{'ename':$scope.ename,'efromdate':$scope.efromdate,'etodate':$scope.etodate,'ealloc':$scope.ealloc})
         .success(function(data,status,headers,config){
-          console.log("nice");
-    getSched();
+          console.log(data);
+      getSched();
         });
-
-
   }
-
 
 });

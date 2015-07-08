@@ -71,7 +71,7 @@ $scope.updateData = function(){
 
       $http.post("API/insertproject.php",{'eproject_name':$scope.eproject_name})
         .success(function(data,status,headers,config){
-          console.log("nice");
+          console.log(data);
           getData();
         });
   }
