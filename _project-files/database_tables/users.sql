@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2015 at 07:08 AM
+-- Generation Time: Jul 08, 2015 at 05:34 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -34,23 +34,25 @@ CREATE TABLE IF NOT EXISTS `users` (
   `team_id` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(12) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `birthdate`, `team_id`, `username`, `password`) VALUES
-(1, 'Edge', 'asdzxc', '2015-06-24 00:00:00', 0, 'myuser', 'pass123'),
-(2, 'Ken', 'Nigga', '2015-06-03 00:00:00', 0, '', '0'),
-(3, 'Oll', 'Ske', '2015-06-25 00:00:00', 0, '', '0'),
-(66, 'Edge', 'Coronado', '1994-01-10 00:00:00', 0, '', ''),
-(67, 'ju', 'ji', '0000-00-00 00:00:00', 0, '', ''),
-(68, 'Jull', 'Munn', '0000-00-00 00:00:00', 0, '', ''),
-(69, '', '', '0000-00-00 00:00:00', 0, '', ''),
-(70, 'zxcsda', 'wewe', '0000-00-00 00:00:00', 0, '', ''),
-(71, 'asda', 'sdasd', '2222-11-23 00:00:00', 2, '', ''),
-(72, 'wa', 'we', '2015-07-10 05:00:57', 4, '', '');
+(1, 'Ken', 'Nigga', '2015-07-10 03:06:00', 5, 'myuser', 'pass123'),
+(2, 'wew', 'asd', '2015-08-08 00:00:00', 6, '', '0'),
+(3, 'asdas', 'wew', '2015-07-25 12:00:00', 4, '', '0'),
+(70, 'zxcsda', 'wewe', '2015-07-21 12:00:00', 1, '', ''),
+(72, 'wa', 'we', '2015-07-10 00:00:00', 4, '', ''),
+(74, 'qqqq', 'aaaaa', '2015-07-03 00:00:00', 3, '', ''),
+(75, 'Edge', 'Edge', '2015-07-15 12:00:00', 6, '', ''),
+(76, 'bbbb', 'eeeee', '2015-07-04 00:00:00', 4, '', ''),
+(79, 'Edge', 'Coronado', '2015-07-22 01:04:34', 3, '', ''),
+(80, 'lll', 'iii', '2015-07-04 03:56:08', 3, '', ''),
+(81, 'Julius 1', 'Domingo 1', '2015-07-30 04:33:43', 4, '', ''),
+(82, 'Kenshin', 'Hinigga', '2015-07-25 03:06:00', 3, '', '');
 
 --
 -- Indexes for dumped tables
@@ -70,7 +72,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=73;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

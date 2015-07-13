@@ -9,22 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title>TeamBrewer</title>
 
     
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    
     <link href="css/sb-admin.css" rel="stylesheet">
-<link href="css/header.css" rel="stylesheet">
-    
+    <link href="css/header.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    
-
     <script src="js/jquery.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
-<body ng-app="myApp" ng-controller="userCtrl">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <body ng-app="myApp" ng-controller="userCtrl">
 
 </head>
 
@@ -49,45 +43,37 @@
                 <ul class="nav navbar-nav side-nav">
           
                     <li>
-                        <a href="users.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> User Management</a>
-                       
+                        <a href="users.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-male"></i> People </a>
                     </li>
                     <li>
-                           <a href="team.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-link"></i>Team</a>
-                       
+                           <a href="team.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-link"></i> Team </a>
                     </li>
                      <li>
                         <a href="project.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-edit"></i> Project </a>
-                       
                     </li>
-<<<<<<< HEAD
                     <li>
-                        <a href="project.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i>Project</a>
+                        <a href="sched.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-clock-o"></i> Schedule </a>
                     </li>
-=======
->>>>>>> 0f8c2191cd36b6f0ad4272cf8ff1be5a01cd738a
+                    <li>
+                        <a href="charts.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-bar-chart"></i> Charts </a>
+                    </li>
                 </ul>
             </div>
             
         </nav>
 
         <div id="page-wrapper">
-
             <div class="container-fluid">
-
-              
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Team
-                        </h1>
-                       
-                    </div>
-                </div>
+                        <h1 class="page-header">Team</h1>
+                       <div class="table-responsive">
+                            <table class="table table-striped">
+               
               
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#mydModal">
-  <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Team</button>
-</button>
+            <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#mydModal">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Team</button>
+            </button>
  
                                 <div class="modal fade" id="mydModal" role="dialog">
                                     <div class="modal-dialog modal-md">
@@ -109,7 +95,7 @@
                                                             <div class="form-group">
                                                                 <label for='exe1'>Team Name</label>
 
-                                                                <input id="exe1" class="form-control" ng-model="ename" placeholder="Team Name" value="pol">
+                                                                <input id="exe1" class="form-control" ng-model="name" placeholder="Team Name" value="pol">
                                                             </div>
 
                                                         </form>            
@@ -130,37 +116,30 @@
                     <div class="col-lg-12">
                         <h2>List of Teams</h2>
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-bordered table-hover table-striped">
                                 <thead><tr>
                                     <th>Team</th>
                                     <th>Edit</th>
                               </tr></thead>
-                              <tbody><tr ng-repeat="(key, user) in teams">
+                              <tbody><tr class="active" ng-repeat="(key, user) in teams">
                                 <td>{{ user.name }}</td>
                                 <td>
-                                
                                 <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal" ng-click="editTeam(key)">
                                 <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-
-                              
                                         <div class="modal fade" id="myModal" role="dialog">
                                             <div class="modal-dialog modal-md">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
+                                                    <div class="modal-header modal-header-success">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         <h4 class="modal-title">Edit Team Information</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="row">
                                                             <div class="col-lg-8">
-                                                
-                                                                <form role="form">
-                                                                    
-
+                                                                <form role="form"> 
                                                                     <div class="form-group">
                                                                         <label>Team Name</label>
-
-                                                                        <input id="edit_name" class="form-control" ng-model="name" placeholder="Team Name">
+                                                                        <input id="name" class="form-control" ng-model="name"  placeholder="Team Name">
                                                                     </div>
                                                                 </form>
                                                                 </div>
@@ -179,11 +158,13 @@
                                 </td>
                             </tr></tbody>
                         </table>
+                        </table>
                     </div>
                 </div>
              </div>
         </div>
-                  
+    </div>
+</div>               
 
     </div>
                

@@ -32,34 +32,33 @@ $scope.editTeam = function(id) {
   console.log(id);
   console.log($scope.teams[id]);
   console.log($scope.teams[id].team_id);
-  console.log($scope.teams[id].team_name);
+  console.log($scope.teams[id].name);
 
  $scope.team_id = $scope.teams[id].team_id.toString();
- $scope.team_name = $scope.teams[id].team_name.toString();
+ $scope.name = $scope.teams[id].name.toString();
 
 };
 
 $scope.updateData = function(){
 
-  var edit_team_id = $scope.team_id;
-  var edit_team_name = $('#edit_team_name').val();
+  var team_id = $scope.team_id;
+  var name = $('#name').val();
 
   $http.post("API/update-team.php",{
-    'team_id': edit_team_id, 
-    'team_name': edit_team_name,
+    'team_id': team_id, 
+    'name': name
     })
     .success(function(data,status,headers,config){
-      console.log(data);
-    getData();
+      getData();
       //popup here
     });
 
 }
   $scope.insertdata=function(){
-
-      $http.post("API/insert-team.php",{'eteam_name':$scope.eteam_name})
+      $http.post("API/insert-team.php",{'name':$scope.name})
         .success(function(data,status,headers,config){
           console.log(data);
+          getData();
         });
 
 

@@ -55,20 +55,19 @@
                         <a href="charts.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-bar-chart"></i> Charts </a>
                     </li>
                 </ul>
-            </div>     
+            </div>       
         </nav>
         <div id="page-wrapper">
             <div class="container-fluid">
-                <div class="row">
+              <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">People</h1> 
-                 <div class="table-responsive">
-                            <table class="table table-striped"> 
-                    <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#mydModal" ng-click="addUser()">
-                    <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add User</button>
+                        <h2 class="page-header">Schedules</h2>
+                        <div class="table-responsive">
+                            <table class="table table-striped">        
+                                     <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#mydModal" ng-click="addUser()">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Schedule</button>
                     </button>
-                    </button>
-                             <div class="modal fade" id="mydModal" role="dialog">
+                    <div class="modal fade" id="mydModal" role="dialog">
                                     <div class="modal-dialog modal-md">
                                         <div class="modal-content">
                                             <div class="modal-header modal-header-success" >
@@ -86,38 +85,42 @@
                                                             </div>
 
                                                               <div class="form-group">
-                                                                <label>First Name</label>
-
-                                                                <input id="efirst_name" class="form-control" ng-model="efirst_name" placeholder="First Name">
+                                                                <label>Choose Name</label>
+                                                                <select ng-model="ename" id="ename">
+                                                                    <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " +user.last_name}}</option>
+                                                                </select>
                                                             </div>
-
+                                                           
                                                             <div class="form-group">
-                                                                <label>Last Name</label>
-                                                                <input id="elast_name" class="form-control" ng-model="elast_name" placeholder="Last Name">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Date of Birth</label>
-                                                                <div class='input-group date' id='datetimepicker1'>
-                                                                    <input type='text' class="form-control" ng-model="ebirthdate" 
-                                                                    placeholder="YYYY-MM-DD" id="ebirthdate" value="">
+                                                                <label>From </label>
+                                                                <div class='input-group date' id='datetimepicker2'>
+                                                                    <input type='text' id="efromdate" class="form-control" ng-model="efromdate" placeholder="YYYY-MM-DD"  value="">
                                                                     <span class="input-group-addon">
                                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                                    <div class="form-group">
-                                                                <label>Choose Team</label>
-                                                                <select id="eteam" class="btn btn-primary"  ng-model="eteam">
-                                                                    <option id="eteam" ng-repeat="(key,team) in teams" value="{{ key }}">{{team.name}}</option>
+                                                             <div class="form-group">
+                                                                <label>To </label>
+                                                                <div class='input-group date' id='datetimepicker3'>
+                                                                    <input type='text' id="etodate" class="form-control" ng-model="etodate" placeholder="YYYY-MM-DD"  value="">
+                                                                    <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                                 <div class="form-group">
+                                                                <label>Allocation</label>
+                                                                <select ng-model="ealloc" id="ealloc">
+                                                                    <option  id="ealloc" ng-repeat="(key,alloc) in allocation" value="{{ alloc.allocation }}">{{ alloc.allocation }}%</option>
                                                                 </select>
                                                             </div>
-
                                                         </form>            
                                                     </div>
                                                 </div>
                                              </div>
                                              <div class="modal-footer">
-                                                  <button type="button" ng-click="savedata()" class="btn btn-primary" data-dismiss="modal">
+                                                <button type="button" ng-click="savedata()" class="btn btn-primary" data-dismiss="modal">
                                                  <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Save</button>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">
                                                  <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Close</button>
@@ -125,54 +128,44 @@
                                           </div>                   
                                       </div>
                                         </div>
-                                    </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2> List of Peoples </h2>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
-                                <thead><tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Birth Date</th>
-                                    <th>Team</th>
-                                    <th>Edit</th>
-                              </tr></thead>
-                              <tbody><tr class="active" ng-repeat="(key, user) in users">
-                                <td>{{ user.first_name }}</td>
-                                <td>{{ user.last_name }}</td>
-                                <td>{{ user.birthdate }}</td>
-                                <td>{{ user.name }}</td>
-                                <td>
-                                
-                                
-                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#mydModal" ng-click="editUser(key)">
+                     <div class="row">
+                        <div class="col-lg-12">
+                            <h2>List of Schedules</h2>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped">
+                                        <thead><tr>
+                                        <th>Name</th>  
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Allocation</th>
+                                        <th>Edit</th>
+                                  </tr></thead>
+                                  <tbody><tr class="active" ng-repeat="(key,shed) in sched">                               
+                                    <td>{{ shed.name }}</td>
+                                    <td>{{ shed.fromdate }}</td>
+                                    <td>{{ shed.todate }}</td>
+                                    <td>{{ shed.allocation }}%</td>
+                                    <td>
+                                    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#mydModal" ng-click="editUser(key)">
                                     <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
+                            
                                     </td>
-                              </tr></tbody>
-                            </table>
-                            </table>
+                                  </tr></tbody>
+                                 </table>
+                               </table>
+                             </div>
+                          </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-   
     <script type="text/javascript" src="js/moment.js"></script>
     <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="css/bootstrap.css"></script>
     <script type="text/javascript" src="css/bootstrap-datetimepicker.min.css"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src = "users.js"></script>
+    <script src = "sched.js"></script>
 </body>
-
 </html>

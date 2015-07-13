@@ -8,18 +8,13 @@ $scope.updateData = {}
 
 $scope.first_name2 = "test";
 
-
 $(document).ready(function () {
-      $('.selectpicker').selectpicker({
-          style: 'btn-info',
-          size: 4
-      });
-});
+    $('#datetimepicker1').datetimepicker({
+      format: 'YYYY-MM-DD hh:mm:ss'
 
-$(document).ready(function () {
-    $('#datetimepicker2').datetimepicker();
-    $("#datetimepicker2").on("dp.change", function (e) {
-      $scope.ebirthdate = e.date;
+    });
+    $("#datetimepicker1").on("dp.change", function (e) {
+      $scope.ebirthdate = $('#ebirthdate').val();
     });
 });
 
@@ -52,76 +47,71 @@ function getTeams(){
   });
 }
 
-function getTeams(){
-
-  var response = $http.get("http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime());
-
-  response.success(function(data, status, headers, config) {
-      console.log(data.teams);
-      
-      $scope.teams = data.teams;
-  });
-  response.error(function(data, status, headers, config) {
-      alert("AJAX failed!");
-  });
-}
-
 getData();
 getTeams();
-
-
 
 $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false; 
+$scope.addUser = function() {
+  $scope.form_mode = 'insert';
+  $scope.form_title = "Add User Information";
+
+  $scope.efirst_name = '';
+  $scope.elast_name = '';
+  $scope.ebirthdate = '';
+  $scope.eteam = '';
+}
 
 $scope.editUser = function(id) {
 
-  
-  console.log(id);
-  console.log($scope.users[id]);
-  console.log($scope.users[id].user_id);
-  console.log($scope.users[id].first_name);
-  console.log($scope.users[id].last_name);
-  console.log($scope.users[id].birthdate);
-
- $scope.user_id = $scope.users[id].user_id.toString();
- $scope.first_name = $scope.users[id].first_name.toString();
- $scope.last_name = $scope.users[id].last_name.toString();
- $scope.birthdate = $scope.users[id].birthdate.toString();
-
+  $scope.form_mode = 'update';
+  $scope.form_title = "Edit User Information";
+  $scope.efirst_name = $scope.users[id].first_name.toString();
+  $scope.elast_name = $scope.users[id].last_name.toString();
+  $scope.ebirthdate = $scope.users[id].birthdate.toString();
+  $scope.eteam = $scope.users[id].team_id.toString();
+  $scope.user_id = $scope.users[id].user_id.toString();
 };
+
+$scope.savedata = function(){
+
+  switch($scope.form_mode){
+    case 'update':
+      $scope.updateData();
+    break;
+    case 'insert':
+      $scope.insertData();
+    break;
+  }
+}
 
 $scope.updateData = function(){
 
-  var edit_user_id = $scope.user_id;
-  var edit_first_name = $('#edit_first_name').val();
-  var edit_last_name = $('#edit_last_name').val();
-  var edit_birthdate = $('#edit_birthdate').val();
+  var user_id = $scope.user_id;
+  var efirst_name = $('#efirst_name').val();
+  var elast_name = $('#elast_name').val();
+  var ebirthdate = $('#ebirthdate').val();
+  var eteam = $('#eteam').val();
 
-  $http.post("API/update.php",{
-    'user_id': edit_user_id, 
-    'first_name': edit_first_name,
-    'last_name': edit_last_name,
-    'birthdate': edit_birthdate
+  $http.post("API/update-people.php",{
+    'user_id': user_id, 
+    'first_name': efirst_name,
+    'last_name': elast_name,
+    'birthdate': ebirthdate,
+    'team_id': eteam
     })
     .success(function(data,status,headers,config){
       console.log(data);
     getData();
       //popup here
     });
-
 }
-  $scope.insertdata=function(){
-
-      $http.post("API/insert.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate})
+  $scope.insertData=function(){
+      $http.post("API/insert-people.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate,'eteam':$scope.eteam})
         .success(function(data,status,headers,config){
-          console.log("nice");
+          console.log(data);
     getData();
         });
-
-
   }
-
-
 });
