@@ -21,9 +21,7 @@ $(document).ready(function () {
 
 function getData(){
 
-  var response = $http.get("http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime(),{
-    'access_token': $cookies.get('access_token')
-  });
+  var response = $http.get("http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime());
 
   response.success(function(data, status, headers, config) {
       console.log(data.users);
@@ -102,7 +100,6 @@ $scope.updateData = function(){
     'last_name': elast_name,
     'birthdate': ebirthdate,
     'team_id': eteam
-    'access_token': $cookies.get('access_token')
     })
     .success(function(data,status,headers,config){
       console.log(data);
@@ -115,11 +112,11 @@ $scope.updateData = function(){
         'efirst_name':$scope.efirst_name,
         'elast_name':$scope.elast_name,
         'ebirthdate':$scope.ebirthdate,
-        'eteam':$scope.eteam,
-        'access_token': $cookies.get('access_token')
+        'eteam':$scope.eteam
       })
         .success(function(data,status,headers,config){
           console.log(data);
+          alert("User successfully added!");
     getData();
         });
   }
