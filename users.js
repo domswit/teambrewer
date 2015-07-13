@@ -94,7 +94,7 @@ $scope.updateData = function(){
   var ebirthdate = $('#ebirthdate').val();
   var eteam = $('#eteam').val();
 
-  $http.post("API/update.php",{
+  $http.post("API/update-people.php",{
     'user_id': user_id, 
     'first_name': efirst_name,
     'last_name': elast_name,
@@ -108,7 +108,7 @@ $scope.updateData = function(){
     });
 }
   $scope.insertData=function(){
-      $http.post("API/insert.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate,'eteam':$scope.eteam})
+      $http.post("API/insert-people.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate,'eteam':$scope.eteam})
         .success(function(data,status,headers,config){
           console.log(data);
     getData();

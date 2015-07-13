@@ -1,4 +1,4 @@
-angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
 $scope.fName = '';
 $scope.lName = '';
 $scope.passw1 = '';
@@ -14,7 +14,9 @@ $scope.first_name2 = "test";
 function getData(){
 
 
-  var response = $http.get("http://localhost/teambrewer/API/project-list.php?rand=" + new Date().getTime());
+  var response = $http.get("http://localhost/teambrewer/API/project-list.php?rand=" + new Date().getTime(),{
+    'access_token': $cookies.get('access_token')
+  });
 
   response.success(function(data, status, headers, config) {
       console.log(data.projects);
@@ -56,10 +58,10 @@ $scope.updateData = function(){
   var edit_project_name = $('#edit_project_name').val();
 
 
-  $http.post("API/updateproject.php",{
+  $http.post("API/update-project.php",{
     'project_id': edit_project_id, 
     'project_name': edit_project_name,
-   
+    'access_token': $cookies.get('access_token')
     })
     .success(function(data,status,headers,config){
       console.log(data);
@@ -69,7 +71,10 @@ $scope.updateData = function(){
 }
   $scope.insertdata=function(){
 
-      $http.post("API/insertproject.php",{'eproject_name':$scope.eproject_name})
+      $http.post("API/insert-project.php",{
+        'eproject_name':$scope.eproject_name,
+        'access_token': $cookies.get('access_token')
+        })
         .success(function(data,status,headers,config){
           console.log(data);
           getData();
