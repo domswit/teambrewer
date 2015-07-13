@@ -55,7 +55,10 @@ $scope.updateData = function(){
 
 }
   $scope.insertdata=function(){
-      $http.post("API/insert-team.php",{'name':$scope.name})
+      $http.post("API/insert-team.php",{
+        'name':$scope.name,
+        
+      })
         .success(function(data,status,headers,config){
           console.log(data);
           getData();

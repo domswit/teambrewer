@@ -1,4 +1,4 @@
-angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
 
 $scope.form_title = "yeah";
 $scope.fName = '';
@@ -33,7 +33,9 @@ $(document).ready(function () {
 
 function getSched(){
 
-  var response = $http.get("http://localhost/teambrewer/API/sched-list.php?rand=" + new Date().getTime());
+  var response = $http.get("http://localhost/teambrewer/API/sched-list.php?rand=" + new Date().getTime(),{
+    'access_token': $cookies.get('access_token')
+  });
 
   response.success(function(data, status, headers, config) {
       console.log(data.sched);
@@ -127,6 +129,7 @@ $scope.updateData = function(){
     'fromdate': efromdate,
     'todate': etodate,
     'allocation': ealloc
+    'access_token': $cookies.get('access_token')
     })
     .success(function(data,status,headers,config){
       console.log(data);
@@ -135,7 +138,7 @@ $scope.updateData = function(){
     });
 }
   $scope.insertData=function(){
-      $http.post("API/insert-sched.php",{'ename':$scope.ename,'efromdate':$scope.efromdate,'etodate':$scope.etodate,'ealloc':$scope.ealloc})
+      $http.post("API/insert-sched.php",{'ename':$scope.ename,'efromdate':$scope.efromdate,'etodate':$scope.etodate,'ealloc':$scope.ealloc,'access_token': $cookies.get('access_token') })
         .success(function(data,status,headers,config){
           console.log(data);
       getSched();

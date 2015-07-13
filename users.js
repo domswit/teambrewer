@@ -1,4 +1,4 @@
-angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
 $scope.fName = '';
 $scope.lName = '';
 $scope.passw1 = '';
@@ -21,7 +21,9 @@ $(document).ready(function () {
 
 function getData(){
 
-  var response = $http.get("http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime());
+  var response = $http.get("http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime(),{
+    'access_token': $cookies.get('access_token')
+  });
 
   response.success(function(data, status, headers, config) {
       console.log(data.users);
@@ -100,6 +102,7 @@ $scope.updateData = function(){
     'last_name': elast_name,
     'birthdate': ebirthdate,
     'team_id': eteam
+    'access_token': $cookies.get('access_token')
     })
     .success(function(data,status,headers,config){
       console.log(data);
@@ -108,7 +111,13 @@ $scope.updateData = function(){
     });
 }
   $scope.insertData=function(){
-      $http.post("API/insert-people.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate,'eteam':$scope.eteam})
+      $http.post("API/insert-people.php",{
+        'efirst_name':$scope.efirst_name,
+        'elast_name':$scope.elast_name,
+        'ebirthdate':$scope.ebirthdate,
+        'eteam':$scope.eteam,
+        'access_token': $cookies.get('access_token')
+      })
         .success(function(data,status,headers,config){
           console.log(data);
     getData();
