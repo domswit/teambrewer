@@ -1,4 +1,4 @@
-angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
 $scope.teams = '';
 
 $scope.updateData = {}
@@ -7,7 +7,9 @@ $scope.updateData = {}
 
 function getData(){
 
-  var response = $http.get("http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime());
+  var response = $http.get("http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime(),{
+    'access_token': $cookies.get('access_token')
+  });
 
   response.success(function(data, status, headers, config) {
       console.log(data.teams);
@@ -46,7 +48,8 @@ $scope.updateData = function(){
 
   $http.post("API/update-team.php",{
     'team_id': team_id, 
-    'name': name
+    'name': name,
+    'access_token': $cookies.get('access_token')
     })
     .success(function(data,status,headers,config){
       getData();
@@ -55,7 +58,10 @@ $scope.updateData = function(){
 
 }
   $scope.insertdata=function(){
-      $http.post("API/insert-team.php",{'name':$scope.name})
+      $http.post("API/insert-team.php",{
+        'name':$scope.name,
+        'access_token': $cookies.get('access_token')
+      })
         .success(function(data,status,headers,config){
           console.log(data);
           getData();

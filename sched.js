@@ -1,4 +1,4 @@
-angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
 
 $scope.form_title = "yeah";
 $scope.fName = '';

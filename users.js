@@ -1,4 +1,4 @@
-angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
 $scope.fName = '';
 $scope.lName = '';
 $scope.passw1 = '';
@@ -108,9 +108,15 @@ $scope.updateData = function(){
     });
 }
   $scope.insertData=function(){
-      $http.post("API/insert-people.php",{'efirst_name':$scope.efirst_name,'elast_name':$scope.elast_name,'ebirthdate':$scope.ebirthdate,'eteam':$scope.eteam})
+      $http.post("API/insert-people.php",{
+        'efirst_name':$scope.efirst_name,
+        'elast_name':$scope.elast_name,
+        'ebirthdate':$scope.ebirthdate,
+        'eteam':$scope.eteam
+      })
         .success(function(data,status,headers,config){
           console.log(data);
+          alert("User successfully added!");
     getData();
         });
   }
