@@ -1,35 +1,9 @@
-angular.module('myApp', ['ui.bootstrap']);
 angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
 $scope.teams = '';
 
 $scope.updateData = {}
 
 //$scope.first_name2 = "test";
-
-
-$(document).ready(function () {
-
-    $('#datetimepicker1').datetimepicker({
-      format: 'YYYY-MM-DD hh:mm:ss'
-      
-    });
-    $("#datetimepicker1").on("dp.change", function (e) {
-      $scope.efromdate = $('#efromdate').val();
-    });
-
-    $('#datetimepicker2').datetimepicker({
-      format: 'YYYY-MM-DD hh:mm:ss'
-      
-    });
-    $("#datetimepicker2").on("dp.change", function (e) {
-      $scope.etodate = $('#etodate').val();
-    });
-
-  
-
-});
-
-
 
 function getTeam(){
 
@@ -90,7 +64,6 @@ function getSched(){
 getTeam();
 getProject();
 getData();
-getSched();
 
 
 

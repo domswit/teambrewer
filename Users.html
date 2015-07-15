@@ -14,6 +14,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
+    
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="js/jquery.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
@@ -29,14 +30,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"> 
             
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="users.html">teambrewer</a>
-
+                <a class="navbar-brand" href="charts.html">teambrewer</a>
             </div>
             
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -86,8 +80,8 @@
                                                                 <div class='input-group date' id='datetimepicker1'>
                                                                     <input type='text' class="form-control" ng-model="ebirthdate" 
                                                                     placeholder="YYYY-MM-DD" id="ebirthdate" value="">
-                                                                    <span class="input-group-btn">
-                                                                        <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -122,8 +116,7 @@
                                     <th>Last Name</th>
                                     <th>Birth Date</th>
                                     <th>Team</th>
-                                    <th>Action</th>
-                                    
+                                    <th>Edit</th>
                               </tr></thead>
                               <tbody><tr class="active" ng-repeat="(key, user) in users">
                                 <td>{{ user.first_name }}</td>
@@ -131,11 +124,10 @@
                                 <td>{{ user.birthdate }}</td>
                                 <td>{{ user.name }}</td>
                                 <td>
+                                
+                                
                                 <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#mydModal" ng-click="editUser(key)">
                                     <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                                    
-                                        <button type="button" class="btn btn-danger btn-md" data-toggle="modal" ng-click="savedata()">
-                                    <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
                                     </td>
                               </tr></tbody>
                             </table>

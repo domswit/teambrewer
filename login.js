@@ -12,7 +12,7 @@ angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, 
 
 		$cookies.put('access_token', data.user.access_token);
 
-	      $window.location.href = '/teambrewer/charts.html';
+	      $window.location.href = '/teambrewer/users.html';
 
     });
 

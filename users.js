@@ -9,7 +9,6 @@ $scope.updateData = {}
 $scope.first_name2 = "test";
 
 $(document).ready(function () {
-  
     $('#datetimepicker1').datetimepicker({
       format: 'YYYY-MM-DD hh:mm:ss'
 
@@ -73,7 +72,6 @@ $scope.editUser = function(id) {
   $scope.ebirthdate = $scope.users[id].birthdate.toString();
   $scope.eteam = $scope.users[id].team_id.toString();
   $scope.user_id = $scope.users[id].user_id.toString();
-
 };
 
 $scope.savedata = function(){
@@ -85,7 +83,6 @@ $scope.savedata = function(){
     case 'insert':
       $scope.insertData();
     break;
-    
   }
 }
 
@@ -106,9 +103,7 @@ $scope.updateData = function(){
     })
     .success(function(data,status,headers,config){
       console.log(data);
-      alert(user_id);
     getData();
-
       //popup here
     });
 }
@@ -125,18 +120,4 @@ $scope.updateData = function(){
     getData();
         });
   }
-
-  $scope.deleteData=function(){
-
-      var user_id = $scope.user_id;
-      $http.get("API/delete-people.php",{
-        'user_id': $scope.user_id 
-      })
-        .success(function(data,status,headers,config){
-          console.log(data);
-          alert(user_id);
-    getData();
-        });
-  }
-
 });
