@@ -25,13 +25,7 @@ $(document).ready(function () {
       $scope.etodate = $('#etodate').val();
     });
 
-  $( "#efromdate" ).change(function() {
-      alert( "Handler for .change() called." );
-    });
-
-    $( "#etodate" ).change(function() {
-      alert( "Handler for .change() called." );
-    });
+  
 
 });
 

@@ -182,8 +182,8 @@ $(document).ready(function () {
                                         <div class='input-group date' id='datetimepicker1'>
                                                                         <input type='text' class="form-control" ng-model="ebirthdate" 
                                                                         placeholder="YYYY-MM-DD" id="ebirthdate" value="">
-                                                                        <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                         <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
                                                                         </span>
                                                                     </div>
                                 </div>
@@ -192,8 +192,8 @@ $(document).ready(function () {
                                        <div class='input-group date' id='datetimepicker1'>
                                                                         <input type='text' class="form-control" ng-model="ebirthdate" 
                                                                         placeholder="YYYY-MM-DD" id="ebirthdate" value="">
-                                                                        <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                         <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
                                                                         </span>
                                                                     </div>
                                 </div>
@@ -213,7 +213,7 @@ $(document).ready(function () {
                     </div>
                 </div><br>
 
-            <a class="btn btn-info btn-lg btn-block" role="button" data-toggle="collapse" href="#colps" aria-expanded="false" aria-controls="colps">
+            <a class="btn btn-info btn-lg btn-block" role="button" data-toggle="collapse" data-target="#colps" aria-expanded="false" aria-controls="colps">
               Show List
             </a>
             </button>
