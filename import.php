@@ -5,28 +5,52 @@
 	{
 		margin: 0;
 		padding: 0;
-		background-color:#D6F5F5;
+		background-color:#fff;
 		text-align:center;
+	}
+	p
+	{
+		font-size: 15px;
+		font-family: sans-serif;
+	}
+	a
+	{
+		color: #999;
+		font-size: 30px;
+		font-family: sans-serif;
+		text-decoration: none;
+	}
+	a:hover
+	{
+		color: #fff;
 	}
 	.top-bar
 		{
 			width: 100%;
 			height: auto;
 			text-align: center;
-			background-color:#FFF;
+			background-color:#222;
 			border-bottom: 1px solid #000;
+			padding-top: 30px;
 			margin-bottom: 20px;
+		}
+	.bodybar
+		{
+			padding-top: 100px;
+			border:1px dashed #333333;
+			width:300px;
+			margin:0 auto; 
+			padding:10px;
 		}
 	.inside-top-bar
 		{
-			margin-top: 5px;
 			margin-bottom: 5px;
 		}
 	.link
 		{
 			font-size: 18px;
 			text-decoration: none;
-			background-color: #000;
+			background-color: #222;
 			color: #FFF;
 			padding: 5px;
 		}
@@ -34,6 +58,17 @@
 		{
 			background-color: #9688B2;
 		}
+
+	.import
+	{
+		float:center;
+
+	}
+	.separator
+	{
+		margin-bottom:100px;
+		color: transparent;
+	}
 	</style>
 	
 	<script>
@@ -51,23 +86,23 @@
 <body>
 	<div class="top-bar">
 		<div class="inside-top-bar">
-			<a href="http://www.eggslab.net"><img src="http://www.eggslab.net/wp-content/uploads/2015/03/eggslablogo.png" width="500px"></a>
+			<a class="navbar-brand" href="charts.html">teambrewer</a>
 			<br><br>
-			<a href="http://www.eggslab.net/import-excel-file-data-in-mysql-database-using-php" class="link">&larr; Back to Article</a> | <a href="http://demos.eggslab.net/" class="link">More Demos &rarr;</a>
 		</div>
-	</div>
-    <div style="border:1px dashed #333333; width:300px; margin:0 auto; padding:10px;">
-    
-	<form name="import" method="post" enctype="multipart/form-data" action="API/api.php">
-    	<input type="file" name="file" /><br />
-        <input type="submit" name="submit" value="Submit"  />
-    </form>
 
-    
+	</div>
+
+	<hr class="separator"/>
+    <div class="bodybar">
+    	<p>Choose file:</p>
+		<form name="import" method="post" enctype="multipart/form-data" action="API/api.php">
+	    	<input type="file" name="file" /><br/>
+	        <input type="submit" name="submit" value="Submit"  />
+	    </form>
+
     </div>
-    <hr style="margin-top:300px;" />	
-    
-    <div align="center" style="font-size:18px;"><a href="http://www.eggslab.net">&copy; Eggs Lab</a></div>
+
+    <hr style="margin-top:200px;" />
 
 </body>
 </html>
