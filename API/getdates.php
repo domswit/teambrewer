@@ -1,5 +1,3 @@
-
-
 <?php
 
 print_r(getDatesFromRange( '2010-10-01', '2011-01-05' ));
