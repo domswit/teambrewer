@@ -85,6 +85,10 @@ body {
     white-space: normal;
 }
 
+select {
+    height: 33px;
+}
+
 ul.message-dropdown {
     padding: 0;
     max-height: 250px;
@@ -167,6 +171,11 @@ ul.alert-dropdown {
 }
 
 /* Custom Colored Panels */
+
+.chart_filter {
+    display: inline-table;
+  padding: 0 3px;
+}
 
 .huge {
     font-size: 40px;

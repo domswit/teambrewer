@@ -145,23 +145,7 @@
             </div>
             
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                  <li>
-                        <a href="users.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-male"></i> People </a>
-                    </li>
-                    <li>
-                        <a href="team.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-link"></i> Team </a>
-                    </li>
-                   <li>
-                        <a href="project.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-edit"></i> Project </a>
-                    </li>
-                    <li>
-                        <a href="sched.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-clock-o"></i> Schedule </a>
-                    </li>
-                    <li>
-                        <a href="charts.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-bar-chart"></i> Charts </a>
-                    </li>
-                </ul>
+                <div ng-include="'navbar.html'"></div>
             </div>
         </nav>
         <div id="page-wrapper">
@@ -181,46 +165,50 @@
                 <!-- Flot Charts -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="page-header"><center>Free Finder</center></h2>
+                        <h2 class="page-header"><center>Resource Allocation</center></h2>
                         
                         <div class="row">
-                            <div class="col-sm-2">
-                                <label>Project</label><br>
-                                    <select  ng-model="project_name">
-                                        <option ng-repeat="(key,project) in projects">{{ project.name }}</option>
+                            <div class="chart-filter-container" class="class_filter" style="text-align:center">
+                                <div class="chart_filter">
+                                    <label>Project</label><br>
+                                        <select  ng-model="project_name" class="col-lg">
+                                            <option ng-repeat="(key,project) in projects">{{ project.name }}</option>
+                                        </select>
+                                </div>
+                                <div class="chart_filter">
+
+                                    <label for='exe3'>Team</label><br>
+                                        <select  ng-model="eteam" class="col-lg">
+                                            <option ng-repeat="(key,team) in teams" value="{{ key }}">{{ team.name}}</option>
+                                        </select>
+                                </div>
+                                <div class="chart_filter">
+
+                                    <label for='exe3'>From:</label><br>
+                                        <div class='input-group date' id='datetimepicker1'>
+                                                                        <input type='text' class="form-control" ng-model="ebirthdate" 
+                                                                        placeholder="YYYY-MM-DD" id="ebirthdate" value="">
+                                                                        <span class="input-group-addon">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </span>
+                                                                    </div>
+                                </div>
+                                <div class="chart_filter">
+                                    <label for='exe3'>To:</label><br>
+                                       <div class='input-group date' id='datetimepicker1'>
+                                                                        <input type='text' class="form-control" ng-model="ebirthdate" 
+                                                                        placeholder="YYYY-MM-DD" id="ebirthdate" value="">
+                                                                        <span class="input-group-addon">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </span>
+                                                                    </div>
+                                </div>
+                                <div class="chart_filter">
+                                    <label for='exe3'>People</label><br>
+                                       <select ng-model="ename" id="ename" class="col-lg">
+                                    <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " + user.last_name}}</option>
                                     </select>
-                            </div>
-                            <div class="col-sm-2">
-                                <label for='exe3'>Team</label><br>
-                                    <select  ng-model="eteam">
-                                        <option ng-repeat="(key,team) in teams" value="{{ key }}">{{ team.name}}</option>
-                                    </select>
-                            </div>
-                            <div class="col-sm-2">
-                                <label for='exe3'>From:</label><br>
-                                    <div class='input-group date' id='datetimepicker1'>
-                                                                    <input type='text' class="form-control" ng-model="ebirthdate" 
-                                                                    placeholder="YYYY-MM-DD" id="ebirthdate" value="">
-                                                                    <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <label for='exe3'>To:</label><br>
-                                   <div class='input-group date' id='datetimepicker1'>
-                                                                    <input type='text' class="form-control" ng-model="ebirthdate" 
-                                                                    placeholder="YYYY-MM-DD" id="ebirthdate" value="">
-                                                                    <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <label for='exe3'>People</label><br>
-                                   <select ng-model="ename" id="ename">
-                                <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " + user.last_name}}</option>
-                            </select>
+                                </div>
                             </div>
                         </div>
                     </div>
