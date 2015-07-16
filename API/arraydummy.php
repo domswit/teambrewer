@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors','false');
+//ini_set('display_errors','false');
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -22,7 +22,6 @@ function getUsers($project_id, $team_id, $user_id){
 	return $users;
 }
 
-
 function getDates($startDate, $endDate)
 {
     $return = array($startDate);
@@ -32,7 +31,7 @@ function getDates($startDate, $endDate)
     {
        while (strtotime($start) < strtotime($endDate))
         {
-            $start = date('YYYY-mm-dd', strtotime($startDate.'+'.$a.' days'));
+            $start = date('Y-m-d', strtotime($startDate.'+'.$a.' days'));
             $return[] = $start;
             $a++;
         }
@@ -52,11 +51,11 @@ function getDates($startDate, $endDate)
 // 		array('id'=>'6','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'60'),
 // 	));
 // }
-function getScheds($user_id){
+function getScheds($user_id, $fromdate, $todate){
 
 	global $conn;
 
-	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id )";
+	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) WHERE a.user_id = '{$user_id}' && (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate')";
 
 	$result = $conn->query($sql);
 
@@ -67,7 +66,7 @@ function getScheds($user_id){
 	    while($row = $result -> fetch_assoc()) {
 	      
 			
-	    	$scheds[$row["sched_id"]] = $row;
+	    	$scheds[] = $row;
 	    }
 	} else {
 	    echo "0 results";
@@ -87,11 +86,15 @@ $allDates = array();
 
 
 
-$fromdate = '2011-01-01';
-$todate = '2012-01-01';
+$fromdate = '2015-07-01';
+$todate = '2015-07-29';
 
 
 $dates =  getDates($fromdate, $todate);
+
+
+// print_r($dates);
+// die(); 
 
 
 
@@ -104,50 +107,61 @@ foreach($users as $key => $user){
 	//echo "<BR><BR>USER " . $key . "<BR>" ;
 	for($x=0; $x<count($dates); $x++){
 		$date = $dates[$x];
+		$users[$key][$date] = array();
 	}
 
 
-	$scheds = getScheds($key);
+	$scheds = getScheds($key, $fromdate, $todate);
 
-	for($x=0; $x<count($scheds); $x++){
-		$fromdate = $scheds[$x]['fromdate'];
-		$todate = $scheds[$x]['todate'];
+	if(count($scheds) > 0){
 
 
+        
+		for($x=0; $x<count($scheds); $x++){
+			$fromdate = $scheds[$x]['fromdate'];
+			$todate = $scheds[$x]['todate'];
 
-		$sched_dates = getDates($fromdate , $todate);
+            if (strtotime($fromdate) < strtotime($todate)){
+                $sched_dates = getDates($fromdate , $todate);
 
-		
-		//$users[$e][$date] = array();
+                
+                //$users[$e][$date] = array();
 
-		$allocation = $scheds[$x]['allocation'];
-		$project_id = $scheds[$x]['id'];
-
-
-
-
-		
-
-		for($i=0; $i<count($sched_dates); $i++){
-
-			//echo 'UID: ' . $key . ' -- DATE:' . $sched_dates[$i] . 'ALLOCATION: ' . $allocation . '<br>';
+                $allocation = $scheds[$x]['allocation'];
+                $project_id = $scheds[$x]['project_id'];
 
 
-			$users[$key][ $sched_dates[$i] ]['allocation_list'][] = array(
-				'allocation'=>$allocation,
-				'project_id'=>$project_id,
-			);
 
-			$users[$key][ $sched_dates[$i] ]['allocation_total'] += $allocation*1;
+
+
+                for($i=0; $i<count($sched_dates); $i++){
+
+                    //echo 'UID: ' . $key . ' -- DATE:' . $sched_dates[$i] . 'ALLOCATION: ' . $allocation . '<br>';
+
+                    $sched_date = date('Y-m-d', strtotime($sched_dates[$i]));
+
+                    if($sched_date != ''){
+
+                        $users[$key][ $sched_date ]['allocation_list'][] = array(
+                            'allocation'=>$allocation,
+                            'project_id'=>$project_id,
+                        );              
+
+                        $users[$key][ $sched_date ]['allocation_total'] += $allocation*1;  
+                    }
+                    
+                }                
+            }
+
+
 		}
 	}
 
+
+
 }
 
-
- //echo json_encode ($users);
-
- print_r($users);
+echo json_encode ($users);
 
 $conn->close();
 
