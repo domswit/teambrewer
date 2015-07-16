@@ -1,9 +1,33 @@
+angular.module('myApp', ['ui.bootstrap']);
 angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
 $scope.teams = '';
 
 $scope.updateData = {}
 
 //$scope.first_name2 = "test";
+
+
+$(document).ready(function () {
+
+    $('#datetimepicker1').datetimepicker({
+      format: 'YYYY-MM-DD hh:mm:ss'
+    });
+
+    $("#datetimepicker1").on("dp.change", function (e) {
+      $scope.efromdate = $('#efromdate').val();
+    });
+
+    $('#datetimepicker2').datetimepicker({
+      format: 'YYYY-MM-DD hh:mm:ss'
+    });
+
+    $("#datetimepicker2").on("dp.change", function (e) {
+      $scope.etodate = $('#etodate').val();
+    });
+
+});
+
+
 
 function getTeam(){
 
@@ -61,11 +85,35 @@ function getSched(){
   });
 }
 
+function getChart(){
+
+  var response = $http.get("http://localhost/teambrewer/API/charts.php?rand=" + new Date().getTime());
+
+  response.success(function(data, status, headers, config) {
+      console.log(data);
+
+      for(var i in data){
+        console.log("USER: " + i);
+        console.log(data[i]);
+
+        for(var e in data[i]){
+          console.log("DATE: " + e + " ALLOC:" + data[i][e]['allocation_total']);
+           console.log(data[i][e]);
+        }
+      }
+      
+      //$scope.sched = data;
+  });
+  response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+  });
+}
+
 getTeam();
 getProject();
 getData();
-
-
+getSched();
+getChart();
 
 $scope.edit = true;
 $scope.error = false;
