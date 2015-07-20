@@ -192,7 +192,7 @@
                                 <div class="chart-filter-container" class="class_filter" style="text-align:center">
                                     <div class="chart_filter">
                                         <label>Project</label><br>
-                                            <select  name="project_id" ng-model="project_name" class="col-lg">
+                                            <select id="project_id"  name="project_id" ng-model="project_name" class="col-lg">
                                                 <option ng-repeat="(key,project) in projects">{{ project.name }}</option>
                                             </select>
                                     </div>
@@ -225,7 +225,6 @@
                                             </span>
                                         </div>
                                     </div>
-
                                     <div class="chart_filter">
                                         <label for='exe3'>People</label><br>
                                            <select  name="user_id" ng-model="ename" id="ename" class="col-lg">

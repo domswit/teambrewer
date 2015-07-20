@@ -51,6 +51,13 @@ function getProject(){
       console.log(data.projects);
       
       $scope.projects = data.projects;
+
+      var filters = getUrlVars();
+
+      $scope.project_name = filters.project_id;
+      $scope.eteam = filters.team_id;
+      $scope.efromdate = filters.from_date;
+      $scope.etodate = filters.to_date;
   });
   response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
