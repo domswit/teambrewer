@@ -1,5 +1,5 @@
 <?php
-//ini_set('display_errors','false');
+ini_set('display_errors','false');
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -22,6 +22,7 @@ function getUsers($project_id, $team_id, $user_id){
 	return $users;
 }
 
+
 function getDates($startDate, $endDate)
 {
     $return = array($startDate);
@@ -41,21 +42,11 @@ function getDates($startDate, $endDate)
 }
 
 
-// function getScheds($user_id){
-// 	return(array(
-// 		array('id'=>'1','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'10'),
-// 		array('id'=>'2','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'20'),
-// 		array('id'=>'3','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'30'),
-// 		array('id'=>'4','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'40'),
-// 		array('id'=>'5','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'50'),
-// 		array('id'=>'6','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'60'),
-// 	));
-// }
 function getScheds($user_id, $fromdate, $todate){
 
 	global $conn;
 
-	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) WHERE a.user_id = '{$user_id}' && (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate')";
+	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) WHERE a.user_id = '{$user_id}' && (a.fromdate >= '$fromdate' && a.fromdate <='$todate') && (a.fromdate >= '$fromdate' && a.todate <= '$todate')";
 
 	$result = $conn->query($sql);
 
@@ -69,7 +60,7 @@ function getScheds($user_id, $fromdate, $todate){
 	    	$scheds[] = $row;
 	    }
 	} else {
-	    echo "0 results";
+	    // echo "0 results";
 	}
 
 	return $scheds;
@@ -85,26 +76,13 @@ $scheds[] = array('allocation' <= '45');
 $allDates = array();
 
 
-
 $fromdate = '2015-07-01';
-$todate = '2015-07-29';
-
+$todate = '2015-07-30';
 
 $dates =  getDates($fromdate, $todate);
 
-
-// print_r($dates);
-// die(); 
-
-
-
 foreach($users as $key => $user){
 
-	// echo $e;
-	// echo "<br>";
-	//preparation
-
-	//echo "<BR><BR>USER " . $key . "<BR>" ;
 	for($x=0; $x<count($dates); $x++){
 		$date = $dates[$x];
 		$users[$key][$date] = array();
@@ -118,13 +96,13 @@ foreach($users as $key => $user){
 
         
 		for($x=0; $x<count($scheds); $x++){
-			$fromdate = $scheds[$x]['fromdate'];
-			$todate = $scheds[$x]['todate'];
+			$sched_fromdate =  date('Y-m-d', strtotime($scheds[$x]['fromdate']));
+			$sched_todate =  date('Y-m-d', strtotime($scheds[$x]['todate']));
 
             if (strtotime($fromdate) < strtotime($todate)){
-                $sched_dates = getDates($fromdate , $todate);
+                $sched_dates = getDates($sched_fromdate , $sched_todate);
 
-                
+              
                 //$users[$e][$date] = array();
 
                 $allocation = $scheds[$x]['allocation'];
@@ -161,7 +139,10 @@ foreach($users as $key => $user){
 
 }
 
-echo json_encode ($users);
+
+ echo json_encode ($users);
+
+ // print_r($users);
 
 $conn->close();
 

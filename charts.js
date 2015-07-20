@@ -85,47 +85,6 @@ function getSched(){
   });
 }
 
-function getChart(){
-
-  var response = $http.get("http://localhost/teambrewer/API/charts.php?rand=" + new Date().getTime());
-
-  response.success(function(data, status, headers, config) {
-      // console.log(data);
-
-      // var chartDate = [];
-      
-      // for(var i in data){
-      //   console.log("USER: " + i);
-      //   console.log(data[i]);
-
-
-      //   var userData = [];
-        
-      //   for(var e in data[i]){
-      //     var allocation_total = data[i][e]['allocation_total'];
-
-      //     if(allocation_total == undefined)
-      //       allocation_total = 0;
-
-      //     console.log("DATE: " + e + " ALLOC:" + allocation_total);
-
-      //     userData.push([e, allocation_total]);
-      //     //console.log(data[i][e]);
-      //   }
-
-      //   chartDate.push({ data: userData, label: i });
-
-  
-        
-      // }
-      
-      // return chartDate;
-      //$scope.sched = data;
-  });
-  response.error(function(data, status, headers, config) {
-      alert("AJAX failed!");
-  });
-}
 
 function getTwoDates(){
 
@@ -144,8 +103,11 @@ getTeam();
 getProject();
 getData();
 getSched();
+<<<<<<< HEAD
 getChart();
 getTwoDates();
+=======
+>>>>>>> 387e2cc73ab1a41227e2fc31fd8da4960f3a4067
 
 $scope.edit = true;
 $scope.error = false;
