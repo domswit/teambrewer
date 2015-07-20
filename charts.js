@@ -127,11 +127,25 @@ function getChart(){
   });
 }
 
+function getTwoDates(){
+
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date(2015,07,01);
+  var secondDate = new Date(2015,07,10);
+
+  var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+
+  console.log("here")
+  console.log(diffDays);
+
+}
+
 getTeam();
 getProject();
 getData();
 getSched();
 getChart();
+getTwoDates();
 
 $scope.edit = true;
 $scope.error = false;
@@ -175,5 +189,15 @@ $scope.incomplete = false;
 
 //   }
 
+// DATETIMEPICKER GET VALUE TRIAL3
+// function getDateDTP()
+// {
+//   var efromdate = $('#fromdate').val();
+//   var etodate = $('#todate').val();
+
+//   console.log("here");
+//   console.log(efromdate);
+//   console.log(etomdate);
+// }
 
 });
