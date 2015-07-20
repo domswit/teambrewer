@@ -93,10 +93,28 @@ function getSched(){
 }
 
 
+function getTwoDates(){
+
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date(2015,07,01);
+  var secondDate = new Date(2015,07,10);
+
+  var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+
+  console.log("here")
+  console.log(diffDays);
+
+}
+
 getTeam();
 getProject();
 getData();
 getSched();
+<<<<<<< HEAD
+getChart();
+getTwoDates();
+=======
+>>>>>>> 387e2cc73ab1a41227e2fc31fd8da4960f3a4067
 
 $scope.edit = true;
 $scope.error = false;
@@ -140,5 +158,15 @@ $scope.incomplete = false;
 
 //   }
 
+// DATETIMEPICKER GET VALUE TRIAL3
+// function getDateDTP()
+// {
+//   var efromdate = $('#fromdate').val();
+//   var etodate = $('#todate').val();
+
+//   console.log("here");
+//   console.log(efromdate);
+//   console.log(etomdate);
+// }
 
 });
