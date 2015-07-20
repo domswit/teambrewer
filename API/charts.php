@@ -14,12 +14,32 @@ if ($conn->connect_error) {
 
 
 function getUsers($project_id, $team_id, $user_id){
-	$users = array();
-	$users[1] = array();
-	$users[2] = array();
-	$users[3] = array();
+	// $users = array();
+	// $users[1] = array();
+	// $users[2] = array();
+	// $users[3] = array();
 
-	return $users;
+	
+
+	global $conn;
+		$sql = "SELECT a.user_id, c.team_id, a.project_id, a.fromdate, a.todate FROM `sched` as a, `projects` as b, `users` as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id AND a.project_id = 2 AND c.team_id = 2";
+	$result = $conn->query($sql);
+
+	$users = Array();
+
+	if ($result ->num_rows > 0) {
+	   
+	    while($row = $result -> fetch_assoc()) {
+	      
+			
+	    	$users[$row['user_id']] = $row;
+	    }
+	} else {
+	    //echo "0 results";
+	}
+	
+	 return $users;
+	
 }
 
 function getDates($startDate, $endDate)
@@ -55,7 +75,7 @@ function getScheds($user_id, $fromdate, $todate){
 
 	global $conn;
 
-	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) WHERE a.user_id = '{$user_id}' && (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate')";
+	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate'))";
 
 //echo $sql . "<br><br>";
 	$result = $conn->query($sql);
@@ -76,7 +96,11 @@ function getScheds($user_id, $fromdate, $todate){
 	return $scheds;
 }
 
-$users = getUsers();
+$fromdate = $_POST['from_date'];
+$todate = $_POST['to_date'];
+$project_id = $_POST['project_id'];
+
+$users = getUsers($project_id, $team_id);
 
 $scheds = array();
 $scheds[] = array('allocation' <= '50');
@@ -87,8 +111,10 @@ $allDates = array();
 
 
 
-$fromdate = '2015-07-21';
-$todate = '2015-07-29';
+
+//echo $fromdate;
+
+
 
 
 $dates =  getDates($fromdate, $todate);
