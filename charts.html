@@ -210,7 +210,9 @@
         plotChart(20);
     });
 
-        
+
+
+
 </script>
 
     <body ng-app="myApp" ng-controller="userCtrl">
@@ -262,9 +264,10 @@
 
                                     <label for='exe3'>From:</label><br>
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" ng-model="ebirthdate" 
-                                        placeholder="YYYY-MM-DD" id="ebirthdate" value="">
-                                         <span class="input-group-btn">
+                                        <input type='text' class="form-control" ng-model="efromdate" 
+                                        placeholder="YYYY-MM-DD" id="efromdate" value="">
+
+                                        <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
                                     </div>
@@ -272,10 +275,10 @@
 
                                 <div class="chart_filter">
                                     <label for='exe3'>To:</label><br>
-                                   <div class='input-group date' id='datetimepicker1'>
-                                        <input type='text' class="form-control" ng-model="ebirthdate" 
-                                        placeholder="YYYY-MM-DD" id="ebirthdate" value="">
-                                         <span class="input-group-btn">
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type='text' class="form-control" ng-model="etodate" 
+                                        placeholder="YYYY-MM-DD" id="etodate" value="">
+                                        <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
                                     </div>
