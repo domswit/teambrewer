@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2015 at 06:51 AM
+-- Generation Time: Jul 16, 2015 at 08:41 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -56,22 +56,24 @@ INSERT INTO `projects` (`project_id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `sched` (
   `sched_id` int(11) NOT NULL,
   `user_id` int(30) NOT NULL,
+  `project_id` int(3) NOT NULL,
   `fromdate` datetime NOT NULL,
   `todate` datetime NOT NULL,
   `allocation` int(3) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sched`
 --
 
-INSERT INTO `sched` (`sched_id`, `user_id`, `fromdate`, `todate`, `allocation`) VALUES
-(3, 3, '2015-06-20 12:00:00', '2015-06-20 12:00:00', 50),
-(4, 2, '2015-06-30 00:00:00', '0015-06-11 00:00:00', 50),
-(10, 79, '2015-07-20 12:00:00', '2015-07-15 12:00:00', 30),
-(14, 1, '2015-07-22 12:00:00', '2015-07-21 12:00:00', 50),
-(15, 1, '2015-06-06 03:35:09', '2015-06-06 03:35:12', 100),
-(16, 2, '2015-08-06 04:44:49', '2015-07-07 04:44:51', 10);
+INSERT INTO `sched` (`sched_id`, `user_id`, `project_id`, `fromdate`, `todate`, `allocation`) VALUES
+(3, 3, 2, '2015-06-20 12:00:00', '2015-06-20 12:00:00', 50),
+(4, 3, 40, '2015-06-30 00:00:00', '0015-08-30 00:00:00', 50),
+(10, 79, 5, '2015-07-20 12:00:00', '2015-07-15 12:00:00', 30),
+(14, 1, 2, '2015-07-21 12:00:00', '2015-07-25 12:00:00', 50),
+(15, 1, 5, '2015-07-23 03:35:09', '2015-07-28 03:35:12', 100),
+(16, 2, 66, '2015-08-06 04:44:49', '2015-07-07 04:44:51', 10),
+(17, 82, 34, '2015-07-02 01:11:32', '2015-07-23 01:11:35', 50);
 
 -- --------------------------------------------------------
 
@@ -113,16 +115,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(30) NOT NULL,
   `password` varchar(50) NOT NULL,
   `access_token` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `birthdate`, `team_id`, `username`, `password`, `access_token`) VALUES
-(1, 'Ken', 'Nigga', '2015-07-10 03:06:00', 5, 'myuser', 'pass123', ''),
-(2, 'wew', 'asd', '2015-08-08 00:00:00', 6, '', '0', ''),
-(3, 'asdas', 'wew', '2015-07-25 12:00:00', 4, '', '0', ''),
+(2, 'wew', 'asd', '2015-08-08 00:00:00', 2, '', '0', ''),
+(3, 'asdas', 'wew', '2015-07-25 12:00:00', 2, '', '0', ''),
 (70, 'zxcsda', 'wewe', '2015-07-21 12:00:00', 1, '', '', ''),
 (72, 'wa', 'we', '2015-07-10 00:00:00', 4, '', '', ''),
 (74, 'qqqq', 'aaaaa', '2015-07-03 00:00:00', 3, '', '', ''),
@@ -138,7 +139,9 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `birthdate`, `team_id
 (86, 'wew', 'asd', '2015-07-03 09:15:22', 4, '', 'temppassword', '830336821fb3c54a3c2a08ac68a90f0d'),
 (87, 'ezxczx', 'ezxczxd', '2015-06-30 09:17:46', 2, 'tempusername', 'temppassword', '3ba768b2178737ce1697a42c8908e955'),
 (88, 'zxczxc', 'zxczcxc', '2015-06-13 09:17:46', 2, 'tempusername', '4f5f3c2adbcc', '08194dee04abb8ed7d766d1b0f7ce0b4'),
-(89, 'edgeeee', 'asdasd', '2015-06-10 09:17:46', 1, 'tempusername', '4f5f3c2adbcc8752f1e2e4b81ea188c4', '18c971e705ff9b8c5f8d127c08e65d58');
+(89, 'edgeeee', 'asdasd', '2015-06-10 09:17:46', 1, 'tempusername', '4f5f3c2adbcc8752f1e2e4b81ea188c4', '18c971e705ff9b8c5f8d127c08e65d58'),
+(90, 'Wewew', 'Dsds', '2015-07-09 01:12:23', 3, 'tempusername', '4f5f3c2adbcc8752f1e2e4b81ea188c4', 'd446249617eb30557c7e7d9a30b1899d'),
+(91, 'Kuero', 'Baka', '2015-07-08 01:13:27', 3, 'tempusername', '4f5f3c2adbcc8752f1e2e4b81ea188c4', '3e4a90775873de07db961b9941a863f4');
 
 --
 -- Indexes for dumped tables
@@ -181,7 +184,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `sched`
 --
 ALTER TABLE `sched`
-  MODIFY `sched_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `sched_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `teams`
 --
@@ -191,7 +194,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=90;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=92;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

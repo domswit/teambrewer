@@ -1,5 +1,5 @@
 <?php
-//ini_set('display_errors','false');
+ini_set('display_errors','false');
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -57,6 +57,7 @@ function getScheds($user_id, $fromdate, $todate){
 
 	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) WHERE a.user_id = '{$user_id}' && (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate')";
 
+//echo $sql . "<br><br>";
 	$result = $conn->query($sql);
 
 	$scheds = Array();
@@ -69,7 +70,7 @@ function getScheds($user_id, $fromdate, $todate){
 	    	$scheds[] = $row;
 	    }
 	} else {
-	    echo "0 results";
+	    //echo "0 results";
 	}
 
 	return $scheds;
@@ -86,7 +87,7 @@ $allDates = array();
 
 
 
-$fromdate = '2015-07-01';
+$fromdate = '2015-07-21';
 $todate = '2015-07-29';
 
 
@@ -159,7 +160,10 @@ foreach($users as $key => $user){
 
 
 
+
 }
+
+//print_r($users);
 
 echo json_encode ($users);
 
