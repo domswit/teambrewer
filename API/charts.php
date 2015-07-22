@@ -111,6 +111,8 @@ $allDates = array();
 
 
 
+$fromdate = '2015-06-20';
+$todate = '2015-07-29';
 
 //echo $fromdate;
 
