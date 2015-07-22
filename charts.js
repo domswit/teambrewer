@@ -28,6 +28,13 @@ function getProject(){
       console.log(data.projects);
       
       $scope.projects = data.projects;
+
+      var filters = getUrlVars();
+
+      $scope.project_name = filters.project_id;
+      $scope.eteam = filters.team_id;
+      $scope.efromdate = filters.from_date;
+      $scope.etodate = filters.to_date;
   });
   response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -63,13 +70,83 @@ function getSched(){
 }
 
 
+function getTwoDates(){
+
+  var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+  var firstDate = new Date(2015,07,01);
+  var secondDate = new Date(2015,07,10);
+
+  var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+
+  console.log("here")
+  console.log(diffDays);
+
+}
+
 getTeam();
 getProject();
 getData();
 getSched();
+<<<<<<< HEAD
+getChart();
+getTwoDates();
+=======
+>>>>>>> 387e2cc73ab1a41227e2fc31fd8da4960f3a4067
 
 $scope.edit = true;
 $scope.error = false;
 $scope.incomplete = false; 
 
+<<<<<<< HEAD
+=======
+// $scope.editTeam = function(id) {
+  
+//   console.log(id);
+//   console.log($scope.teams[id]);
+//   console.log($scope.teams[id].team_id);
+//   console.log($scope.teams[id].team_name);
+
+//  $scope.team_id = $scope.teams[id].team_id.toString();
+//  $scope.team_name = $scope.teams[id].team_name.toString();
+
+// };
+
+// $scope.updateData = function(){
+
+//   var edit_team_id = $scope.team_id;
+//   var edit_team_name = $('#edit_team_name').val();
+
+//   $http.post("API/update-team.php",{
+//     'team_id': edit_team_id, 
+//     'team_name': edit_team_name,
+//     })
+//     .success(function(data,status,headers,config){
+//       console.log(data);
+//     getData();
+//       //popup here
+//     });
+
+// }
+//   $scope.insertdata=function(){
+
+//       $http.post("API/insert-team.php",{'eteam_name':$scope.eteam_name})
+//         .success(function(data,status,headers,config){
+//           console.log(data);
+//         });
+
+
+//   }
+
+// DATETIMEPICKER GET VALUE TRIAL3
+// function getDateDTP()
+// {
+//   var efromdate = $('#fromdate').val();
+//   var etodate = $('#todate').val();
+
+//   console.log("here");
+//   console.log(efromdate);
+//   console.log(etomdate);
+// }
+
+>>>>>>> a8246791f1e5838bf2b7b67a710ea1f0fe9b2f12
 });

@@ -158,7 +158,9 @@
         plotChart(20, chartDate);
     });
 
-        
+
+
+
 </script>
     </head> 
     <body ng-app="myApp" ng-controller="userCtrl">
@@ -194,7 +196,7 @@
                                 <div class="chart-filter-container" class="class_filter" style="text-align:center">
                                     <div class="chart_filter">
                                         <label>Project</label><br>
-                                            <select  name="project_id" ng-model="project_name" class="col-lg">
+                                            <select id="project_id"  name="project_id" ng-model="project_name" class="col-lg">
                                                 <option ng-repeat="(key,project) in projects">{{ project.name }}</option>
                                             </select>
                                     </div>
@@ -207,7 +209,21 @@
 
                                     <div class="chart_filter">
 
+<<<<<<< HEAD
                                         <label for='datetimepicker1'>From:</label><br>
+=======
+<<<<<<< HEAD
+                                    <label for='exe3'>From:</label><br>
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" ng-model="efromdate" 
+                                        placeholder="YYYY-MM-DD" id="efromdate" value="">
+
+                                        <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+=======
+                                        <label for='exe3'>From:</label><br>
+>>>>>>> a8246791f1e5838bf2b7b67a710ea1f0fe9b2f12
                                         <div class='input-group date' id='datetimepicker1'>
                                             <input name="from_date" type='text' class="form-control" ng-model="efromdate" 
                                             placeholder="YYYY-MM-DD" id="datetimepicker1" value="">
@@ -215,8 +231,19 @@
                                             <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
                                         </div>
+>>>>>>> 387e2cc73ab1a41227e2fc31fd8da4960f3a4067
                                     </div>
 
+<<<<<<< HEAD
+                                <div class="chart_filter">
+                                    <label for='exe3'>To:</label><br>
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type='text' class="form-control" ng-model="etodate" 
+                                        placeholder="YYYY-MM-DD" id="etodate" value="">
+                                        <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+=======
                                     <div class="chart_filter">
                                         <label for='datetimepicker2'>To:</label><br>
                                        <div class='input-group date' id='datetimepicker2'>
@@ -226,8 +253,8 @@
                                             <button type="button" class="btn btn-default" ng-click="open"><i class="glyphicon glyphicon-calendar"></i></button>
                                             </span>
                                         </div>
+>>>>>>> 387e2cc73ab1a41227e2fc31fd8da4960f3a4067
                                     </div>
-
                                     <div class="chart_filter">
                                         <label for='exe3'>People</label><br>
                                            <select  name="user_id" ng-model="ename" id="ename" class="col-lg">
