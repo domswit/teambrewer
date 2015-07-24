@@ -12,13 +12,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "DELETE FROM `users` WHERE `user_id`='".$id."'"	;
+$sql = "DELETE FROM `teams` WHERE `team_id`='".$id."'"	;
 
 $output = Array();
 
 if ($conn->query($sql) === TRUE) {
 	$output['success'] = true;
-	$output['message'] = "User deleted!";
+	$output['message'] = "wew";
 } else {
 	$output['success'] = false;
 	$output['message'] = $conn->error;
