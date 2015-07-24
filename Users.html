@@ -1,137 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>TeamBrewer</title>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/sb-admin.css" rel="stylesheet">
-    <link href="css/header.css" rel="stylesheet">
-    
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>TeamBrewer</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="css/header.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script src="js/jquery.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-    <script src="js/angular-cookies.js"></script>
-    <script src="js/angular-route.js"></script>
-
-    <body ng-app="myApp" ng-controller="userCtrl">
-
-</head>
-
-    <div id="wrapper">
-
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"> 
-            
-            <div class="navbar-header">
-                <a class="navbar-brand" href="charts.html">teambrewer</a>
-            </div>
-            
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <div ng-include="'navbar.html'"></div>
-            </div>     
-        </nav>
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">People</h1> 
-                 <div class="table-responsive">
-                            <table class="table table-striped"> 
-                    <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#mydModal" ng-click="addUser()">
-                    <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add User</button>
-                    </button>
-                    </button>
-                             <div class="modal fade" id="mydModal" role="dialog">
-                                    <div class="modal-dialog modal-md">
-                                        <div class="modal-content">
-                                            <div class="modal-header modal-header-success" >
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                                                <h4 class="modal-title">{{form_title}}</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-lg-8">
-                                        
-                                                        <form role="form">
-                                                            <div class="form-group">
-                                                                
+        <script src="js/jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+        <script src="js/angular-cookies.js"></script>
+        <script src="js/angular-route.js"></script>
+        <body ng-app="myApp" ng-controller="userCtrl">
+        </head>
+        <div id="wrapper">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="charts.html">teambrewer</a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <div ng-include="'navbar.html'"></div>
+                </div>
+            </nav>
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">People</h1>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#mydModal" ng-click="addUser()">
+                                        <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add User
+                                    </button>
+                                </button>
+                            </button>
+                            <div class="modal fade" id="mydModal" role="dialog">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <div class="modal-header modal-header-success" >
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">{{form_title}}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <form role="form">
+                                                        <div class="form-group"></div>
+                                                        <div class="form-group">
+                                                            <label>First Name</label>
+                                                            <input id="efirst_name" class="form-control" ng-model="efirst_name" placeholder="First Name">
                                                             </div>
-
-                                                              <div class="form-group">
-                                                                <label>First Name</label>
-
-                                                                <input id="efirst_name" class="form-control" ng-model="efirst_name" placeholder="First Name">
-                                                            </div>
-
                                                             <div class="form-group">
                                                                 <label>Last Name</label>
                                                                 <input id="elast_name" class="form-control" ng-model="elast_name" placeholder="Last Name">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Date of Birth</label>
-                                                                <div class='input-group date' id='datetimepicker1'>
-                                                                    <input type='text' class="form-control" ng-model="ebirthdate" 
-                                                                    placeholder="YYYY-MM-DD" id="ebirthdate" value="">
-                                                                    <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
                                                                 </div>
-                                                            </div>
+                                                                <div class="form-group">
+                                                                    <label>Date of Birth</label>
+                                                                    <div class='input-group date' id='datetimepicker1'>
+                                                                        <input type='text' class="form-control" ng-model="ebirthdate" 
+                                                                             placeholder="YYYY-MM-DD" id="ebirthdate" value="">
+                                                                            <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="form-group">
-                                                                <label>Choose Team</label>
-                                                                <select id="eteam" class="btn btn-primary"  ng-model="eteam">
-                                                                    <option id="eteam" ng-repeat="(key,team) in teams" value="{{ key }}">{{team.name}}</option>
-                                                                </select>
+                                                                        <label>Choose Team</label>
+                                                                        <select id="eteam" class="btn btn-primary"  ng-model="eteam">
+                                                                            <option id="eteam" ng-repeat="(key,team) in teams" value="{{ key }}">{{team.name}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </form>
                                                             </div>
-
-                                                        </form>            
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" ng-click="savedata()" class="btn btn-primary" data-dismiss="modal">
+                                                            <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Save
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                            <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Close
+                                                        </button>
                                                     </div>
                                                 </div>
-                                             </div>
-                                             <div class="modal-footer">
-                                                  <button type="button" ng-click="savedata()" class="btn btn-primary" data-dismiss="modal">
-                                                 <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Save</button>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                                                 <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Close</button>
-                                             </div>
-                                          </div>                   
-                                      </div>
+                                            </div>
                                         </div>
                                     </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2> List of People </h2>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
-                                <thead><tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Birth Date</th>
-                                    <th>Team</th>
-                                    <th>Edit</th>
-                              </tr></thead>
-                              <tbody><tr class="active" ng-repeat="(key, user) in users">
-                                <td>{{ user.first_name }}</td>
-                                <td>{{ user.last_name }}</td>
-                                <td>{{ user.birthdate }}</td>
-                                <td>{{ user.name }}</td>
-                                <td>
-                                
-                                
-                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#mydModal" ng-click="editUser(key)">
-                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                                    </td>
-                              </tr></tbody>
-                            </table>
-                            </table>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h2> List of People </h2>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>First Name</th>
+                                                            <th>Last Name</th>
+                                                            <th>Birth Date</th>
+                                                            <th>Team</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="active" ng-repeat="(key, user) in users">
+                                                            <td>{{ user.first_name }}</td>
+                                                            <td>{{ user.last_name }}</td>
+                                                            <td>{{ user.birthdate }}</td>
+                                                            <td>{{ user.name }}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#mydModal" ng-click="editUser(key)">
+                                                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+                                                                </button>
+                                                                <button type="button" ng-click="deleteData(key)" class="btn btn-danger btn-md">
+                                                                    <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -140,19 +134,13 @@
     </div>
 </div>
 </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-   
-    <script type="text/javascript" src="js/moment.js"></script>
-    <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="css/bootstrap.css"></script>
-    <script type="text/javascript" src="css/bootstrap-datetimepicker.min.css"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src = "users.js"></script>
+</div>
+</div>
+<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="css/bootstrap.css"></script>
+<script type="text/javascript" src="css/bootstrap-datetimepicker.min.css"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src = "users.js"></script>
 </body>
-
 </html>
