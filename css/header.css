@@ -1,3 +1,6 @@
+.no-margin{
+    margin: 0;
+}
 .modal-header-success {
     color:#fff;
     padding:9px 15px;
