@@ -1,25 +1,82 @@
 <?php
-ini_set('display_errors','false');
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mydb";
+
+//START OF IMPLEMENTATION
+
+ini_set('display_errors','true');
+
+include("connection.php");
+
+$users = getUsers();
+
+$fromdate = $_POST['from_date'];
+$todate = $_POST['to_date'];
+$project_id = $_POST['project_id'];
+
+$users = getUsers($project_id, $team_id);
+
+$scheds = array();
+$scheds[] = array('allocation' <= '50');
+$scheds[] = array('allocation' <= '45');
+$scheds[] = array('allocation' <= '45');
+
+$allDates = array();
+
+foreach($users as $key => $user){
+
+	for($x=0; $x<count($dates); $x++){
+		$date = $dates[$x];
+		$users[$key][$date] = array();
+	}
+
+	$scheds = getScheds($key, $fromdate, $todate);
+
+	if(count($scheds) > 0){
 
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+        
+		for($x=0; $x<count($scheds); $x++){
+			$fromdate = $scheds[$x]['fromdate'];
+			$todate = $scheds[$x]['todate'];
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+            if (strtotime($fromdate) < strtotime($todate)){
 
+                $sched_dates = getDates($fromdate , $todate);
+                $allocation = $scheds[$x]['allocation'];
+                $project_id = $scheds[$x]['project_id'];
+
+                for($i=0; $i<count($sched_dates); $i++){
+
+                    $sched_date = date('Y-m-d', strtotime($sched_dates[$i]));
+
+                    if($sched_date != ''){
+
+                        $users[$key][ $sched_date ]['allocation_list'][] = array(
+                            'allocation'=>$allocation,
+                            'project_id'=>$project_id,
+                        );              
+
+                        $users[$key][ $sched_date ]['allocation_total'] += $allocation*1;  
+                    }
+                    
+                }                
+            }
+
+
+		}
+	}
+}
+
+echo json_encode ($users);
+
+$conn->close();
+
+//END OF IMPLEMENTATION
+
+
+
+/* FUNCTIONS */
 
 function getUsers($project_id, $team_id, $user_id){
-	// $users = array();
-	// $users[1] = array();
-	// $users[2] = array();
-	// $users[3] = array();
-
-	
 
 	global $conn;
 		$sql = "SELECT a.user_id, c.team_id, a.project_id, a.fromdate, a.todate FROM `sched` as a, `projects` as b, `users` as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id AND a.project_id = 11 AND c.team_id = 2";
@@ -60,16 +117,6 @@ function getDates($startDate, $endDate)
     return $return;
 }
 
-// function getScheds($user_id){
-// 	return(array(
-// 		array('id'=>'1','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'10'),
-// 		array('id'=>'2','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'20'),
-// 		array('id'=>'3','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'30'),
-// 		array('id'=>'4','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'40'),
-// 		array('id'=>'5','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'50'),
-// 		array('id'=>'6','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'60'),
-// 	));
-// }
 function getScheds($user_id, $fromdate, $todate)
 {
 
@@ -98,107 +145,6 @@ function getScheds($user_id, $fromdate, $todate)
 }
 
 
-
-
-
-
-$users = getUsers();
-
-$fromdate = $_POST['from_date'];
-$todate = $_POST['to_date'];
-$project_id = $_POST['project_id'];
-
-$users = getUsers($project_id, $team_id);
-
-$scheds = array();
-$scheds[] = array('allocation' <= '50');
-$scheds[] = array('allocation' <= '45');
-$scheds[] = array('allocation' <= '45');
-
-$allDates = array();
-
-
-//echo $fromdate;
-
-
-
-//$dates =  getDates($fromdate, $todate);
-
-
-// print_r($dates);
-// die(); 
-
-
-
-foreach($users as $key => $user){
-
-	// echo $e;
-	// echo "<br>";
-	//preparation
-
-	//echo "<BR><BR>USER " . $key . "<BR>" ;
-	for($x=0; $x<count($dates); $x++){
-		$date = $dates[$x];
-		$users[$key][$date] = array();
-	}
-
-
-	$scheds = getScheds($key, $fromdate, $todate);
-
-	if(count($scheds) > 0){
-
-
-        
-		for($x=0; $x<count($scheds); $x++){
-			$fromdate = $scheds[$x]['fromdate'];
-			$todate = $scheds[$x]['todate'];
-
-            if (strtotime($fromdate) < strtotime($todate)){
-                $sched_dates = getDates($fromdate , $todate);
-
-                
-                //$users[$e][$date] = array();
-
-                $allocation = $scheds[$x]['allocation'];
-                $project_id = $scheds[$x]['project_id'];
-
-
-
-
-
-                for($i=0; $i<count($sched_dates); $i++){
-
-                    //echo 'UID: ' . $key . ' -- DATE:' . $sched_dates[$i] . 'ALLOCATION: ' . $allocation . '<br>';
-
-                    $sched_date = date('Y-m-d', strtotime($sched_dates[$i]));
-
-                    if($sched_date != ''){
-
-                        $users[$key][ $sched_date ]['allocation_list'][] = array(
-                            'allocation'=>$allocation,
-                            'project_id'=>$project_id,
-                        );              
-
-                        $users[$key][ $sched_date ]['allocation_total'] += $allocation*1;  
-                    }
-                    
-                }                
-            }
-
-
-		}
-	}
-
-
-
-
-}
-
-//print_r($users);
-
-echo json_encode ($users);
-
-$conn->close();
 
 
 ?>

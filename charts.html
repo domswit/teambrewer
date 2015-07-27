@@ -197,130 +197,127 @@
     </script>
     </head>
     <body ng-app="myApp" ng-controller="userCtrl">
-    <div id="wrapper">
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-    <a class="navbar-brand" href="charts.html">teambrewer</a>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <div ng-include="'navbar.html'"></div>
-    </div>
-    </nav>
-    <div id="page-wrapper">
-    <div class="container-fluid">
-    <div class="row">
-    <div class="col-lg-12">
-    <h1 class="page-header">
-    Charts
-    </h1>
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-lg-12">
-    <h2 class="page-header">
-    <center>Resource Allocation</center>
-    </h2>
-    <form action="charts.html" method="get">
-    <div class="row">
-    <div class="chart-filter-container" class="class_filter" style="text-align:center">
-    <div class="chart_filter">
-        <label>Project</label>
-        <br>
-            <select id="project_id"  name="project_id" ng-model="project_name" class="col-lg">
-                <option ng-repeat="(key,project) in projects">{{ project.name }}</option>
-            </select>
-        </div>
-        <div class="chart_filter">
-            <label for='exe3'>Team</label>
-            <br>
-                <select name="team_id" ng-model="eteam" class="col-lg">
-                    <option ng-repeat="(key,team) in teams" value="{{ key }}">{{ team.name}}</option>
-                </select>
-            </div>
-            <div class="chart_filter">
-                <label for='exe3'>From:</label>
-                <br>
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input name="from_date" type='text' class="form-control" ng-model="efromdate" 
-    placeholder="YYYY-MM-DD" id="datetimepicker1" value="">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open">
-                                    <i class="glyphicon glyphicon-calendar"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="chart_filter">
-                        <label for='datetimepicker2'>To:</label>
-                        <br>
-                            <div class='input-group date' id='datetimepicker2'>
-                                <input  name="to_date" type='text' class="form-control" ng-model="etodate" 
-    placeholder="YYYY-MM-DD" id="datetimepicker2" value="">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="open">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="chart_filter">
-                                <label for='exe3'>People</label>
-                                <br>
-                                    <select  name="user_id" ng-model="ename" id="ename" class="col-lg">
-                                        <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " + user.last_name}}</option>
-                                    </select>
-                                </div>
-                                <div class="chart_filter">
-                                    <label for='exe3'></label>
-                                    <br>
-
-                                        <button type="submit" class="btn btn-primary btn-lg" >&nbsp;&nbsp;Generate Chart</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+        <div id="wrapper">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="charts.html">teambrewer</a>
                 </div>
-            </div>
-            <br>
-                <a class="btn btn-info btn-lg btn-block" role="button" data-toggle="collapse" data-target="#colps" aria-expanded="false" aria-controls="colps">
-    Show List
-    </a>
-            </button>
-            <div class="collapse" id="colps">
-                <div class="well">
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <div ng-include="'navbar.html'"></div>
+                </div>
+            </nav>
+            <div id="page-wrapper">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>From</th>
-                                            <th>To</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="active" ng-repeat="(key,shed) in sched">
-                                            <td>{{ shed.name }}</td>
-                                            <td>{{ shed.fromdate }}</td>
-                                            <td>{{ shed.todate }}</td>
-                                        </table>
+                            <h1 class="page-header">
+                                Charts
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                <center>Resource Allocation</center>
+                            </h2>
+                            <form action="charts.html" method="get">
+                                <div class="row">
+                                    <div class="chart-filter-container" class="class_filter" style="text-align:center">
+                                        <div class="chart_filter">
+                                            <label>Project</label>
+                                            <br>
+                                            <select id="project_id"  name="project_id" ng-model="project_name" class="col-lg">
+                                                <option value="">Choose a Project</option>
+                                                <option ng-repeat="(key,project) in projects">{{ project.name }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="chart_filter">
+                                            <label for='exe3'>Team</label>
+                                            <br>
+                                            <select name="team_id" ng-model="eteam" class="col-lg">
+                                                <option value="">Choose a Team</option>
+                                                <option ng-repeat="(key,team) in teams" value="{{ key }}">{{ team.name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="chart_filter">
+                                            <label for='exe3'>From:</label>
+                                            <br>
+                                            <div class='input-group date' id='datetimepicker1'>
+                                                <input name="from_date" type='text' class="form-control" ng-model="efromdate" 
+                                                    placeholder="YYYY-MM-DD" id="datetimepicker1" value="">
+                                                <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="chart_filter">
+                                            <label for='datetimepicker2'>To:</label>
+                                            <br>
+                                            <div class='input-group date' id='datetimepicker2'>
+                                                <input  name="to_date" type='text' class="form-control" ng-model="etodate" 
+                                                    placeholder="YYYY-MM-DD" id="datetimepicker2" value="">
+                                                <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="chart_filter">
+                                            <label for='exe3'>People</label>
+                                            <br>
+                                            <select  name="user_id" ng-model="ename" id="ename" class="col-lg">
+                                                <option value="">Choose a Person</option>
+                                                <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " + user.last_name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="chart_filter">
+                                            <label for='exe3'></label>
+                                            <br>
+                                            <button type="submit" class="btn btn-primary btn-lg" >&nbsp;&nbsp;Generate Chart</button>
+                                            <a class="btn btn-info btn-lg" role="button" data-toggle="collapse" data-target="#colps" aria-expanded="false" aria-controls="colps">
+                                            Show List
+                                            </a>
+                                        </div>
                                     </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                </button>
+                <div class="collapse" id="colps">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="active" ng-repeat="(key,shed) in sched">
+                                                <td>{{ shed.name }}</td>
+                                                <td>{{ shed.fromdate }}</td>
+                                                <td>{{ shed.todate }}</td>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="content">
-                        <div class="demo-container">
-                            <div id="placeholder" class="demo-placeholder"></div>
-
-
-                        </div>
-                       
-                        <p><label><input id="enableTooltip" type="checkbox" checked="checked"></input>Enable tooltip</label></p>
+                </div>
+                <div id="content">
+                    <div class="demo-container">
+                        <div id="placeholder" class="demo-placeholder"></div>
                     </div>
+                    <p><label><input id="enableTooltip" type="checkbox" checked="checked"></input>Enable tooltip</label></p>
                 </div>
             </div>
         </div>
@@ -332,6 +329,7 @@
 
     $(document).ready(function () {
 
+        
     $('#datetimepicker1').datetimepicker({
 
     format: 'YYYY-MM-DD'
