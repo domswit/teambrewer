@@ -19,10 +19,21 @@ function getUsers($project_id, $team_id, $user_id){
 	// $users[2] = array();
 	// $users[3] = array();
 
+	$project_str = '';
+	if($project_id != ''){
+		$project_str = "AND a.project_id = {$project_id}";
+	}
 	
+	$team_str = '';
+	if($team_id != ''){
+		$team_str = "AND c.team_id = {$team_id}";
+	}
+
 
 	global $conn;
-		$sql = "SELECT a.user_id, c.team_id, a.project_id, a.fromdate, a.todate FROM `sched` as a, `projects` as b, `users` as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id AND a.project_id = 2 AND c.team_id = 2";
+		$sql = "SELECT a.user_id, c.first_name, c.last_name, c.team_id, a.project_id,  a.fromdate, a.todate FROM `sched` as a, `projects` as b, `users` as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id " . $project_str . " " . $team_str;
+
+		//echo $sql;
 	$result = $conn->query($sql);
 
 	$users = Array();
@@ -75,11 +86,10 @@ function getScheds($user_id, $fromdate, $todate)
 
 	global $conn;
 
-<<<<<<< HEAD
-	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate'))";
-=======
-	$sql = "SELECT a.sched_id, a.user_id, a.project_id , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate'))";
->>>>>>> 387e2cc73ab1a41227e2fc31fd8da4960f3a4067
+
+	$sql = "SELECT a.sched_id, a.user_id, a.project_id, c.name as project_name , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) INNER JOIN projects as c ON(a.project_id = c.project_id) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate')) ORDER BY a.project_id ASC, a.fromdate ASC";
+
+	// echo $sql . "<br><Br>";
 
 //echo $sql . "<br><br>";
 	$result = $conn->query($sql);
@@ -100,27 +110,17 @@ function getScheds($user_id, $fromdate, $todate)
 	return $scheds;
 }
 
-<<<<<<< HEAD
-function BetTwoDates($fromdate, $todate)
-{
-	$datetime1 = date_create($fromdate);
-	$datetime2 = date_create($todate);
-	$interval = date_diff($datetime1, $datetime2);
-	return $interval->format('%a');
-}
 
 
 
+//$users = getUsers();
 
-$users = getUsers();
-=======
 $fromdate = $_POST['from_date'];
 $todate = $_POST['to_date'];
 $project_id = $_POST['project_id'];
+$team_id = $_POST['team_id'];
 
 $users = getUsers($project_id, $team_id);
->>>>>>> 387e2cc73ab1a41227e2fc31fd8da4960f3a4067
-
 
 $scheds = array();
 $scheds[] = array('allocation' <= '50');
@@ -130,15 +130,8 @@ $scheds[] = array('allocation' <= '45');
 $allDates = array();
 
 
-
-$fromdate = '2015-06-20';
-$todate = '2015-07-29';
-
 //echo $fromdate;
 
-
-
-$days = BetTwoDates($fromdate, $todate);
 
 
 //$dates =  getDates($fromdate, $todate);
@@ -180,9 +173,7 @@ foreach($users as $key => $user){
 
                 $allocation = $scheds[$x]['allocation'];
                 $project_id = $scheds[$x]['project_id'];
-
-
-
+                $project_name = $scheds[$x]['project_name'];
 
 
                 for($i=0; $i<count($sched_dates); $i++){
@@ -196,6 +187,7 @@ foreach($users as $key => $user){
                         $users[$key][ $sched_date ]['allocation_list'][] = array(
                             'allocation'=>$allocation,
                             'project_id'=>$project_id,
+                            'project_name'=>$project_name
                         );              
 
                         $users[$key][ $sched_date ]['allocation_total'] += $allocation*1;  
@@ -203,21 +195,13 @@ foreach($users as $key => $user){
                     
                 }                
             }
-
-
 		}
 	}
-
-
-
 
 }
 
 //print_r($users);
 
 echo json_encode ($users);
-echo BetTwoDates();
+
 $conn->close();
-
-
-?>
