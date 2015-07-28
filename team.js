@@ -3,6 +3,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.teams = '';
   $scope.updateData = {}
 
+  var access_token = $cookies.get('access_token');
+
   function getData() {
     var response = $http.get(
       "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()

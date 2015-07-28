@@ -1,12 +1,15 @@
 angular.module('myApp', ['ui.bootstrap']);
-angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
   $scope.teams = '';
   $scope.updateData = {}
-
+  var access_token = $cookies.get('access_token');
+  
   function getTeam() {
     var response = $http.get(
       "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()
-      .getTime());
+      .getTime(), {
+      'access_token': $cookies.get('access_token')
+      });
     response.success(function(data, status, headers, config) {
       console.log(data.teams);
       $scope.teams = data.teams;
@@ -19,7 +22,9 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
   function getProject() {
     var response = $http.get(
       "http://localhost/teambrewer/API/project-list.php?rand=" + new Date()
-      .getTime());
+      .getTime(), {
+      'access_token': $cookies.get('access_token')
+      });
     response.success(function(data, status, headers, config) {
       console.log(data.projects);
       $scope.projects = data.projects;
@@ -37,7 +42,9 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
   function getData() {
     var response = $http.get(
       "http://localhost/teambrewer/API/user-list.php?rand=" + new Date()
-      .getTime());
+      .getTime(), {
+      'access_token': $cookies.get('access_token')
+      });
     response.success(function(data, status, headers, config) {
       console.log(data.users);
       $scope.users = data.users;
@@ -50,7 +57,9 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
   function getSched() {
     var response = $http.get(
       "http://localhost/teambrewer/API/sched-list.php?rand=" + new Date()
-      .getTime());
+      .getTime(), {
+      'access_token': $cookies.get('access_token')
+      });
     response.success(function(data, status, headers, config) {
       console.log(data.sched);
       $scope.sched = data.sched;

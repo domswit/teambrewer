@@ -7,6 +7,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.first_name2 = "test";
 
+  var access_token = $cookies.get('access_token');
+
   function getData() {
     var response = $http.get(
       "http://localhost/teambrewer/API/project-list.php?rand=" + new Date()
