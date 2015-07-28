@@ -7,9 +7,29 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
+
+
+$scope.pageArray = [];
+
+
+$scope.fillPageArray = function(num, page) {
+
+      $scope.pageArray.splice(0);
+
+      for(var i = 1; i <= num; i++){
+        if (i >= page - 2 && i <= page + 2){
+          $scope.pageArray.push(i);
+        }
+      }
+
+      return $scope.pageArray;
+  }
   
 
-  var access_token = $cookies.get('access_token');
+
+  
+
+ 
 
   $(document).ready(function() {
     $('#datetimepicker2').datetimepicker({
@@ -28,12 +48,25 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   });
 
-  function getSched() {
+  $scope.getSched = function(page) {
+
+    if(page == undefined){
+      page = 1;
+    }
+
+
     var response = $http.get(
-      "http://localhost/teambrewer/API/sched-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+
+      "http://localhost/teambrewer/API/sched-list.php?rand=" + new Date()
+      .getTime() + "&page=" + page, {
+        'access_token': $cookies.get('access_token')
+      });
+
     response.success(function(data, status, headers, config) {
       console.log(data.sched);
-      $scope.sched = data.sched;
+     $scope.sched = data.sched;
+
+     $scope.fillPageArray(data.total_rows, page);
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -65,7 +98,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   }
   getAlloc();
   getData();
-  getSched();
+  $scope.getSched();
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;

@@ -7,9 +7,10 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.first_name2 = "test";
 
-  var access_token = $cookies.get('access_token');
+   $scope.pageArray = [];
 
-  $(document).ready(function() {
+=======
+
     $('#datetimepicker1').datetimepicker({
       format: 'YYYY-MM-DD hh:mm:ss'
     });
@@ -19,12 +20,38 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   });
 
-  function getData() {
+  $scope.fillPageArray = function(num, page) {
+
+      $scope.pageArray.splice(0);
+
+      for(var i = 1; i <= num; i++){
+        if (i >= page - 2 && i <= page + 2){
+          $scope.pageArray.push(i);
+        }
+      }
+
+      return $scope.pageArray;
+  }
+
+   $scope.getData = function(page) {
+
+    if(page == undefined){
+      page = 1;
+    }
+
+
     var response = $http.get(
-      "http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+
+      "http://localhost/teambrewer/API/user-list.php?rand=" + new Date()
+      .getTime() + "&page=" + page, {
+        'access_token': $cookies.get('access_token')
+      });
+=
     response.success(function(data, status, headers, config) {
       console.log(data.users);
-      $scope.users = data.users;
+     $scope.users = data.users;
+
+     $scope.fillPageArray(data.total_rows, page);
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -43,7 +70,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   }
 
-  getData();
+  $scope.getData();
   getTeams();
   $scope.edit = true;
   $scope.error = false;
@@ -93,7 +120,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }).success(function(data, status, headers, config) {
       console.log(data);
       alert(user_id);
-      getData();
+      $scope.getData();
       //popup here
     });
   }
@@ -107,7 +134,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }).success(function(data, status, headers, config) {
       console.log(data);
       alert("User successfully added!");
-      getData();
+      $scope.getData();
     });
   }
   
@@ -119,7 +146,7 @@ $scope.deleteData = function(id) {
     }).success(function(data, status, headers, config) {
       console.log(data);
   
-      getData();
+    $scope.getData();
       //popup here
     });
   }

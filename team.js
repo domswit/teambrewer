@@ -4,36 +4,41 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.pageArray = [];
 
-  $scope.getPageNum = function(){
-    //alert($location.search().p);
-  }
+
 
     
 
   $scope.fillPageArray = function(num) {
 
+
       $scope.pageArray.splice(0);
 
       for(var i = 1; i <= num; i++){
-        $scope.pageArray.push(i);
+        if (i >= page - 2 && i <= page + 2){
+          $scope.pageArray.push(i);
+        }
       }
 
       return $scope.pageArray;
   }
 
-  $scope.getData = function(page) {
-    //var page = $scope.getPageNum();
+   $scope.getData = function(page) {
 
-    //alert(page);
+    if(page == undefined){
+      page = 1;
+    }
+
+
     var response = $http.get(
       "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()
       .getTime() + "&page=" + page, {
         'access_token': $cookies.get('access_token')
       });
     response.success(function(data, status, headers, config) {
-      $scope.teams = data.teams;
+      console.log(data.teams);
+     $scope.teams = data.teams;
 
-      $scope.fillPageArray(data.total_rows);
+     $scope.fillPageArray(data.total_rows, page);
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
