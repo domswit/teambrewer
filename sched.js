@@ -8,6 +8,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.first_name2 = "test";
 
+
 $scope.pageArray = [];
 
 
@@ -25,6 +26,10 @@ $scope.fillPageArray = function(num, page) {
   }
   
 
+
+  
+
+ 
 
   $(document).ready(function() {
     $('#datetimepicker2').datetimepicker({
@@ -51,10 +56,12 @@ $scope.fillPageArray = function(num, page) {
 
 
     var response = $http.get(
+
       "http://localhost/teambrewer/API/sched-list.php?rand=" + new Date()
       .getTime() + "&page=" + page, {
         'access_token': $cookies.get('access_token')
       });
+
     response.success(function(data, status, headers, config) {
       console.log(data.sched);
      $scope.sched = data.sched;
@@ -68,8 +75,7 @@ $scope.fillPageArray = function(num, page) {
 
   function getAlloc() {
     var response = $http.get(
-      "http://localhost/teambrewer/API/allocation.php?rand=" + new Date()
-      .getTime());
+      "http://localhost/teambrewer/API/allocation.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
     response.success(function(data, status, headers, config) {
       console.log(data.allocation);
       $scope.allocation = data.allocation;
@@ -81,8 +87,7 @@ $scope.fillPageArray = function(num, page) {
 
   function getData() {
     var response = $http.get(
-      "http://localhost/teambrewer/API/user-list.php?rand=" + new Date()
-      .getTime());
+      "http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
     response.success(function(data, status, headers, config) {
       console.log(data.users);
       $scope.users = data.users;

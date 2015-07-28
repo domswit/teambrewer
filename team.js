@@ -4,7 +4,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.pageArray = [];
 
-  $scope.fillPageArray = function(num, page) {
+
+
+    
+
+  $scope.fillPageArray = function(num) {
+
 
       $scope.pageArray.splice(0);
 

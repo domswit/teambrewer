@@ -6,15 +6,17 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
+
    $scope.pageArray = [];
 
+=======
 
-  $(document).ready(function() {
     $('#datetimepicker1').datetimepicker({
       format: 'YYYY-MM-DD hh:mm:ss'
     });
     $("#datetimepicker1").on("dp.change", function(e) {
       $scope.ebirthdate = $('#ebirthdate').val();
+    
     });
   });
 
@@ -39,10 +41,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
 
     var response = $http.get(
+
       "http://localhost/teambrewer/API/user-list.php?rand=" + new Date()
       .getTime() + "&page=" + page, {
         'access_token': $cookies.get('access_token')
       });
+=
     response.success(function(data, status, headers, config) {
       console.log(data.users);
      $scope.users = data.users;
@@ -56,8 +60,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
   function getTeams() {
     var response = $http.get(
-      "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()
-      .getTime());
+      "http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
     response.success(function(data, status, headers, config) {
       console.log(data.teams);
       $scope.teams = data.teams;

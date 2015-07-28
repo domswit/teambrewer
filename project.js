@@ -33,6 +33,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }
 
 
+
+
+  function getData() {
     var response = $http.get(
       "http://localhost/teambrewer/API/project-list.php?rand=" + new Date()
       .getTime() + "&page=" + page, {
