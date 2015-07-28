@@ -22,6 +22,8 @@
 <div class="navbar-header">
     <a class="navbar-brand" href="charts.html">teambrewer</a>
 </div>
+
+<div ng-include="'logout.html'"></div>
 <div class="collapse navbar-collapse navbar-ex1-collapse">
     <div ng-include="'navbar.html'"></div>
 </div>
@@ -102,6 +104,9 @@
                                 <div class="col-lg-12">
                                     <h2>List of Schedules</h2>
                                     <div class="table-responsive">
+                                              <ul class="pagination no-margin pull-right">
+                                          <li ng-repeat="i in pageArray"><a ng-click="getSched(i)" href="#/?p={{i}}">{{i}}</a></li>
+                                        </ul>
                                         <table class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
@@ -129,6 +134,9 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                            <ul class="pagination no-margin pull-right">
+                                          <li ng-repeat="i in pageArray"><a ng-click="getSched(i)" href="#/?p={{i}}">{{i}}</a></li>
+                                        </ul>
                                     </table>
                                 </div>
                             </div>

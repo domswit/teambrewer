@@ -7,6 +7,25 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
+$scope.pageArray = [];
+
+
+$scope.fillPageArray = function(num, page) {
+
+      $scope.pageArray.splice(0);
+
+      for(var i = 1; i <= num; i++){
+        if (i >= page - 2 && i <= page + 2){
+          $scope.pageArray.push(i);
+        }
+      }
+
+      return $scope.pageArray;
+  }
+  
+
+
+
   $(document).ready(function() {
     $('#datetimepicker2').datetimepicker({
       format: 'YYYY-MM-DD hh:mm:ss'
@@ -24,13 +43,26 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   });
 
-  function getSched() {
+
+  $scope.getSched = function(page) {
+
+    if(page == undefined){
+      page = 1;
+    }
+
+
     var response = $http.get(
+
       "http://localhost/teambrewer/API/sched-list.php?rand=" + new Date()
-      .getTime());
+      .getTime() + "&page=" + page, {
+        'access_token': $cookies.get('access_token')
+      });
+
     response.success(function(data, status, headers, config) {
       console.log(data.sched);
-      $scope.sched = data.sched;
+     $scope.sched = data.sched;
+
+     $scope.fillPageArray(data.total_rows, page);
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -39,8 +71,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
   function getAlloc() {
     var response = $http.get(
-      "http://localhost/teambrewer/API/allocation.php?rand=" + new Date()
-      .getTime());
+      "http://localhost/teambrewer/API/allocation.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+
     response.success(function(data, status, headers, config) {
       console.log(data.allocation);
       $scope.allocation = data.allocation;
@@ -52,8 +84,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
   function getData() {
     var response = $http.get(
-      "http://localhost/teambrewer/API/user-list.php?rand=" + new Date()
-      .getTime());
+
+      "http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+
     response.success(function(data, status, headers, config) {
       console.log(data.users);
       $scope.users = data.users;
@@ -61,10 +94,11 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
     });
+
   }
   getAlloc();
   getData();
-  getSched();
+  $scope.getSched();
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
@@ -76,6 +110,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.ename = '';
     $scope.ealloc = '';
   }
+
   $scope.editUser = function(id) {
     $scope.form_mode = 'update';
     $scope.form_title = "Edit User Information";

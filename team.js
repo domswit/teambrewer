@@ -2,22 +2,52 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $http, $cookies) {
   $scope.teams = '';
   $scope.updateData = {}
+  $scope.pageArray = [];
 
-  function getData() {
+
+
+    
+
+  $scope.fillPageArray = function(num, page) {
+
+      $scope.pageArray.splice(0);
+
+      for(var i = 1; i <= num; i++){
+        if (i >= page - 2 && i <= page + 2){
+          $scope.pageArray.push(i);
+        }
+      }
+
+      return $scope.pageArray;
+  }
+
+   $scope.getData = function(page) {
+
+    if(page == undefined){
+      page = 1;
+    }
+
+
     var response = $http.get(
       "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()
-      .getTime(), {
+      .getTime() + "&page=" + page, {
+
         'access_token': $cookies.get('access_token')
       });
     response.success(function(data, status, headers, config) {
       console.log(data.teams);
-      $scope.teams = data.teams;
+
+     $scope.teams = data.teams;
+
+     $scope.fillPageArray(data.total_rows, page);
+
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
     });
   }
-  getData();
+
+  $scope.getData();
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
@@ -37,7 +67,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'name': name,
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
-      getData();
+
+      $scope.getData();
+
     });
   }
   $scope.insertdata = function() {
@@ -46,9 +78,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      getData();
+
+      $scope.getData();
+
     });
   }
+
   $scope.deleteData = function(id) {
     
    
@@ -57,7 +92,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }).success(function(data, status, headers, config) {
       console.log(data);
   
-      getData();
+
+      $scope.getData();
+
       //popup here
     });
   }
