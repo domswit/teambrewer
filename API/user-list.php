@@ -1,5 +1,7 @@
 <?php
 include("connection.php");
+ini_set('max_execution_time', 0);
+set_time_limit(0);
 
 $output = Array('success'=>true, 'users'=>null);
 
@@ -7,7 +9,7 @@ $max_per_page = 5;
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
-$sql = "SELECT  a.user_id, a.first_name, a.last_name, a.fullname, a.birthdate, b.name, a.username, a.password, a.team_id FROM users as a LEFT JOIN teams as b ON (a.team_id = b.team_id) LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
+$sql = "SELECT  a.user_id, a.fullname, a.first_name, a.last_name, a.fullname, a.birthdate, b.name, a.username, a.password, a.team_id FROM users as a LEFT JOIN teams as b ON (a.team_id = b.team_id) LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
 $count_sql = "SELECT COUNT(*) as total FROM users";
 
 $result = $conn->query($sql);

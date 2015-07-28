@@ -114,14 +114,18 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 		{	
 			if($r > 3){
 				echo "asd";
-				$fromdate = $filesop[4];
+				$fromdateArr = explode("/", $filesop[4]);
+				$fromdate = $fromdateArr[2]. "-" . $fromdateArr[0] . "-" . $fromdateArr[1];
 				$name = $filesop[8];
+
+				echo "fromdate:" . $fromdate;
+				echo "todate:" . $todate;
+				echo "<br>";
 				
-				$todate = $filesop[5];
+				$todateArr = explode("/", $filesop[5]);
+				$todate = $fromdateArr[2]. "-" . $todateArr[0] . "-" . $todateArr[1];
 				$allocation = $filesop[6];
 				$project_name = $filesop[9];
-				$fromdate= date('Y-m-d h:i:s');
-				$todate= date('Y-m-d h:i:s');
 				
 
 				$user_id = $alloc = str_replace($name, getUserIdByName($name), $name);

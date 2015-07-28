@@ -8,9 +8,9 @@ angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, 
       'access_token' : $scope.access_token
     })
     .success(function(data,status,headers,config){
-      console.log(data);
+        console.log(data);
 
-		$cookies.put('access_token', data.user.access_token);
+		    $cookies.put('access_token', data.user.access_token);
 
 	      $window.location.href = '/teambrewer/charts.html';
 

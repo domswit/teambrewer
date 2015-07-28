@@ -31,7 +31,7 @@ function getUsers($project_id, $team_id, $user_id){
 
 
 	global $conn;
-		$sql = "SELECT a.user_id, c.first_name, c.last_name, c.team_id, a.project_id,  a.fromdate, a.todate FROM `sched` as a, `projects` as b, `users` as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id " . $project_str . " " . $team_str;
+		$sql = "SELECT a.user_id, c.fullname, c.team_id, a.project_id,  a.fromdate, a.todate FROM `sched` as a, `projects` as b, `users` as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id " . $project_str . " " . $team_str;
 
 		//echo $sql;
 	$result = $conn->query($sql);
@@ -86,8 +86,7 @@ function getScheds($user_id, $fromdate, $todate)
 
 	global $conn;
 
-
-	$sql = "SELECT a.sched_id, a.user_id, a.project_id, c.name as project_name , CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) INNER JOIN projects as c ON(a.project_id = c.project_id) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate')) ORDER BY a.project_id ASC, a.fromdate ASC";
+	$sql = "SELECT a.sched_id, a.user_id, a.project_id, c.name as project_name , b.fullname, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) INNER JOIN projects as c ON(a.project_id = c.project_id) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate')) ORDER BY a.project_id ASC, a.fromdate ASC";
 
 	// echo $sql . "<br><Br>";
 
