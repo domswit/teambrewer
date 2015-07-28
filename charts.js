@@ -68,10 +68,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $
       alert("AJAX failed!");
     });
   }
+  
   getTeam();
   getProject();
   getData();
   getSched();
+
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
