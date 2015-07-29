@@ -1,0 +1,2 @@
+INSERT INTO `users` (`user_id`, `fullname`, `first_name`, `last_name`, `birthdate`, `team_id`, `username`, `password`, `access_token`) VALUES
+(6, 'Admin Account', '', '', '0000-00-00 00:00:00', 0, 'admin', '5f4dcc3b5aa765d61d8327deb882cf99', '');
