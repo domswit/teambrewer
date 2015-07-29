@@ -88,8 +88,6 @@ function getScheds($user_id, $fromdate, $todate)
 
 	$sql = "SELECT a.sched_id, a.user_id, a.project_id, c.name as project_name , b.fullname, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) INNER JOIN projects as c ON(a.project_id = c.project_id) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate')) ORDER BY a.project_id ASC, a.fromdate ASC";
 
-	// echo $sql . "<br><Br>";
-
 //echo $sql . "<br><br>";
 	$result = $conn->query($sql);
 
@@ -114,8 +112,8 @@ function getScheds($user_id, $fromdate, $todate)
 
 //$users = getUsers();
 
-$fromdate = $_POST['from_date'];
-$todate = $_POST['to_date'];
+$form_fromdate = $_POST['from_date'];
+$form_todate = $_POST['to_date'];
 $project_id = $_POST['project_id'];
 $team_id = $_POST['team_id'];
 
@@ -154,7 +152,7 @@ foreach($users as $key => $user){
 	}
 
 
-	$scheds = getScheds($key, $fromdate, $todate);
+	$scheds = getScheds($key, $form_fromdate, $form_todate);
 
 	if(count($scheds) > 0){
 
