@@ -9,6 +9,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.pageArray = [];
 
 
+
+
+
  $scope.fillPageArray = function(num, page) {
 
       $scope.pageArray.splice(0);
@@ -24,19 +27,20 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   
 
   $scope.getData = function(page) {
-    var response = $http.get(
+
+    if(page == undefined){
+      page = 1;
+    }
+  var response = $http.get(
       "http://localhost/teambrewer/API/project-list.php?rand=" + new Date()
       .getTime() + "&page=" + page, {
-
         'access_token': $cookies.get('access_token')
       });
     response.success(function(data, status, headers, config) {
       console.log(data.projects);
-
      $scope.projects = data.projects;
 
      $scope.fillPageArray(data.total_rows, page);
-
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");

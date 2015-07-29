@@ -19,19 +19,32 @@ function getUsers($project_id, $team_id, $user_id){
 	// $users[2] = array();
 	// $users[3] = array();
 
-	$project_str = '';
-	if($project_id != ''){
-		$project_str = "AND a.project_id = {$project_id}";
-	}
 	
-	$team_str = '';
-	if($team_id != ''){
-		$team_str = "AND c.team_id = {$team_id}";
-	}
+$user_str = '';
+	if($user_id != ''){
 
+		$user_str = "AND c.user_id = {$user_id}";
+
+	} else {
+
+		$project_str = '';
+		
+		if($project_id != ''){
+
+			$project_str = "AND a.project_id = {$project_id}";
+		}
+		
+		$team_str = '';
+
+		if($team_id != ''){
+
+			$team_str = "AND c.team_id = {$team_id}";
+		}
+	}
 
 	global $conn;
-		$sql = "SELECT a.user_id, c.fullname, c.team_id, a.project_id,  a.fromdate, a.todate FROM `sched` as a, `projects` as b, `users` as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id " . $project_str . " " . $team_str;
+
+		$sql = "SELECT a.user_id, c.fullname, c.team_id, a.project_id,  a.fromdate, a.todate FROM sched as a, projects as b, users as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id " . $project_str . " " . $team_str. " " . $user_str;
 
 		//echo $sql;
 	$result = $conn->query($sql);
@@ -88,7 +101,7 @@ function getScheds($user_id, $fromdate, $todate)
 
 	$sql = "SELECT a.sched_id, a.user_id, a.project_id, c.name as project_name , b.fullname, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) INNER JOIN projects as c ON(a.project_id = c.project_id) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate')) ORDER BY a.project_id ASC, a.fromdate ASC";
 
-//echo $sql . "<br><br>";
+//zecho $sql . "<br><br>";
 	$result = $conn->query($sql);
 
 	$scheds = Array();
@@ -111,13 +124,13 @@ function getScheds($user_id, $fromdate, $todate)
 
 
 //$users = getUsers();
-
+$user_id = $_POST['user_id']; 
 $form_fromdate = $_POST['from_date'];
 $form_todate = $_POST['to_date'];
 $project_id = $_POST['project_id'];
 $team_id = $_POST['team_id'];
 
-$users = getUsers($project_id, $team_id);
+$users = getUsers($project_id, $team_id,$user_id);
 
 $scheds = array();
 $scheds[] = array('allocation' <= '50');

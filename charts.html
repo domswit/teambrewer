@@ -301,7 +301,7 @@
                                         <br>
                                         <select id="project_id" name="project_id" ng-model="project_name" class="col-lg">
                                             <option value="">Choose a Project</option>
-                                            <option ng-repeat="(key,project) in projects">{{ project.name }}</option>
+                                            <option ng-repeat="(key,project) in projects" value="{{ key }}">{{ project.name }}</option>
                                         </select>
                                     </div>
                                     <div class="chart_filter">
@@ -341,7 +341,7 @@
                                         <br>
                                         <select name="user_id" ng-model="ename" id="ename" class="col-lg">
                                             <option value="">Choose a Person</option>
-                                            <option id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " + user.last_name}}</option>
+                                            <option id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.fullname}}</option>
                                         </select>
                                     </div>
                                     <div class="chart_filter">
