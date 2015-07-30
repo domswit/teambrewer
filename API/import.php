@@ -1,3 +1,9 @@
+<style type="text/css">
+	*{
+		font-family: Arial;
+		font-size: 12px;
+	}
+</style>
 <?php
 
 $servername = "localhost";
@@ -119,7 +125,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 				$todate = $fromdateArr[2]. "-" . $todateArr[0] . "-" . $todateArr[1];
 				$allocation = $filesop[6];
 				$project_name = $filesop[9];
-				
+				 
 
 				$user_id = $alloc = str_replace($name, getUserIdByName($name), $name);
 				
@@ -142,6 +148,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 				if ($conn->query($insertsql) === TRUE) {
 					$output['success'] = true;
 					$output['message'] = "User has been added.";
+					echo "New Schedule Inserted For User (" . $user_id . "): " . $from_date . " to " . $to_date . ", " . $project_name . " " .$alloc. "% " ."<br>"."<br>";
+
 				} else {
 					$output['success'] = false;
 					$output['message'] = $conn->error;
@@ -150,8 +158,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 				}	
 				$r = $r + 1;
 			}
+			
 		}
 	}
+	echo "Import Complete"."<br>"."<br>";
 ?>
 
 
