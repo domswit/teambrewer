@@ -4,8 +4,8 @@ $username = "root";
 $password = "";
 $dbname = "mydb";
 $data = json_decode(file_get_contents("php://input"));
-$efirst_name = mysql_real_escape_string($data->efirst_name);
-$elast_name = mysql_real_escape_string($data->elast_name);
+$efullname = mysql_real_escape_string($data->efullname);
+
 $ebirthdate = mysql_real_escape_string($data->ebirthdate);
 $eteam = mysql_real_escape_string($data->eteam);
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -18,7 +18,7 @@ $username = "tempusername";
 $password = "temppassword";
 $password = md5($password);
 
-$sql = "INSERT INTO users(`first_name`, `last_name`, `birthdate`, `team_id`, `username` , `password`)VALUES('".$efirst_name."','".$elast_name."','".$ebirthdate."','".$eteam."','" . $username . "' ,'" . $password . "')";
+$sql = "INSERT INTO users(`fullname`, `birthdate`, `team_id`, `username` , `password`)VALUES('".$efullname."','".$ebirthdate."','".$eteam."','" . $username . "' ,'" . $password . "')";
 
 $output = Array();
 
