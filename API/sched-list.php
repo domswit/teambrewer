@@ -7,7 +7,8 @@ $max_per_page = 25;
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
-$sql = "SELECT a.sched_id, a.user_id, CONCAT(b.first_name, ' ', b.last_name) as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id)LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
+$sql = "SELECT a.sched_id, a.user_id, b.fullname as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id)LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
+
 $count_sql = "SELECT COUNT(*) as total FROM sched";
 $result = $conn->query($sql);
 
