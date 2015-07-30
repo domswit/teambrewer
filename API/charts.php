@@ -179,7 +179,7 @@ foreach($users as $key => $user){
 
                     $sched_date = date('Y-m-d', strtotime($sched_dates[$i]));
 
-                    if($sched_date != ''){
+                    if($sched_date != '' && ( strtotime($sched_dates[$i]) >= strtotime($form_fromdate) && strtotime($sched_dates[$i])<= strtotime($form_todate))){
 
                         $users[$key][ $sched_date ]['allocation_list'][] = array(
                             'allocation'=>$allocation,

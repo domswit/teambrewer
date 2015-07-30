@@ -19,7 +19,6 @@
     <link href="css/examples.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
         var allData = [];
-        
 
         function convertToTimestamp(date) {
 
@@ -84,8 +83,8 @@
                     xaxis: {
                         mode: "time",
                         minTickSize: [1, "month"],
-                        min: (new Date(2015, 6, 1)).getTime(),
-                        max: (new Date(2015, 7, 29)).getTime()
+                        min: (new Date(2015, 1, 1)).getTime(),
+                        max: (new Date(2015, 11, 29)).getTime()
                     },
                     series: {
                         lines: {
@@ -147,6 +146,7 @@
                 if (item) {
                     var x = item.datapoint[0],
                         y = item.datapoint[1];
+
 
                     var timestamp = Math.round(item.datapoint[0]);
                     var date = convertToDate(timestamp);
