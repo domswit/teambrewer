@@ -8,14 +8,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>TeamBrewer</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <script src="js/jquery.js"></script>
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <link href="css/examples.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
         var allData = [];
@@ -186,15 +186,9 @@
                             }
 
                             htmlString += "<br>";
-                        }
-
-
-                        
+                        }                  
                     }
-                    
-                 
-                    
-                    
+
                     //alert(item)
 
                     $("#tooltip").html(htmlString)
@@ -209,7 +203,6 @@
 
             });
         }
-
 
         $(document).ready(function() {
 
@@ -294,19 +287,19 @@
                         <h2 class="page-header">
     <center>Resource Allocation</center>
     </h2>
-                        <form action="charts.html" method="get">
+                        <form action="charts.html" method="GET">
                             <div class="row">
                                 <div class="chart-filter-container" class="class_filter" style="text-align:center">
                                     <div class="chart_filter">
                                         <label>Project</label>
                                         <br>
-                                        <select id="project_id" name="project_id" ng-model="project_name" class="col-lg">
+                                        <select name="project_id" ng-model="project_name" class="col-lg">
                                             <option value="">Choose a Project</option>
                                             <option ng-repeat="(key,project) in projects" value="{{ key }}">{{ project.name }}</option>
                                         </select>
                                     </div>
                                     <div class="chart_filter">
-                                        <label for='exe3'>Team</label>
+                                        <label>Team</label>
                                         <br>
                                         <select name="team_id" ng-model="eteam" class="col-lg">
                                             <option value="">Choose a Team</option>
@@ -349,7 +342,7 @@
                                         <label for='exe3'></label>
                                         <br>
 
-                                        <button type="submit" class="btn btn-primary btn-lg">&nbsp;&nbsp;Generate Chart</button>
+                                        <button ng-click="submit" class="btn btn-primary btn-lg">&nbsp;&nbsp;Generate Chart</button>
 
                                     </div>
                                 </div>
@@ -400,7 +393,7 @@
     </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://raw.githubusercontent.com/moment/moment/develop/moment.js"></script>
     <script src="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
     <script>
