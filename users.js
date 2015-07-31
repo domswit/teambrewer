@@ -94,8 +94,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.editUser = function(id) {
     $scope.form_mode = 'update';
     $scope.form_title = "Edit User Information";
-    $scope.efirst_name = $scope.users[id].first_name.toString();
-    $scope.elast_name = $scope.users[id].last_name.toString();
+    $scope.efullname = $scope.users[id].fullname.toString();
     $scope.ebirthdate = $scope.users[id].birthdate.toString();
     $scope.eteam = $scope.users[id].team_id.toString();
     $scope.user_id = $scope.users[id].user_id.toString();
@@ -113,14 +112,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
   $scope.updateData = function() {
     var user_id = $scope.user_id;
-    var efirst_name = $('#efirst_name').val();
-    var elast_name = $('#elast_name').val();
+    var efullname = $('#efullname').val();
     var ebirthdate = $('#ebirthdate').val();
     var eteam = $('#eteam').val();
     $http.post("API/update-people.php", {
       'user_id': user_id,
-      'first_name': efirst_name,
-      'last_name': elast_name,
+      'fullname': efullname,
       'birthdate': ebirthdate,
       'team_id': eteam
     }).success(function(data, status, headers, config) {
@@ -135,8 +132,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
    
   $scope.insertData = function() {
     $http.post("API/insert-people.php", {
-      'efirst_name': $scope.efirst_name,
-      'elast_name': $scope.elast_name,
+      'efullname': $scope.efullname,
       'ebirthdate': $scope.ebirthdate,
       'eteam': $scope.eteam
     }).success(function(data, status, headers, config) {

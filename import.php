@@ -101,7 +101,7 @@
                    <hr class="separator"/>
     <div class="bodybar">
         <p>Choose file:</p>
-        <form name="import" method="post" enctype="multipart/form-data" action="API/import.php">
+        <form name="import" method="post" enctype="multipart/form-data" action="API/import.php" target="_blank">
             <input type="file" name="file" /><br/>
             <input type="submit" name="submit" value="Submit"  />
         </form>

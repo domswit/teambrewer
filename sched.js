@@ -8,6 +8,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.first_name2 = "test";
 $scope.pageArray = [];
+
 var access_token = $cookies.get('access_token');
 
 $scope.fillPageArray = function(num, page) {
