@@ -145,6 +145,7 @@ $scope.fillPageArray = function(num, page) {
     }).success(function(data, status, headers, config) {
       console.log(data);
       getSched();
+      alert("Schedule successfully updated!");
     });
   }
   $scope.insertData = function() {
@@ -156,6 +157,7 @@ $scope.fillPageArray = function(num, page) {
     }).success(function(data, status, headers, config) {
       console.log(data);
       getSched();
+      alert("Schedule successfully added!");
     });
   }
   $scope.deleteData = function(id) {
@@ -167,6 +169,7 @@ $scope.fillPageArray = function(num, page) {
       console.log(data);
   
       getSched();
+      alert("Schedule successfully deleted!");
       //popup here
     });
   }

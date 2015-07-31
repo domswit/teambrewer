@@ -12,7 +12,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO projects(`name`)VALUES('".$eproject_name."')";
+$created = date("Y-m-d h:i:s");
+
+$sql = "INSERT INTO projects(`name`, `created`)VALUES('".$eproject_name."','" . $created . "')";
 
 $output = Array();
 

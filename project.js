@@ -8,7 +8,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.first_name2 = "test";
   $scope.pageArray = [];
 
-
+  var access_token = $cookies.get('access_token');
 
 
 
@@ -33,9 +33,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }
   var response = $http.get(
       "http://localhost/teambrewer/API/project-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page, {
-        'access_token': $cookies.get('access_token')
-      });
+      .getTime() + "&page=" + page + "&access_token=" + access_token);
     response.success(function(data, status, headers, config) {
       console.log(data.projects);
      $scope.projects = data.projects;
@@ -69,6 +67,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }).success(function(data, status, headers, config) {
       console.log(data);
       getData();
+      alert("Project successfully updated!");
     });
   }
   $scope.insertdata = function() {
@@ -77,7 +76,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      getData();
+      $scope.getData();
+      alert("Project successfully added!");
     });
   }
   $scope.deleteData = function(id) {
@@ -89,6 +89,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       console.log(data);
   
       getData();
+      alert("Project successfully deleted!");
       //popup here
     });
   }
