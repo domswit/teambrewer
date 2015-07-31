@@ -4,20 +4,12 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
   $scope.updateData = {}
 
 
-<<<<<<< HEAD
-=======
-
-
     var filters = getUrlVars();
     $scope.project_name = filters.project_id;
     $scope.eteam = filters.team_id;
     $scope.efromdate = filters.from_date;
     $scope.etodate = filters.to_date;
 
-
-    
-
->>>>>>> 801d2cee34a48ebba2f3f8bb23aa3aadfaafa218
   function getTeam() {
     var response = $http.get(
       "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()
@@ -37,10 +29,6 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
       .getTime());
     response.success(function(data, status, headers, config) {
       $scope.projects = data.projects;
-<<<<<<< HEAD
-    
-=======
->>>>>>> 801d2cee34a48ebba2f3f8bb23aa3aadfaafa218
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
