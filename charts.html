@@ -22,17 +22,12 @@
         var allData = [];
 
         function convertToTimestamp(date) {
-
-
-
             myDate = date.split("-");
             var newDate = myDate[0] + "/" + myDate[1] + "/" + myDate[2];
             return (new Date(newDate).getTime());
         }
 
         function convertToDate(timestamp) {
-
-
             return moment.unix(timestamp / 1000).format("YYYY-MM-DD");
         }
 
@@ -98,10 +93,6 @@
                     }
                 });
             } else if ($numdays > 31 && $numdays <= 124) {
-
-
-
-
 
                 $.plot("#placeholder", chartDate, {
                     yaxis: {
@@ -309,7 +300,7 @@
                                     <div class="chart_filter">
                                         <label>Team</label>
                                         <br>
-                                        <select name="team_id" ng-model="eteam" class="col-lg">
+                                        <select id="team_id" name="team_id" ng-model="eteam" class="col-lg">
                                             <option value="">Choose a Team</option>
                                             <option ng-repeat="(key,team) in teams" value="{{ key }}">{{ team.name}}</option>
                                         </select>
@@ -317,21 +308,40 @@
                                     <div class="chart_filter">
                                         <label>From:</label>
                                         <br>
+<<<<<<< HEAD
                                         <div class="input-group">
                                             <input name="from_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker1" value="">
                                             <label class= "input-group-addon btn" for="datetimepicker1">
                                             <span ng-click="open" class="glyphicon glyphicon-calendar">
                                     </span>
                                 </label>
+=======
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input id="from_date" name="from_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker1" value="">
+                                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+>>>>>>> 801d2cee34a48ebba2f3f8bb23aa3aadfaafa218
                                         </div>
                                     </div>
                                     <div class="chart_filter">
                                         <label>To:</label>
                                         <br>
+<<<<<<< HEAD
                                         <div class="input-group">
                                             <input name="to_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker2" value="">
                                             <label class= "input-group-addon btn" for="datetimepicker2">
                                             <span ng-click="open" class="glyphicon glyphicon-calendar">
+=======
+                                        <div class='input-group date' id='datetimepicker2'>
+                                            <input id="to_date" name="to_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker2" value="">
+                                            <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+>>>>>>> 801d2cee34a48ebba2f3f8bb23aa3aadfaafa218
                                     </span>
                                 </label>
                                         </div>
@@ -339,9 +349,9 @@
                                     <div class="chart_filter">
                                         <label for='exe3'>People</label>
                                         <br>
-                                        <select name="user_id" ng-model="ename" id="ename" class="col-lg">
+                                        <select name="user_id" ng-model="ename" id="user_id" class="col-lg">
                                             <option value="">Choose a Person</option>
-                                            <option id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.fullname}}</option>
+                                            <option ng-repeat="(key,user) in users " value="{{ key }}">{{user.fullname}}</option>
                                         </select>
                                     </div>
                                     <div class="chart_filter">
@@ -412,6 +422,16 @@
                 format: 'YYYY-MM-DD'
             });
         });
+
+        $(document).ready(function(){
+            var filters = getUrlVars();
+            $('#project_id').val(filters.project_id);
+            $('#team_id').val(filters.team_id);
+            $('#from_date').val(filters.from_date);
+            $('#to_date').val(filters.to_date);
+            $('#user_id').val(filters.user_id);
+        });
+
     </script>
     <script src="js/plugins/flot/jquery.flot.js"></script>
     <script src="js/plugins/flot/jquery.flot.time.js"></script>
