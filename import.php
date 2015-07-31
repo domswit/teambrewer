@@ -28,7 +28,6 @@
         margin: 0;
         padding: 0;
         background-color:#fff;
-        text-align:center;
     }
    
     .top-bar
@@ -39,7 +38,7 @@
             background-color:#222;
             border-bottom: 1px solid #000;
             padding-top: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 20px;text-align:center;
         }
     .bodybar
         {
@@ -47,11 +46,12 @@
             border:1px dashed #333333;
             width:300px;
             margin:0 auto; 
-            padding:10px;
+            padding:10px;text-align:center;
         }
     .inside-top-bar
         {
             margin-bottom: 5px;
+            text-align:center;
         }
     .link
         {
@@ -95,7 +95,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Import Schedule</h1> 
+                        <h1 class="page-header" align="center">Import Schedule</h1> 
                  <div class="table-responsive">
                             <table class="table table-striped"> 
                    <hr class="separator"/>

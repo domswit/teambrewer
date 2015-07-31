@@ -4,17 +4,6 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
   $scope.updateData = {}
 
 
-
-
-    var filters = getUrlVars();
-    $scope.project_name = filters.project_id;
-    $scope.eteam = filters.team_id;
-    $scope.efromdate = filters.from_date;
-    $scope.etodate = filters.to_date;
-
-
-    
-
   function getTeam() {
     var response = $http.get(
       "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()
@@ -72,4 +61,14 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
+ 
+    $(document).ready(function($scope){
+        var filters = getUrlVars();
+      $scope.project_name = filters.project_id;
+      $scope.eteam = filters.team_id;
+      $scope.efromdate = filters.from_date;
+      $scope.etodate = filters.to_date;
+     });
+ 
+
 });

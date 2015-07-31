@@ -8,14 +8,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>TeamBrewer</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" type="text/css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css">
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/jquery.js"></script>
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <link href="css/examples.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
         var allData = [];
@@ -52,10 +53,12 @@
 
                 $.plot("#placeholder", chartDate, {
                     yaxis: {
+                        show: true,
                         min: 0,
                         max: 100
                     },
                     xaxis: {
+                        show: true,
                         mode: "time",
                         minTickSize: [1, "day"],
                         min: (new Date(2015, 6, 1)).getTime(),
@@ -67,10 +70,12 @@
 
                 $.plot("#placeholder", chartDate, {
                     yaxis: {
+                        show: true,
                         min: 0,
                         max: 100
                     },
                     xaxis: {
+                        show: true,
                         mode: "time",
                         minTickSize: [1, "month"]
                     },
@@ -89,16 +94,14 @@
                 });
             } else if ($numdays > 31 && $numdays <= 124) {
 
-
-
-
-
                 $.plot("#placeholder", chartDate, {
                     yaxis: {
+                        show: true,
                         min: 0,
                         max: 100
                     },
                     xaxis: {
+                        show: true,
                         mode: "time",
                         minTickSize: [1, "quarter"]
                     },
@@ -119,16 +122,17 @@
                     }
                 });
 
+
             }
 
             $("<div id='tooltip'></div>").css({
                 position: "absolute",
-                display: "none",
+                
                 border: "1px solid #fdd",
                 padding: "2px",
                 "background-color": "#fee",
                 opacity: 0.80
-            }).appendTo("body");
+            }).appendTo("body").fadeIn(200);;
 
             $("#placeholder").bind("plothover", function(event, pos, item) {
 
@@ -149,11 +153,7 @@
                     var date = convertToDate(timestamp);
                     console.log(item.series.label + " ::: " + date);
 
-
                     var user_id = item.series.custom_id;
-
-                   
-
 
                     console.log("this is the user:");
                     console.log(allData[user_id][date]['allocation_list']);
@@ -183,15 +183,9 @@
                             }
 
                             htmlString += "<br>";
-                        }
-
-
-                        
+                        }                  
                     }
-                    
-                 
-                    
-                    
+
                     //alert(item)
 
                     $("#tooltip").html(htmlString)
@@ -255,14 +249,13 @@
                         chartDate.push({
                             data: userData,
                             label: data[i]['fullname'],
-                            custom_data: ['ABG DDM'],
                             custom_id: i
                         });
                     }
                 }
             });
 
-            plotChart(36, chartDate);
+            plotChart(30, chartDate);
         });
     </script>
 </head>
@@ -293,19 +286,19 @@
                         <h2 class="page-header">
     <center>Resource Allocation</center>
     </h2>
-                        <form action="charts.html" method="get">
+                        <form action="charts.html" method="GET">
                             <div class="row">
                                 <div class="chart-filter-container" class="class_filter" style="text-align:center">
                                     <div class="chart_filter">
                                         <label>Project</label>
                                         <br>
-                                        <select id="project_id" name="project_id" ng-model="project_name" class="col-lg">
+                                        <select name="project_id" ng-model="project_name" class="col-lg">
                                             <option value="">Choose a Project</option>
                                             <option ng-repeat="(key,project) in projects" value="{{ key }}">{{ project.name }}</option>
                                         </select>
                                     </div>
                                     <div class="chart_filter">
-                                        <label for='exe3'>Team</label>
+                                        <label>Team</label>
                                         <br>
                                         <select id="team_id" name="team_id" ng-model="eteam" class="col-lg">
                                             <option value="">Choose a Team</option>
@@ -315,6 +308,14 @@
                                     <div class="chart_filter">
                                         <label>From:</label>
                                         <br>
+<!--
+                                        <div class="input-group">
+                                            <input name="from_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker1" value="">
+                                            <label class= "input-group-addon btn" for="datetimepicker1">
+                                            <span ng-click="open" class="glyphicon glyphicon-calendar">
+                                    </span>
+                                </label>
+-->
                                         <div class='input-group date' id='datetimepicker1'>
                                             <input id="from_date" name="from_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker1" value="">
                                             <span class="input-group-btn">
@@ -322,18 +323,27 @@
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
+<!--
                                         </div>
                                     </div>
                                     <div class="chart_filter">
                                         <label>To:</label>
                                         <br>
+-->
+                                        <div class="input-group">
+                                            <input name="to_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker2" value="">
+                                            <label class= "input-group-addon btn" for="datetimepicker2">
+                                            <span ng-click="open" class="glyphicon glyphicon-calendar">
+
                                         <div class='input-group date' id='datetimepicker2'>
                                             <input id="to_date" name="to_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker2" value="">
                                             <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open">
                                             <i class="glyphicon glyphicon-calendar"></i>
                                         </button>
+
                                     </span>
+                                </label>
                                         </div>
                                     </div>
                                     <div class="chart_filter">
@@ -347,10 +357,13 @@
                                     <div class="chart_filter">
                                         <label for='exe3'></label>
                                         <br>
+
+                                        <button ng-click="submit" class="btn btn-primary btn-lg">&nbsp;&nbsp;Generate Chart</button>
+
                                         <a class="btn btn-info btn-lg" role="button" data-toggle="collapse" data-target="#colps" aria-expanded="false" aria-controls="colps">
                                             Show List
                                         </a>
-                                        <button type="submit" class="btn btn-primary btn-lg">&nbsp;&nbsp;Generate Chart</button>
+
 
                                     </div>
                                 </div>
@@ -394,11 +407,11 @@
         </div>
     </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+   
     <script src="https://raw.githubusercontent.com/moment/moment/develop/moment.js"></script>
     <script src="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
 
             $('#datetimepicker1').datetimepicker({
