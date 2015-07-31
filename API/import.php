@@ -1,3 +1,9 @@
+<style type="text/css">
+	*{
+		font-family: Arial;
+		font-size: 12px;
+	}
+</style>
 <?php
 
 $servername = "localhost";
@@ -23,16 +29,14 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 		    while($row = $result -> fetch_assoc()) {
     			$user[] = $row;
 		    }
-		} else {
-		    echo "0 results";
-		}
+		} 
 		
 
 	
 		if( count($user) > 0 ){
 			//if name was found, return its id
 			$result_id = $user[0]['user_id'];
-			echo "exist: ";
+			echo "Existing User: ";
 		
 		} else {
 			//if name was not found, add to database and return inserted id
@@ -40,7 +44,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 			if ($conn->query($sql) === TRUE) {
 				$result_id = $conn->insert_id;
-				echo "inser: ";
+				echo "New User Inserted: ";
 			
 			}
 		}
@@ -66,17 +70,14 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 		    while($row = $result -> fetch_assoc()) {
     			$project[] = $row;
 		    }
-		} else {
-		    echo "0 results";
-		}
-
+		} 
 
 		
 
 	
 		if( count($project) > 0 ){
 			//if name was found, return its id
-			echo "exist: ";
+			echo "Existing Project: ";
 			$result_id = $project[0]['project_id'];
 			
 		
@@ -85,7 +86,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 			$sql = "INSERT INTO projects (name) VALUES ('$project_name')";
 
 			if ($conn->query($sql) === TRUE) {
-				echo " insert: ";
+				echo " New Project Inserted: ";
 				$result_id = $conn->insert_id;
 				
 			
@@ -100,11 +101,11 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 	//echo "123";
 
-	//if(isset($_POST["submit"]))
-	if(1)
-	{
-	//	$file = $_FILES['file']['tmp_name'];
-		$file = "../spreadsheet/sample-import-excel.csv";
+	if(isset($_POST["submit"])){
+		if(1)
+		{
+		$file = $_FILES['file']['tmp_name'];
+		
 		$handle = fopen($file, "r");
 		$c = 0;
 		$r = 0;
@@ -113,28 +114,26 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 		while(($filesop = fgetcsv($handle, 1000, ",")) !== false)
 		{	
 			if($r > 3){
-				echo "asd";
+				
 				$fromdateArr = explode("/", $filesop[4]);
 				$fromdate = $fromdateArr[2]. "-" . $fromdateArr[0] . "-" . $fromdateArr[1];
 				$name = $filesop[8];
 
-				echo "fromdate:" . $fromdate;
-				echo "todate:" . $todate;
-				echo "<br>";
+				
 				
 				$todateArr = explode("/", $filesop[5]);
 				$todate = $fromdateArr[2]. "-" . $todateArr[0] . "-" . $todateArr[1];
 				$allocation = $filesop[6];
 				$project_name = $filesop[9];
-				
+				 
 
 				$user_id = $alloc = str_replace($name, getUserIdByName($name), $name);
 				
 				// getUserIdByName($name);
 				
-				echo "userID: " . $user_id;
+				echo  "ID (". $user_id . ") " . $name. " "  ;
 				$project_id = getProjectIdByName($project_name);
-				echo "projectID: " . $project_id;
+				echo "ID (" . $project_id. ") " . $project_name . "<br>";
 				 $from_date = $fromdate;
 				$to_date = $todate;
 				$alloc = str_replace("%", "", $allocation);
@@ -142,23 +141,27 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 				$insertsql =  "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}')";
 
-				echo $insertsql . "<br><br>";
+				
 
 				$c = $c + 1;
 
 				if ($conn->query($insertsql) === TRUE) {
 					$output['success'] = true;
 					$output['message'] = "User has been added.";
+					echo "New Schedule Inserted For User (" . $user_id . "): " . $from_date . " to " . $to_date . ", " . $project_name . " " .$alloc. "% " ."<br>"."<br>";
+
 				} else {
 					$output['success'] = false;
 					$output['message'] = $conn->error;
 					echo $conn->error;
-				}
+					}
+				}	
+				$r = $r + 1;
 			}
-			$r = $r + 1;
+			
 		}
 	}
-
+	echo "Import Complete"."<br>"."<br>";
 ?>
 
 

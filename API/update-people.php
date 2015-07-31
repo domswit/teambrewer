@@ -4,8 +4,8 @@ $username = "root";
 $password = "";
 $dbname = "mydb";
 $data = json_decode(file_get_contents("php://input"));
-$efirst_name = mysql_real_escape_string($data->first_name);
-$elast_name = mysql_real_escape_string($data->last_name);
+$efullname = mysql_real_escape_string($data->fullname);
+
 $user_id = mysql_real_escape_string($data->user_id);
 $ebirthdate = mysql_real_escape_string($data->birthdate);
 $eteam = mysql_real_escape_string($data->team_id);
@@ -16,7 +16,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "UPDATE users SET first_name='" . $efirst_name . "', last_name='" . $elast_name . "' , birthdate='" . $ebirthdate . "' , team_id='" . $eteam . "' WHERE user_id='" . $user_id . "'";
+$sql = "UPDATE users SET fullname='" . $efullname . "', birthdate='" . $ebirthdate . "' , team_id='" . $eteam . "' WHERE user_id='" . $user_id . "'";
 $output = Array();
 
 if ($conn->query($sql) === TRUE) {

@@ -40,6 +40,12 @@ input[type=checkbox] {
 	height: 100%;
 }
 
+#legend-container{
+	width: 100px;
+	display: inline-table;
+	margin-top: 25px;
+}
+
 #header {
 	position: relative;
 	width: 900px;
@@ -57,8 +63,8 @@ input[type=checkbox] {
 
 #content {
 	width: 880px;
-	margin: 0 auto;
 	padding: 10px;
+	display: inline-table;
 }
 
 #footer {
