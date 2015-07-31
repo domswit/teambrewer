@@ -46,7 +46,7 @@ $user_str = '';
 
 		$sql = "SELECT a.user_id, c.fullname, c.team_id, a.project_id,  a.fromdate, a.todate FROM sched as a, projects as b, users as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id " . $project_str . " " . $team_str. " " . $user_str;
 
-		//echo $sql;
+		 // echo $sql;
 	$result = $conn->query($sql);
 
 	$users = Array();

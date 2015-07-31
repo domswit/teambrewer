@@ -97,6 +97,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 		return $result_id;
 	}
 
+
 	//IMPLEMENTATION
 
 	//echo "123";
@@ -131,7 +132,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 				
 				// getUserIdByName($name);
 				
-				echo  "ID (". $user_id . ") " . $name. " "  ;
+				echo  "ID (". $user_id . ") " . $name. " "  ."<br>";
 				$project_id = getProjectIdByName($project_name);
 				echo "ID (" . $project_id. ") " . $project_name . "<br>";
 				 $from_date = $fromdate;
@@ -139,15 +140,45 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 				$alloc = str_replace("%", "", $allocation);
 				
 
-				$insertsql =  "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}')";
+				global $conn;
+
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		} 
+ 
+		$sql = "SELECT `sched_id` FROM `sched` WHERE `user_id`= '" .$user_id. "' AND  `fromdate` = '" .$from_date. "' AND `todate` = '" .$to_date . "'";
+			
+		$result = $conn->query($sql);
+		$sched = Array();
+		
+		if ($result ->num_rows > 0) {
+		    while($row = $result -> fetch_assoc()) {
+    			$sched[] = $row;
+		    }
+		} 
+
+		
+
+	
+		if( count($sched) > 0 ){
+			//if name was found, return its id
+			echo "Existing Schedule (".$result_id .") " . $name . " " .$from_date. " to " .$to_date. " " .$alloc."<br>" . "<br>" ;
+			$result_id = $sched[0]['sched_id'];
+			
+		
+		} else {
+			//if name was not found, add to database and return inserted id
+			$sql = "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}')";
+
+			
 
 				
 
 				$c = $c + 1;
 
-				if ($conn->query($insertsql) === TRUE) {
+				if ($conn->query($sql) === TRUE) {
 					$output['success'] = true;
-					$output['message'] = "User has been added.";
+					$output['message'] = "Schedule has been added.";
 					echo "New Schedule Inserted For User (" . $user_id . "): " . $from_date . " to " . $to_date . ", " . $project_name . " " .$alloc. "% " ."<br>"."<br>";
 
 				} else {
@@ -155,6 +186,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 					$output['message'] = $conn->error;
 					echo $conn->error;
 					}
+		}
+
+
+		
 				}	
 				$r = $r + 1;
 			}
