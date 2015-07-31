@@ -1,5 +1,7 @@
 angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, $cookies, $http, $window) {
 
+    $cookies.put('');
+    
   $scope.authenticate = function(id) {
 
     $http.post("API/authentication.php?rand=" + new Date().getTime(),{
@@ -10,12 +12,15 @@ angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, 
     .success(function(data,status,headers,config){
         console.log(data);
 
-		    $cookies.put('access_token', data.user.access_token);
+        if (data.user){
 
-	      $window.location.href = '/teambrewer/charts.html';
+		      $cookies.put('access_token', data.user);
+          $window.location.href = '/teambrewer/charts.html';
+        } 
 
+        else  {
+          $scope.message = "User does not exist";
+        }
     });
-
   }
 });
-
