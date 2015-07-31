@@ -1,6 +1,6 @@
 angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, $cookies, $http, $window) {
 
-    $cookies.put('');
+    $cookies.put('access_token', '');
     
   $scope.authenticate = function(id) {
 
