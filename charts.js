@@ -31,7 +31,7 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
   function getData() {
     var response = $http.get(
       "http://localhost/teambrewer/API/user-list.php?rand=" + new Date()
-      .getTime());
+      .getTime() + "&max_per_page=99999999");
     response.success(function(data, status, headers, config) {
       console.log(data.users);
       $scope.users = data.users;

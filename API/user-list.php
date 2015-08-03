@@ -5,7 +5,13 @@ set_time_limit(0);
 
 $output = Array('success'=>true, 'users'=>null);
 
-$max_per_page = 5;
+
+if($_GET['max_per_page'] != ''){
+	$max_per_page = $_GET['max_per_page'];	
+} else {
+	$max_per_page = 5;	
+}
+
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
