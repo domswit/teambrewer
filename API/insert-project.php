@@ -1,12 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mydb";
+include("connection.php");
 $data = json_decode(file_get_contents("php://input"));
 $eproject_name = mysql_real_escape_string($data->eproject_name);
-
-$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

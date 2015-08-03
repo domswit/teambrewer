@@ -1,13 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mydb";
+include("connection.php");
 $data = json_decode(file_get_contents("php://input"));
 $name = mysql_real_escape_string($data->name);
 $team_id = mysql_real_escape_string($data->team_id);
-
-$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

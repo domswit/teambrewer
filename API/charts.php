@@ -1,12 +1,6 @@
 <?php
 ini_set('display_errors','false');
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mydb";
-
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+include("connection.php");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

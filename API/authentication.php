@@ -1,20 +1,12 @@
 <?php
 ini_set('display_errors','false');
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mydb";
+include("connection.php");
 
 $data = json_decode(file_get_contents("php://input"));
 
 $form_username = mysql_real_escape_string($data->username);
 $form_password = md5(mysql_real_escape_string($data->password));
-
-
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

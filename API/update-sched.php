@@ -1,16 +1,11 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mydb";
+include("connection.php");
 $data = json_decode(file_get_contents("php://input"));
 $ename = mysql_real_escape_string($data->name);
 $ealloc = mysql_real_escape_string($data->allocation);
 $efromdate = mysql_real_escape_string($data->fromdate);
 $etodate = mysql_real_escape_string($data->todate);
 $sched_id = mysql_real_escape_string($data->sched_id);
-
-$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
