@@ -3,16 +3,6 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
   $scope.teams = '';
   $scope.updateData = {}
 
-
-<<<<<<< HEAD
-    var filters = getUrlVars();
-    $scope.project_name = filters.project_id;
-    $scope.eteam = filters.team_id;
-    $scope.efromdate = filters.from_date;
-    $scope.etodate = filters.to_date;
-
-=======
->>>>>>> fa62acb0dd246512002a9d023385fee095c157c8
   function getTeam() {
     var response = $http.get(
       "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()

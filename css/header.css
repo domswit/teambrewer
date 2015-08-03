@@ -3,7 +3,7 @@ body{
 }
 
 #page-wrapper{
-    height: 600px;
+    min-height: 600px;
 }
 
 .no-margin{
