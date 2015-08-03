@@ -66,7 +66,7 @@
                         timeformat: "%a"
                     }
                 });
-            } else if ($numdays > 7 && $numdays <= 31) {
+            } else if ($numdays >= 7 && $numdays <= 31) {
 
                 $.plot("#placeholder", chartDate, {
                     yaxis: {
@@ -92,7 +92,7 @@
                         clickable: true
                     }
                 });
-            } else if ($numdays > 31 && $numdays <= 124) {
+            } else if ($numdays >= 31 && $numdays <= 124) {
 
                 $.plot("#placeholder", chartDate, {
                     yaxis: {
@@ -312,23 +312,27 @@
                                         <label>From:</label>
                                         <br>
 
-                                        <div class="input-group">
-                                            <input name="from_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="from_date" value="">
-                                            <label class= "input-group-addon btn" for="from_date">
-                                            <span ng-click="open" class="glyphicon glyphicon-calendar">
-                                    </span>
-                                </label>
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input id="from_date" name="from_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker1" value="">
+                                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
 
-                                        </div>
-                                    </div>
-                                    <div class="chart_filter">
-                                        <label>To:</label>
-                                        <br>
 
                                         <div class="input-group">
                                             <input name="to_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="to_date" value="">
                                             <label class= "input-group-addon btn" for="to_date">
                                             <span ng-click="open" class="glyphicon glyphicon-calendar">
+
+                                        <div class='input-group date' id='datetimepicker2'>
+                                            <input id="to_date" name="to_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="datetimepicker2" value="">
+                                            <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+
 
                                     </span>
                                 </label>
