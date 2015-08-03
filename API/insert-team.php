@@ -12,7 +12,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO teams(`name`)VALUES('".$ename."')";
+$created = date("Y-m-d h:i:s");
+
+$sql = "INSERT INTO teams(`name`,`created`)VALUES('".$ename."','" . $created . "')";
 
 $output = Array();
 

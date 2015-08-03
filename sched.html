@@ -52,8 +52,9 @@
                                             <form role="form">
                                                 <div class="form-group"></div>
                                                 <div class="form-group">
-                                                    <label>Choose Name</label>
+                                                    <label>Person</label>
                                                     <select ng-model="ename" id="ename">
+                                                        <option value="">Choose Person</option>
                                                         <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " +user.last_name}}</option>
                                                     </select>
                                                 </div>
@@ -82,6 +83,7 @@
                                                         <div class="form-group">
                                                             <label>Allocation</label>
                                                             <select ng-model="ealloc" id="ealloc">
+                                                                <option value="">Choose Allocation</option>
                                                                 <option  id="ealloc" ng-repeat="(key,alloc) in allocation" value="{{ alloc.allocation }}">{{ alloc.allocation }}%</option>
                                                             </select>
                                                         </div>

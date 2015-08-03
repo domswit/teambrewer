@@ -18,7 +18,9 @@ $username = "tempusername";
 $password = "temppassword";
 $password = md5($password);
 
-$sql = "INSERT INTO users(`fullname`, `birthdate`, `team_id`, `username` , `password`)VALUES('".$efullname."','".$ebirthdate."','".$eteam."','" . $username . "' ,'" . $password . "')";
+$created = date("Y-m-d h:i:s");
+
+$sql = "INSERT INTO users(`fullname`, `birthdate`, `team_id`, `username` , `password`, `created`)VALUES('".$efullname."','".$ebirthdate."','".$eteam."','" . $username . "' ,'" . $password . "','" . $created . "')";
 
 $output = Array();
 

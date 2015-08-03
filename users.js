@@ -47,9 +47,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     var response = $http.get(
 
       "http://localhost/teambrewer/API/user-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page, {
-        'access_token': $cookies.get('access_token')
-      });
+      .getTime() + "&page=" + page + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
       console.log(data.users);
@@ -119,14 +117,11 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'user_id': user_id,
       'fullname': efullname,
       'birthdate': ebirthdate,
-      'team_id': eteam
+      'team_id': eteam,
+      'access_token': access_token
     }).success(function(data, status, headers, config) {
-      console.log(data);
-      alert(user_id);
-
       $scope.getData();
-
-      //popup here
+      alert("User successfully updated!");
     });
   }
    
@@ -134,7 +129,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $http.post("API/insert-people.php", {
       'efullname': $scope.efullname,
       'ebirthdate': $scope.ebirthdate,
-      'eteam': $scope.eteam
+      'eteam': $scope.eteam,
+      'access_token': access_token
     }).success(function(data, status, headers, config) {
       console.log(data);
       alert("User successfully added!");
@@ -147,10 +143,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 $scope.deleteData = function(id) {
     
 
-    $http.post("API/delete-people.php?rand=" + new Date().getTime(), {
-      'id': id
+    $http.post("API/delete-people.php", {
+      'rand': new Date().getTime(),
+      'id': id,
+      'access_token': access_token
     }).success(function(data, status, headers, config) {
-      console.log(data);
+      alert("User successfully deleted!");
   
 
     $scope.getData();

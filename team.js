@@ -4,7 +4,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.pageArray = [];
 
-
+  var access_token = $cookies.get('access_token');
 
     
 
@@ -30,10 +30,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
     var response = $http.get(
       "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page, {
-
-        'access_token': $cookies.get('access_token')
-      });
+      .getTime() + "&page=" + page + "&access_token=" + access_token);
     response.success(function(data, status, headers, config) {
       console.log(data.teams);
 
@@ -65,33 +62,36 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $http.post("API/update-team.php", {
       'team_id': team_id,
       'name': name,
-      'access_token': $cookies.get('access_token')
+      'access_token': access_token,
     }).success(function(data, status, headers, config) {
 
       $scope.getData();
+      alert("Team successfully updated!");
 
     });
   }
   $scope.insertdata = function() {
     $http.post("API/insert-team.php", {
       'name': $scope.name,
-      'access_token': $cookies.get('access_token')
+      'access_token': access_token
     }).success(function(data, status, headers, config) {
       console.log(data);
 
       $scope.getData();
+      alert("Team successfully added!");
 
     });
   }
 
   $scope.deleteData = function(id) {
     
-   
-    $http.post("API/delete-teams.php?rand=" + new Date().getTime(), {
-      'id': id
+    $http.post("API/delete-teams.php", {
+      'rand': new Date().getTime(),
+      'id': id,
+      'access_token' : access_token
     }).success(function(data, status, headers, config) {
       console.log(data);
-  
+      alert("Team successfully deleted!");  
 
       $scope.getData();
 

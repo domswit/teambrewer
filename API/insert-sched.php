@@ -15,7 +15,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "INSERT INTO sched(`user_id`, `fromdate`, `todate`, `allocation`)VALUES('".$ename."','".$efromdate."','".$etodate."','".$ealloc."')";
+$created = date("Y-m-d h:i:s");
+
+$sql = "INSERT INTO sched(`user_id`, `fromdate`, `todate`, `allocation`,`created`)VALUES('".$ename."','".$efromdate."','".$etodate."','".$ealloc."','" . $created . "')";
 
 $output = Array();
 
