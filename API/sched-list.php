@@ -3,7 +3,13 @@ include("connection.php");
 
 $output = Array('success'=>true, 'sched'=>null);
 
-$max_per_page = 25;
+
+if($_GET['max_per_page'] != ''){
+	$max_per_page = $_GET['max_per_page'];	
+} else {
+	$max_per_page = 20;	
+}
+
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 

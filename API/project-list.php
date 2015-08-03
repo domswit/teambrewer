@@ -3,7 +3,12 @@ include("connection.php");
 
 $output = Array('success'=>true, 'projects'=>null);
 
-$max_per_page = 5;
+if($_GET['max_per_page'] != ''){
+	$max_per_page = $_GET['max_per_page'];	
+} else {
+	$max_per_page = 5;	
+}
+
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 

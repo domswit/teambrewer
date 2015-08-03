@@ -3,7 +3,13 @@ include("connection.php");
 
 $output = Array('success'=>true, 'teams'=>null);
 
-$max_per_page = 5;
+
+if($_GET['max_per_page'] != ''){
+	$max_per_page = $_GET['max_per_page'];	
+} else {
+	$max_per_page = 20;	
+}
+
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
