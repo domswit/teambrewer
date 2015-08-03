@@ -54,7 +54,7 @@ $scope.fillPageArray = function(num, page) {
 
     var response = $http.get(
 
-      "http://localhost/teambrewer/API/sched-list.php?rand=" + new Date()
+      "API/sched-list.php?rand=" + new Date()
       .getTime() + "&page=" + page, {
         'access_token': access_token
       });

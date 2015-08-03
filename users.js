@@ -46,7 +46,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
     var response = $http.get(
 
-      "http://localhost/teambrewer/API/user-list.php?rand=" + new Date()
+      "API/user-list.php?rand=" + new Date()
       .getTime() + "&page=" + page + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
@@ -62,7 +62,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
   function getTeams() {
     var response = $http.get(
-      "http://localhost/teambrewer/API/team-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+      "API/team-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
       console.log(data.teams);

@@ -5,7 +5,7 @@ $username = "root";
 $password = "";
 $dbname = "mydb";
 
-$servername = "10.23.28.43";
+$servername = "localhost";
 $username = "redmine";
 $password = "Passw0rd";
 $dbname = "mydb";

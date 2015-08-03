@@ -32,7 +32,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       page = 1;
     }
   var response = $http.get(
-      "http://localhost/teambrewer/API/project-list.php?rand=" + new Date()
+      "API/project-list.php?rand=" + new Date()
       .getTime() + "&page=" + page + "&access_token=" + access_token);
     response.success(function(data, status, headers, config) {
       console.log(data.projects);

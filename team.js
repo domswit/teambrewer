@@ -29,7 +29,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
 
     var response = $http.get(
-      "http://localhost/teambrewer/API/team-list.php?rand=" + new Date()
+      "API/team-list.php?rand=" + new Date()
       .getTime() + "&page=" + page + "&access_token=" + access_token);
     response.success(function(data, status, headers, config) {
       console.log(data.teams);
