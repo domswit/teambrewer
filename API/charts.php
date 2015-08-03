@@ -130,85 +130,101 @@ $form_todate = $_POST['to_date'];
 $project_id = $_POST['project_id'];
 $team_id = $_POST['team_id'];
 
-$users = getUsers($project_id, $team_id,$user_id);
-
-$scheds = array();
-$scheds[] = array('allocation' <= '50');
-$scheds[] = array('allocation' <= '45');
-$scheds[] = array('allocation' <= '45');
-
-$allDates = array();
-
-
-//echo $fromdate;
-
-
-
-//$dates =  getDates($fromdate, $todate);
-
-
-// print_r($dates);
-// die(); 
-
-
-
-foreach($users as $key => $user){
-
-	// echo $e;
-	// echo "<br>";
-	//preparation
-
-	//echo "<BR><BR>USER " . $key . "<BR>" ;
-	for($x=0; $x<count($dates); $x++){
-		$date = $dates[$x];
-		$users[$key][$date] = array();
-	}
-
-
-	$scheds = getScheds($key, $form_fromdate, $form_todate);
-
-	if(count($scheds) > 0){
-
-
-        
-		for($x=0; $x<count($scheds); $x++){
-			$fromdate = $scheds[$x]['fromdate'];
-			$todate = $scheds[$x]['todate'];
-
-            if (strtotime($fromdate) < strtotime($todate)){
-                $sched_dates = getDates($fromdate , $todate);
-
-                
-                //$users[$e][$date] = array();
-
-                $allocation = $scheds[$x]['allocation'];
-                $project_id = $scheds[$x]['project_id'];
-                $project_name = $scheds[$x]['project_name'];
-
-
-                for($i=0; $i<count($sched_dates); $i++){
-
-                    //echo 'UID: ' . $key . ' -- DATE:' . $sched_dates[$i] . 'ALLOCATION: ' . $allocation . '<br>';
-
-                    $sched_date = date('Y-m-d', strtotime($sched_dates[$i]));
-
-                    if($sched_date != '' && ( strtotime($sched_dates[$i]) >= strtotime($form_fromdate) && strtotime($sched_dates[$i])<= strtotime($form_todate))){
-
-                        $users[$key][ $sched_date ]['allocation_list'][] = array(
-                            'allocation'=>$allocation,
-                            'project_id'=>$project_id,
-                            'project_name'=>$project_name
-                        );              
-
-                        $users[$key][ $sched_date ]['allocation_total'] += $allocation*1;  
-                    }
-                    
-                }                
-            }
-		}
-	}
-
+if($form_fromdate != '' && $form_todate == ''){
+	$form_todate = $form_fromdate;
 }
+
+if($form_fromdate == '' && $form_todate != ''){
+	$form_fromdate = $form_todate;
+}
+
+$users = [];
+
+if($form_fromdate != '' || $form_todate != ''){
+	$users = getUsers($project_id, $team_id,$user_id);  
+
+	$scheds = array();
+	$scheds[] = array('allocation' <= '50');
+	$scheds[] = array('allocation' <= '45');
+	$scheds[] = array('allocation' <= '45');
+
+	$allDates = array();
+
+
+	//echo $fromdate;
+
+
+
+	//$dates =  getDates($fromdate, $todate);
+
+
+	// print_r($dates);
+	// die(); 
+
+
+
+	foreach($users as $key => $user){
+
+		// echo $e;
+		// echo "<br>";
+		//preparation
+
+		//echo "<BR><BR>USER " . $key . "<BR>" ;
+		for($x=0; $x<count($dates); $x++){
+			$date = $dates[$x];
+			$users[$key][$date] = array(
+				'allocation_total' => 0
+			);
+		}
+
+
+		$scheds = getScheds($key, $form_fromdate, $form_todate);
+
+		if(count($scheds) > 0){
+
+
+	        
+			for($x=0; $x<count($scheds); $x++){
+				$fromdate = $scheds[$x]['fromdate'];
+				$todate = $scheds[$x]['todate'];
+
+	            if (strtotime($fromdate) < strtotime($todate)){
+	                $sched_dates = getDates($fromdate , $todate);
+
+	                
+	                //$users[$e][$date] = array();
+
+	                $allocation = $scheds[$x]['allocation'];
+	                $project_id = $scheds[$x]['project_id'];
+	                $project_name = $scheds[$x]['project_name'];
+
+
+	                for($i=0; $i<count($sched_dates); $i++){
+
+	                    //echo 'UID: ' . $key . ' -- DATE:' . $sched_dates[$i] . 'ALLOCATION: ' . $allocation . '<br>';
+
+	                    $sched_date = date('Y-m-d', strtotime($sched_dates[$i]));
+
+	                    if($sched_date != '' && ( strtotime($sched_dates[$i]) >= strtotime($form_fromdate) && strtotime($sched_dates[$i])<= strtotime($form_todate))){
+
+	                        $users[$key][ $sched_date ]['allocation_list'][] = array(
+	                            'allocation'=>$allocation,
+	                            'project_id'=>$project_id,
+	                            'project_name'=>$project_name
+	                        );              
+
+	                        $users[$key][ $sched_date ]['allocation_total'] += $allocation*1;  
+	                    }
+	                    
+	                }                
+	            }
+			}
+		}
+
+	}
+}
+
+
 
 //print_r($users);
 

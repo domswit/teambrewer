@@ -1,6 +1,11 @@
 body{
     margin-bottom: 300px;
 }
+
+#page-wrapper{
+    height: 600px;
+}
+
 .no-margin{
     margin: 0;
 }
