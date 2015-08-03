@@ -49,6 +49,36 @@
 
         function plotChart($numdays, chartDate) {
 
+            $.plot("#placeholder", chartDate, {
+                yaxis: {
+                    show: true,
+                    min: 0,
+                    max: 100
+                },
+                xaxis: {
+                    show: true,
+                    mode: "time",
+                    minTickSize: [1, "month"]
+                },
+                series: {
+                    lines: {
+                        show: false
+                    },
+                    points: {
+                        show: true
+                    }
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                },
+                legend: {
+                    container: $('#legend-container')
+                }
+            });
+
+            /*
+
             if ($numdays <= 7) {
 
                 $.plot("#placeholder", chartDate, {
@@ -90,6 +120,9 @@
                     grid: {
                         hoverable: true,
                         clickable: true
+                    },
+                    legend: {
+                        container: $('#legend-container')
                     }
                 });
             } else if ($numdays > 31 && $numdays <= 124) {
@@ -124,17 +157,17 @@
 
 
             }
+            */
 
             $("<div id='tooltip'></div>").css({
                 position: "absolute",
-                
                 border: "1px solid #fdd",
                 padding: "2px",
                 "background-color": "#fee",
                 opacity: 0.80
             }).appendTo("body").fadeIn(200);;
 
-            $("#placeholder").bind("plothover", function(event, pos, item) {
+            $("#placeholder").bind("plotclick", function(event, pos, item) {
 
                 console.log(item);
 
