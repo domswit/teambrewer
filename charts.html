@@ -50,6 +50,7 @@
         function plotChart($numdays, chartDate) {
 
             $.plot("#placeholder", chartDate, {
+
                 yaxis: {
                     show: true,
                     min: 0,
@@ -198,16 +199,19 @@
                     console.log(allData);
 
                     var htmlString = "";
-                    htmlString += (date + "<br><br>");
+                    htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b><br><br>");
+
+
                    
                     for(var e in allData){
                         
                         if (allData[e][date] && y == allData[e][date]['allocation_total']){
 
-                            htmlString += (allData[e].fullname + "<br>");
-                            htmlString += ("Allocation:" + allData[e][date]['allocation_total'] + "%<br>");
+                            htmlString += "<b>" + (allData[e].fullname + "</b><br>");
+                            htmlString += ("<b>" + allData[e][date]['allocation_total'] + "% </b> Allocation<br>");
 
-                            htmlString += ("Breakdown:<br>");
+                            htmlString += ("<div style='font-size: 11px'>");
+                            htmlString += ("<b>Breakdown:</b><br>");
                             console.log("alloc list:");
                             console.log(allData[e][date]['allocation_list']);
 
@@ -217,6 +221,77 @@
                                 htmlString += project_name + " : " + project_alloc + "<br>";
 
                             }
+                            htmlString += ("</div>");
+
+                            htmlString += "<br>";
+                        }                  
+                    }
+
+                    //alert(item)
+
+                    $("#tooltip").html(htmlString)
+                        .css({
+                            top: item.pageY + 5,
+                            left: item.pageX + 5
+                        })
+                        .fadeIn(200);
+                } else {
+                    $("#tooltip").hide();
+                }
+
+            });
+
+            $("#placeholder").bind("plotclick", function(event, pos, item) {
+
+                console.log(item);
+
+                if ($("#enablePosition:checked").length > 0) {
+                    var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+                    $("#hoverdata").text(str);
+                }
+
+
+                if (item) {
+                    var x = item.datapoint[0],
+                        y = item.datapoint[1];
+
+
+                    var timestamp = Math.round(item.datapoint[0]);
+                    var date = convertToDate(timestamp);
+                    console.log(item.series.label + " ::: " + date);
+
+                    var user_id = item.series.custom_id;
+
+                    console.log("this is the user:");
+                    console.log(allData[user_id][date]['allocation_list']);
+
+                    console.log('allData');
+                    console.log(allData);
+
+                    var htmlString = "";
+                    htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b><br><br>");
+
+
+                   
+                    for(var e in allData){
+                        
+                        if (allData[e][date] && y == allData[e][date]['allocation_total']){
+
+                            htmlString += "<b>" + (allData[e].fullname + "</b><br>");
+                            htmlString += ("<b>" + allData[e][date]['allocation_total'] + "% </b> Allocation<br>");
+
+                            htmlString += ("<div style='font-size: 11px'>");
+                            htmlString += ("<b>Breakdown:</b><br>");
+                            console.log("alloc list:");
+                            console.log(allData[e][date]['allocation_list']);
+
+                            for(var i in allData[e][date]['allocation_list']){
+                                var project_name = allData[e][date]['allocation_list'][i]['project_name'];
+                                var project_alloc = allData[e][date]['allocation_list'][i]['allocation'] + "%";
+                                htmlString += project_name + " : " + project_alloc + "<br>";
+
+                            }
+                            htmlString += ("</div>");
 
                             htmlString += "<br>";
                         }                  

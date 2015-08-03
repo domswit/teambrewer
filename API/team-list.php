@@ -4,7 +4,7 @@ include("connection.php");
 $output = Array('success'=>true, 'teams'=>null);
 
 
-if($_GET['max_per_page'] != ''){
+if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 	$max_per_page = $_GET['max_per_page'];	
 } else {
 	$max_per_page = 20;	
