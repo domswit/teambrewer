@@ -1,26 +1,44 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [SB Admin](http://startbootstrap.com/template-overviews/sb-admin/)
+Welcome to Teambrewer
+-------
 
-[SB Admin](http://startbootstrap.com/template-overviews/sb-admin/) is an open source, admin dashboard template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+Teambrewer is a visualization tool that presents your team's project allocations in an intuitive graphical interface.
 
-## Getting Started
+Using Teambrewer, you can manage data for your Projects, Teams, People, and Schedules and present them in a manner that can easily be understood especially by Project Managers.
 
-To use this template, choose one of the following options to get started:
-* Download the latest release on Start Bootstrap
-* Fork this repository on GitHub
+Additionally, you can use the import feature to easily upload a CSV file that you can extract straight from Microsoft Online 365 (or generate from your existing Project Management tool ), making it readily useful and easily integrable.
 
-## Bugs and Issues
+----------
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/IronSummitMedia/startbootstrap-sb-admin/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/sb-admin/).
+Technical Specs
+---------------
 
-## Creator
+Teambrewer uses PHP, MySQL, HTML, Javascript, AngularJS, FlotCharts.
 
-Start Bootstrap was created by and is maintained by **David Miller**, Managing Parter at [Iron Summit Media Strategies](http://www.ironsummitmedia.com/).
+----------
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
+Contributors
+------------
 
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+**Developers**
+Aron 
+Edge Dimalanta
+KC Batac
+Julius Domingo
 
-## Copyright and License
+**Product Owners**
+Mai Aclan
+Rodan Fabregas
+Mark Ringor
+Fred Silva
 
-Copyright 2013-2015 Iron Summit Media Strategies, LLC. Code released under the [Apache 2.0](https://github.com/IronSummitMedia/startbootstrap-sb-admin/blob/gh-pages/LICENSE) license.
+**Special Thanks**
+Tristan Babasa for Server Assistance
+Wendel Dejello for UX Assistance
+John Phillip Lee UX Assistance
+Paul Samillano UX Assistance
+Fred Silva for Feature Suggestions
+JC Santos for Development Assistance
+
+
+
+
