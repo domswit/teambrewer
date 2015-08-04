@@ -36,7 +36,6 @@ Contributors
 
 **Special Thanks**
 
- - List item
  - Tristan Babasa for Server Assistance
  - Wendel Dejello for UX Assistance
  - John Phillip Lee UX Assistance
