@@ -1,5 +1,5 @@
 angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies) {
+  $http, $cookies, $location) {
   $scope.form_title = "yeah";
   $scope.fName = '';
   $scope.lName = '';
