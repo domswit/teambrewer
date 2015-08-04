@@ -145,7 +145,7 @@ $scope.fillPageArray = function(num, page) {
       'allocation': ealloc
     }).success(function(data, status, headers, config) {
       console.log(data);
-      getSched();
+      $scope.getSched();
       alert("Schedule successfully updated!");
     });
   }
@@ -157,7 +157,7 @@ $scope.fillPageArray = function(num, page) {
       'ealloc': $scope.ealloc
     }).success(function(data, status, headers, config) {
       console.log(data);
-      getSched();
+      $scope.getSched();
       alert("Schedule successfully added!");
     });
   }
@@ -169,7 +169,7 @@ $scope.fillPageArray = function(num, page) {
     }).success(function(data, status, headers, config) {
       console.log(data);
   
-      getSched();
+      $scope.getSched();
       alert("Schedule successfully deleted!");
       //popup here
     });

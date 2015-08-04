@@ -58,7 +58,7 @@
                                                     <label>Person</label>
                                                     <select ng-model="ename" id="ename">
                                                         <option value="">Choose Person</option>
-                                                        <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " +user.last_name}}</option>
+                                                        <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.fullname}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
