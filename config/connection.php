@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors','false');
 
-$mode = 1;
+$mode = 2;
 
 $connection = array(
 	'1' => 'connection-local.php',
