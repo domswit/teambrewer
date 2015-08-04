@@ -28,7 +28,6 @@ Contributors
 
 **Product Owners**
 
- - List item
  - Mai Aclan
  - Rodan Fabregas
  - Mark Ringor
