@@ -1,11 +1,12 @@
 angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies) {
+  $http, $cookies, $location) {
   $scope.fName = '';
   $scope.lName = '';
   $scope.passw1 = '';
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
+  $scope.pageNum = $location.search().p;
 
   var access_token = $cookies.get('access_token');
 
@@ -74,7 +75,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
   }
 
-  $scope.getData();
+  $scope.getData($scope.pageNum);
   getTeams();
   $scope.edit = true;
   $scope.error = false;
@@ -120,7 +121,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'team_id': eteam,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
-      $scope.getData();
+      $scope.getData($scope.pageNum);
       alert("User successfully updated!");
     });
   }
@@ -135,13 +136,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       console.log(data);
       alert("User successfully added!");
 
-      $scope.getData();
+      $scope.getData($scope.pageNum);
 
     });
   }
   
 $scope.deleteData = function(id) {
-    
 
     $http.post("API/delete-people.php", {
       'rand': new Date().getTime(),
@@ -151,7 +151,7 @@ $scope.deleteData = function(id) {
       alert("User successfully deleted!");
   
 
-    $scope.getData();
+    $scope.getData($scope.pageNum);
 
       //popup here
     });

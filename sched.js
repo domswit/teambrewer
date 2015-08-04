@@ -7,7 +7,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
-$scope.pageArray = [];
+  $scope.pageArray = [];
+  $scope.pageNum = (($location.search().p) ? $location.search().p : 1);
 
 var access_token = $cookies.get('access_token');
 
@@ -72,7 +73,7 @@ $scope.fillPageArray = function(num, page) {
 
   function getAlloc() {
     var response = $http.get(
-      "http://localhost/teambrewer/API/allocation.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+      "API/allocation.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
       console.log(data.allocation);
@@ -86,7 +87,7 @@ $scope.fillPageArray = function(num, page) {
   function getData() {
     var response = $http.get(
 
-      "http://localhost/teambrewer/API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+      "API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
       console.log(data.users);
@@ -98,7 +99,7 @@ $scope.fillPageArray = function(num, page) {
 
   }
   getAlloc();
-  getData();
+  getData($scope.pageNum);
   $scope.getSched();
   $scope.edit = true;
   $scope.error = false;

@@ -7,6 +7,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.first_name2 = "test";
   $scope.pageArray = [];
+  $scope.pageNum = (($location.search().p) ? $location.search().p : 1);
 
   var access_token = $cookies.get('access_token');
 
@@ -45,7 +46,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   }
 
-   $scope.getData();
+  $scope.getData($scope.pageNum);
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
@@ -66,7 +67,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      getData();
+      getData($scope.pageNum);
       alert("Project successfully updated!");
     });
   }
@@ -76,7 +77,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      $scope.getData();
+      $scope.getData($scope.pageNum);
       alert("Project successfully added!");
     });
   }
@@ -88,7 +89,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }).success(function(data, status, headers, config) {
       console.log(data);
   
-      getData();
+      getData($scope.pageNum);
       alert("Project successfully deleted!");
       //popup here
     });

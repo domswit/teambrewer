@@ -1,8 +1,9 @@
 angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies) {
+  $http, $cookies, $location) {
   $scope.teams = '';
   $scope.updateData = {}
   $scope.pageArray = [];
+  $scope.pageNum = (($location.search().p) ? $location.search().p : 1);
 
   var access_token = $cookies.get('access_token');
 
@@ -44,7 +45,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   }
 
-  $scope.getData();
+  $scope.getData($scope.pageNum);
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
@@ -65,7 +66,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'access_token': access_token,
     }).success(function(data, status, headers, config) {
 
-      $scope.getData();
+      $scope.getData($scope.pageNum);
       alert("Team successfully updated!");
 
     });
@@ -77,7 +78,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }).success(function(data, status, headers, config) {
       console.log(data);
 
-      $scope.getData();
+      $scope.getData($scope.pageNum);
       alert("Team successfully added!");
 
     });
@@ -93,7 +94,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       console.log(data);
       alert("Team successfully deleted!");  
 
-      $scope.getData();
+      $scope.getData($scope.pageNum);
 
       //popup here
     });
