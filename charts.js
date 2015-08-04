@@ -40,8 +40,8 @@ angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
       alert("AJAX failed!");
     });
   }
-
-  function getSched() {
+function
+   getSched() {
     var response = $http.get(
       "API/sched-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999");

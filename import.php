@@ -87,7 +87,7 @@
                             <p>Choose file:</p>
                             <form name="import" method="post" enctype="multipart/form-data" action="API/import.php" target="_blank">
                                 <input type="file" name="file" /><br/>
-                                <input type="submit" name="submit" value="Submit"  />
+                                <button ng-click="submit" class="btn btn-primary btn-md" name="submit">Submit</button>
                             </form>
 
                         </div>
