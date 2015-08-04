@@ -134,6 +134,8 @@ if($form_fromdate == '' && $form_todate != ''){
 
 $users = [];
 
+$dates =  getDates($form_fromdate, $form_todate);
+
 if($form_fromdate != '' || $form_todate != ''){
 	$users = getUsers($project_id, $team_id,$user_id);  
 
@@ -146,10 +148,6 @@ if($form_fromdate != '' || $form_todate != ''){
 
 
 	//echo $fromdate;
-
-
-
-	//$dates =  getDates($fromdate, $todate);
 
 
 	// print_r($dates);
@@ -170,7 +168,6 @@ if($form_fromdate != '' || $form_todate != ''){
 				'allocation_total' => 0
 			);
 		}
-
 
 		$scheds = getScheds($key, $form_fromdate, $form_todate);
 
