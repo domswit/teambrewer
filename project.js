@@ -67,7 +67,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      getData($scope.pageNum);
+      $scope.getData($scope.pageNum);
       alert("Project successfully updated!");
     });
   }
@@ -89,7 +89,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }).success(function(data, status, headers, config) {
       console.log(data);
   
-      getData($scope.pageNum);
+      $scope.getData($scope.pageNum);
       alert("Project successfully deleted!");
       //popup here
     });
