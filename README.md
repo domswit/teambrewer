@@ -20,25 +20,29 @@ Contributors
 ------------
 
 **Developers**
-Aron
 
-Edge Dimalanta
-KC Batac
-Julius Domingo
+ - Aron
+ - Edge Dimalanta
+ - KC Batac
+ - Julius Domingo
 
 **Product Owners**
-Mai Aclan
-Rodan Fabregas
-Mark Ringor
-Fred Silva
+
+ - List item
+ - Mai Aclan
+ - Rodan Fabregas
+ - Mark Ringor
+ - Fred Silva
 
 **Special Thanks**
-Tristan Babasa for Server Assistance
-Wendel Dejello for UX Assistance
-John Phillip Lee UX Assistance
-Paul Samillano UX Assistance
-Fred Silva for Feature Suggestions
-JC Santos for Development Assistance
+
+ - List item
+ - Tristan Babasa for Server Assistance
+ - Wendel Dejello for UX Assistance
+ - John Phillip Lee UX Assistance
+ - Paul Samillano UX Assistance
+ - Fred Silva for Feature Suggestions
+ - JC Santos for Development Assistance
 
 
 
