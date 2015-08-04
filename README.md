@@ -20,7 +20,8 @@ Contributors
 ------------
 
 **Developers**
-Aron 
+Aron
+
 Edge Dimalanta
 KC Batac
 Julius Domingo
