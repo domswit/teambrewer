@@ -1,5 +1,5 @@
 <?php
-include("connection.php");
+include("../config/connection.php");
 ini_set('max_execution_time', 0);
 set_time_limit(0);
 
