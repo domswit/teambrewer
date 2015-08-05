@@ -1,7 +1,7 @@
 <?php
 include("connection.php");
 $data = json_decode(file_get_contents("php://input"));
-$ename = mysql_real_escape_string($data->name);
+$name = mysql_real_escape_string($data->name);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 
 $created = date("Y-m-d h:i:s");
 
-$sql = "INSERT INTO teams(`name`,`created`)VALUES('".$ename."','" . $created . "')";
+$sql = "INSERT INTO teams(`name`,`created`)VALUES('".$name."','" . $created . "')";
 
 $output = Array();
 
