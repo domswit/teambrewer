@@ -6,7 +6,7 @@
 </style>
 <?php
 
-		include("connection.php");
+		include("../config/connection.php");
 
 		function getUserIdByName($name){
 
@@ -121,7 +121,16 @@
 				$todate = $fromdateArr[2]. "-" . $todateArr[0] . "-" . $todateArr[1];
 				$allocation = $filesop[6];
 				$project_name = $filesop[9];
-				 
+
+				//allocation computation
+				$daysBetween = 0;
+				$date1 = new DateTime($fromdate);
+				$date2 = new DateTime($todate);
+
+				$daysBetween = $date2->diff($date1)->format("%a");
+
+				$hoursWork = str_replace('h', '' , $filesop[3]) * 1;
+				$allocation = (($hoursWork / $daysBetween) / 8 ) * 100;
 
 				$user_id = $alloc = str_replace($name, getUserIdByName($name), $name);
 				
@@ -191,6 +200,36 @@
 			
 		}
 	}
+
+    function GetDays($sStartDate, $sEndDate){  
+      // Firstly, format the provided dates.  
+      // This function works best with YYYY-MM-DD  
+      // but other date formats will work thanks  
+      // to strtotime().  
+      $sStartDate = gmdate("Y-m-d", strtotime($sStartDate));  
+      $sEndDate = gmdate("Y-m-d", strtotime($sEndDate));  
+      
+      // Start the variable off with the start date  
+      $aDays[] = $sStartDate;  
+      
+      // Set a 'temp' variable, sCurrentDate, with  
+      // the start date - before beginning the loop  
+      $sCurrentDate = $sStartDate;  
+      
+      // While the current date is less than the end date  
+      while($sCurrentDate < $sEndDate){  
+        // Add a day to the current date  
+        $sCurrentDate = gmdate("Y-m-d", strtotime("+1 day", strtotime($sCurrentDate)));  
+      
+        // Add this new day to the aDays array  
+        $aDays[] = $sCurrentDate;  
+      }  
+      
+      // Once the loop has finished, return the  
+      // array of days.  
+      return $aDays;  
+    }  
+
 	echo "Import Complete"."<br>"."<br>";
 ?>
 

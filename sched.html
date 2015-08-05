@@ -42,30 +42,29 @@
                         <table class="table table-striped">
                             <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#mydModal" ng-click="addUser()">
                                 <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add Schedule
-
-                            </button>
-                            <div class="modal fade" id="mydModal" role="dialog">
-                                <div class="modal-dialog modal-md">
-                                    <div class="modal-content">
-                                        <div class="modal-header modal-header-success">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">{{form_title}}</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-lg-8">
-                                                    <form role="form">
-                                                        <div class="form-group"></div>
-                                                        <div class="form-group">
-                                                            <label>Person</label>
-                                                            <select ng-model="ename" id="ename">
-                                                                <option value="">Choose Person</option>
-                                                                <option id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.first_name + " " +user.last_name}}</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>From </label>
-                                                            <div class='input-group date' id='datetimepicker2'>
+                    </button>
+                    <div class="modal fade" id="mydModal" role="dialog">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header modal-header-success" >
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">{{form_title}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <form role="form">
+                                                <div class="form-group"></div>
+                                                <div class="form-group">
+                                                    <label>Person</label>
+                                                    <select ng-model="ename" id="ename">
+                                                        <option value="">Choose Person</option>
+                                                        <option  id="ename" ng-repeat="(key,user) in users " value="{{ key }}">{{user.fullname}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>From </label>
+                                                     <div class='input-group date' id='datetimepicker2'>
                                                                 <input type='text' class="form-control" ng-model="efromdate" placeholder="YYYY-MM-DD" id="efromdate" value="">
                                                                 <span class="input-group-addon">
                                                                                 <span class="glyphicon glyphicon-calendar"></span>

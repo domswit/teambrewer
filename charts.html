@@ -379,8 +379,8 @@
                                         <label>Project</label>
                                         <br>
                                         <select id="project_id" name="project_id" ng-model="project_name" class="col-lg">
-                                            <option value="">Choose a Project</option>
-                                            <option ng-repeat="(key,project) in projects" value="{{ key }}">{{ project.name }}</option>
+                                            <option value="">Choose a Project {{project_name}}</option>
+                                            <option ng-repeat="(key,project) in projects" value="{{ key }}" ng-selected="key == project_name">{{ project.name }}</option>
                                         </select>
                                     </div>
                                     <div class="chart_filter">
@@ -388,7 +388,7 @@
                                         <br>
                                         <select id="team_id" name="team_id" ng-model="eteam" class="col-lg">
                                             <option value="">Choose a Team</option>
-                                            <option ng-repeat="(key,team) in teams" value="{{ key }}">{{ team.name}}</option>
+                                            <option ng-repeat="(key,team) in teams" value="{{ key }}" ng-selected="key == eteam">{{ team.name}}</option>
                                         </select>
                                     </div>
                                     <div class="chart_filter">
@@ -422,7 +422,7 @@
                                         <br>
                                         <select name="user_id" ng-model="ename" id="user_id" class="col-lg">
                                             <option value="">Choose a Person</option>
-                                            <option ng-repeat="(key,user) in users " value="{{ key }}">{{user.fullname}}</option>
+                                            <option ng-repeat="(key,user) in users " value="{{ key }}" ng-selected="key == ename">{{user.fullname}}</option>
                                         </select>
                                     </div>
                                     <div class="chart_filter">
@@ -495,11 +495,10 @@
 
         $(document).ready(function(){
             var filters = getUrlVars();
-            $('#project_id').val(filters.project_id);
-            $('#team_id').val(filters.team_id);
+            
             $('#from_date').val(filters.from_date);
             $('#to_date').val(filters.to_date);
-            $('#user_id').val(filters.user_id);
+            
         });
 
     </script>

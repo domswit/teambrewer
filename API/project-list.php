@@ -1,5 +1,5 @@
 <?php
-include("connection.php");
+include("../config/connection.php");
 
 $output = Array('success'=>true, 'projects'=>null);
 

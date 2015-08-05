@@ -83,7 +83,7 @@ $scope.addProject = function() {
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      getData($scope.pageNum);
+      $scope.getData($scope.pageNum);
       alert("Project successfully updated!");
     });
   }
@@ -104,7 +104,6 @@ $scope.addProject = function() {
       'id': id
     }).success(function(data, status, headers, config) {
       console.log(data);
-  
      $scope.getData($scope.pageNum);
       alert("Project successfully deleted!");
       //popup here
