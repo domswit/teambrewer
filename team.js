@@ -7,7 +7,6 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
   var access_token = $cookies.get('access_token');
 
-    
 
   $scope.fillPageArray = function(num, page) {
 
@@ -49,14 +48,30 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
+
+
+ $scope.addTeam = function() {
+    $scope.form_mode = 'insert';
+    $scope.form_title = "Add Team Information";
+    $scope.name = '';
+  };
   $scope.editTeam = function(id) {
-    console.log(id);
-    console.log($scope.teams[id]);
-    console.log($scope.teams[id].team_id);
-    console.log($scope.teams[id].name);
-    $scope.team_id = $scope.teams[id].team_id.toString();
+    $scope.form_mode = 'update';
+    $scope.form_title = "Edit Team Information";
     $scope.name = $scope.teams[id].name.toString();
   };
+
+  $scope.saveData = function() {
+    switch ($scope.form_mode) {
+      case 'update':
+        $scope.updateData();
+        break;
+      case 'insert':
+        $scope.insertData();
+        break;  
+    }
+  }
+
   $scope.updateData = function() {
     var team_id = $scope.team_id;
     var name = $('#name').val();
@@ -71,7 +86,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
     });
   }
-  $scope.insertdata = function() {
+  $scope.insertData = function() {
     $http.post("API/insert-team.php", {
       'name': $scope.name,
       'access_token': access_token
@@ -95,8 +110,6 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       alert("Team successfully deleted!");  
 
       $scope.getData($scope.pageNum);
-
-      //popup here
     });
   }
 });

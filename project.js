@@ -50,14 +50,30 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
-  $scope.editUser = function(id) {
-    console.log(id);
-    console.log($scope.projects[id]);
-    console.log($scope.projects[id].project_id);
-    console.log($scope.projects[id].project_name);
-    $scope.project_id = $scope.projects[id].project_id.toString();
-    $scope.project_name = $scope.projects[id].name.toString();
+
+
+$scope.addProject = function() {
+    $scope.form_mode = 'insert';
+    $scope.form_title = "Add Project Information";
+    $scope.eproject_name = '';
   };
+  $scope.editProject = function(id) {
+    $scope.form_mode = 'update';
+    $scope.form_title = "Edit Project Information";
+    $scope.eproject_name = $scope.projects[id].name.toString();
+  };
+
+  $scope.saveData = function() {
+    switch ($scope.form_mode) {
+      case 'update':
+        $scope.updateData();
+        break;
+      case 'insert':
+        $scope.insertData();
+        break;  
+    }
+  }
+
   $scope.updateData = function() {
     var edit_project_id = $scope.project_id;
     var edit_project_name = $('#edit_project_name').val();
@@ -71,7 +87,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       alert("Project successfully updated!");
     });
   }
-  $scope.insertdata = function() {
+  $scope.insertData = function() {
     $http.post("API/insert-project.php", {
       'eproject_name': $scope.eproject_name,
       'access_token': $cookies.get('access_token')
@@ -88,8 +104,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'id': id
     }).success(function(data, status, headers, config) {
       console.log(data);
-  
-      $scope.getData($scope.pageNum);
+     $scope.getData($scope.pageNum);
       alert("Project successfully deleted!");
       //popup here
     });

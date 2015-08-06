@@ -43,7 +43,6 @@
                 vars[hash[0]] = hash[1];
             }
 
-
             return vars;
         }
 
@@ -164,12 +163,13 @@
             */
 
             $("<div id='tooltip'></div>").css({
-                position: "absolute",
-                border: "1px solid #fdd",
-                padding: "2px",
-                "background-color": "#fee",
+                position: 'absolute',
+                display: 'none',
+                border: '1px solid #fdd',
+                padding: '2px',
+                'background-color': '#fee',
                 opacity: 0.80
-            }).appendTo("body").fadeIn(200);;
+            }).appendTo("body").fadeIn(200);
 
             $("#placeholder").bind("plotclick", function(event, pos, item) {
 
@@ -230,18 +230,16 @@
                     //alert(item)
 
                     $("#tooltip").html(htmlString)
-                        .css({
-                            top: item.pageY + 5,
-                            left: item.pageX + 5
+                     .css({
+                            top: item.pageY - 265,
+                            left: item.pageX - 40
                         })
                         .fadeIn(200);
-                } else {
-                    $("#tooltip").hide();
-                }
+                } 
 
             });
 
-            $("#placeholder").bind("plotclick", function(event, pos, item) {
+            $("#placeholder").bind("plothover", function(event, pos, item) {
 
                 console.log(item);
 
@@ -269,40 +267,14 @@
                     console.log(allData);
 
                     var htmlString = "";
-                    htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b><br><br>");
-
-
-                   
-                    for(var e in allData){
-                        
-                        if (allData[e][date] && y == allData[e][date]['allocation_total']){
-
-                            htmlString += "<b>" + (allData[e].fullname + "</b><br>");
-                            htmlString += ("<b>" + allData[e][date]['allocation_total'] + "% </b> Allocation<br>");
-
-                            htmlString += ("<div style='font-size: 11px'>");
-                            htmlString += ("<b>Breakdown:</b><br>");
-                            console.log("alloc list:");
-                            console.log(allData[e][date]['allocation_list']);
-
-                            for(var i in allData[e][date]['allocation_list']){
-                                var project_name = allData[e][date]['allocation_list'][i]['project_name'];
-                                var project_alloc = allData[e][date]['allocation_list'][i]['allocation'] + "%";
-                                htmlString += project_name + " : " + project_alloc + "<br>";
-
-                            }
-                            htmlString += ("</div>");
-
-                            htmlString += "<br>";
-                        }                  
-                    }
+                    htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b>");
 
                     //alert(item)
 
                     $("#tooltip").html(htmlString)
                         .css({
-                            top: item.pageY + 5,
-                            left: item.pageX + 5
+                            top: item.pageY - 40,
+                            left: item.pageX - 40
                         })
                         .fadeIn(200);
                 } else {
@@ -310,8 +282,8 @@
                 }
 
             });
+
         }
-
 
         $(document).ready(function() {
 
