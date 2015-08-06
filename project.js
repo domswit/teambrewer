@@ -60,6 +60,7 @@ $scope.addProject = function() {
   $scope.editProject = function(id) {
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Project Information";
+    $scope.project_id = id;
     $scope.eproject_name = $scope.projects[id].name.toString();
   };
 
@@ -75,11 +76,11 @@ $scope.addProject = function() {
   }
 
   $scope.updateData = function() {
-    var edit_project_id = $scope.project_id;
-    var edit_project_name = $('#edit_project_name').val();
+    var project_id = $scope.project_id;
+    var eproject_name = $('#eproject_name').val();
     $http.post("API/update-project.php", {
-      'project_id': edit_project_id,
-      'project_name': edit_project_name,
+      'project_id': project_id,
+      'eproject_name': eproject_name,
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);

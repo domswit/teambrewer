@@ -58,6 +58,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.editTeam = function(id) {
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Team Information";
+    $scope.team_id = id;
     $scope.name = $scope.teams[id].name.toString();
   };
 

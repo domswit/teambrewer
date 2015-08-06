@@ -7,11 +7,13 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>TeamBrewer</title>
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" type="text/css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link href="css/sb-admin.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<script src="js/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
 <script src="js/angular-cookies.js"></script>
 <script src="js/angular-route.js"></script>
@@ -96,11 +98,9 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="js/moment.js"></script>
-    <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="css/bootstrap.css"></script>
-    <script type="text/javascript" src="css/bootstrap-datetimepicker.min.css"></script>
-    <script src="js/bootstrap.min.js"></script>
+   <script src="https://raw.githubusercontent.com/moment/moment/develop/moment.js"></script>
+<script src="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
+
     <script src = "project.js"></script>
 </body>
 </html>

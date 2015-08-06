@@ -34,8 +34,9 @@
 			echo "Existing User: ";
 		
 		} else {
+			$created = date("Y-m-d h:i:s");
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO users (fullname) VALUES ('$name')";
+			$sql = "INSERT INTO users (fullname,created) VALUES ('$name','$created')";
 
 			if ($conn->query($sql) === TRUE) {
 				$result_id = $conn->insert_id;
@@ -55,7 +56,6 @@
 		if ($conn->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);
 		} 
- 
 		$sql = "SELECT `project_id` FROM `projects` WHERE `name`= '".$project_name."'";
 			
 		$result = $conn->query($sql);
@@ -78,7 +78,8 @@
 		
 		} else {
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO projects (name) VALUES ('$project_name')";
+			$created = date("Y-m-d h:i:s");
+			$sql = "INSERT INTO projects (name,created) VALUES ('$project_name','$created')";
 
 			if ($conn->query($sql) === TRUE) {
 				echo " New Project Inserted: ";
@@ -172,7 +173,8 @@
 		
 		} else {
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}')";
+			$created = date("Y-m-d h:i:s");
+			$sql = "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`,`created`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}','{$created}')";
 
 			
 
