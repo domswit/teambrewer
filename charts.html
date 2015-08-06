@@ -231,7 +231,7 @@
 
                     $("#tooltip").html(htmlString)
                      .css({
-                            top: item.pageY - 265,
+                            top: item.pageY - 200,
                             left: item.pageX - 40
                         })
                         .fadeIn(200);
@@ -267,13 +267,26 @@
                     console.log(allData);
 
                     var htmlString = "";
-                    htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b>");
+                    htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b><br>");
+
+                    for(var e in allData){
+                        
+                        if (allData[e][date] && y == allData[e][date]['allocation_total']){
+
+                            htmlString += "<b>" + (allData[e].fullname + "</b><br>");
+                            htmlString += ("<b>" + allData[e][date]['allocation_total'] + "% </b> Allocation<br>");
+
+                            htmlString += ("</div>");
+
+                            htmlString += "<br>";
+                        }
+                    }
 
                     //alert(item)
 
                     $("#tooltip").html(htmlString)
                         .css({
-                            top: item.pageY - 40,
+                            top: item.pageY - 70,
                             left: item.pageX - 40
                         })
                         .fadeIn(200);
