@@ -7,8 +7,9 @@ $team_id = mysql_real_escape_string($data->team_id);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+$updated = date("Y-m-d h:i:s");
 
-$sql = "UPDATE teams SET name='" . $name . "' WHERE team_id='" . $team_id . "'";
+$sql = "UPDATE teams SET name='" . $name . "',updated='" . $updated . "' WHERE team_id='" . $team_id . "'";
 $output = Array();
 
 if ($conn->query($sql) === TRUE) {
@@ -20,7 +21,7 @@ if ($conn->query($sql) === TRUE) {
 }
 
 echo json_encode ($output);
-
+echo $sql;
 $conn->close();
 
 
