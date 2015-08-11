@@ -99,7 +99,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.ebirthdate = $scope.users[id].birthdate.toString();
     $scope.eteam = $scope.users[id].team_id.toString();
     $scope.user_id = $scope.users[id].user_id.toString();
-    $scope.username = $scope.users[id].username.toString();
+    $scope.eusername = $scope.users[id].username.toString();
     $scope.password = $scope.users[id].password.toString();
   };
   $scope.savedata = function() {
@@ -119,8 +119,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'fullname': $scope.efullname,
       'birthdate': $scope.ebirthdate,
       'team_id': $scope.eteam,
-      'username': $scope.username,
-      'password': $scope.password,
+      'username': $scope.eusername,
+      'password': $scope.epassword,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
       $scope.getData($scope.pageNum());
@@ -146,7 +146,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   }
   
 $scope.deleteData = function(id) {
-
+  if (confirm("Do you want to delete this data?") == true) {
+       
     $http.post("API/delete-people.php", {
       'rand': new Date().getTime(),
       'id': id,
@@ -160,5 +161,6 @@ $scope.deleteData = function(id) {
       //popup here
     });
   }
+}
 
 });

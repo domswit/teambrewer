@@ -60,6 +60,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.team_id = id;
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Team Information";
+    $scope.team_id = id;
     $scope.name = $scope.teams[id].name.toString();
   };
 
@@ -102,7 +103,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   }
 
   $scope.deleteData = function(id) {
-    
+    if (confirm("Do you want to delete this data?") == true) {
     $http.post("API/delete-teams.php", {
       'rand': new Date().getTime(),
       'id': id,
@@ -113,5 +114,6 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
       $scope.getData($scope.pageNum());
     });
+  }
   }
 });

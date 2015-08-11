@@ -13,9 +13,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
+$updated = date("Y-m-d h:i:s");
 
-
-$sql = "UPDATE sched SET user_id='" . $ename . "', fromdate='" . $efromdate . "', todate='" . $etodate . "', allocation='" . $ealloc . "' WHERE sched_id='" . $sched_id . "'";
+$sql = "UPDATE sched SET user_id='" . $ename . "', fromdate='" . $efromdate . "', todate='" . $etodate . "', allocation='" . $ealloc . "', updated='" . $updated ."' WHERE sched_id='" . $sched_id . "'";
 
 $output = Array();
 

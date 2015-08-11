@@ -67,6 +67,7 @@ $scope.addProject = function() {
     $scope.project_id = id;
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Project Information";
+    $scope.project_id = id;
     $scope.eproject_name = $scope.projects[id].name.toString();
   };
 
@@ -103,14 +104,15 @@ $scope.addProject = function() {
     });
   }
   $scope.deleteData = function(id) {
-    
-    $http.post("API/delete-project.php?rand=" + new Date().getTime(), {
-      'id': id
-    }).success(function(data, status, headers, config) {
-      console.log(data);
-     $scope.getData($scope.pageNum());
-      alert("Project successfully deleted!");
-      //popup here
-    });
+    if (confirm("Do you want to delete this data?") == true) {
+      $http.post("API/delete-project.php?rand=" + new Date().getTime(), {
+        'id': id
+      }).success(function(data, status, headers, config) {
+        console.log(data);
+       $scope.getData($scope.pageNum());
+        alert("Project successfully deleted!");
+        //popup here
+      });
+    }
   }
 });
