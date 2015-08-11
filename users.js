@@ -6,7 +6,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
-  $scope.pageNum = $location.search().p;
+  $scope.pageNum = function(){
+    return (($location.search().p) ? $location.search().p : 1);
+  }
 
   var access_token = $cookies.get('access_token');
 
@@ -30,7 +32,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       $scope.pageArray.splice(0);
 
       for(var i = 1; i <= num; i++){
-        if (i >= page - 2 && i <= page + 2){
+        if (i >= page*1 - 2 && i <= page*1 + 2){
           $scope.pageArray.push(i);
         }
       }
@@ -75,7 +77,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
   }
 
-  $scope.getData($scope.pageNum);
+  $scope.getData($scope.pageNum());
   getTeams();
   $scope.edit = true;
   $scope.error = false;
@@ -97,6 +99,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.ebirthdate = $scope.users[id].birthdate.toString();
     $scope.eteam = $scope.users[id].team_id.toString();
     $scope.user_id = $scope.users[id].user_id.toString();
+    $scope.username = $scope.users[id].username.toString();
+    $scope.password = $scope.users[id].password.toString();
   };
   $scope.savedata = function() {
     switch ($scope.form_mode) {
@@ -110,18 +114,16 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   }
 
   $scope.updateData = function() {
-    var user_id = $scope.user_id;
-    var efullname = $('#efullname').val();
-    var ebirthdate = $('#ebirthdate').val();
-    var eteam = $('#eteam').val();
     $http.post("API/update-people.php", {
-      'user_id': user_id,
-      'fullname': efullname,
-      'birthdate': ebirthdate,
-      'team_id': eteam,
+      'user_id': $scope.user_id,
+      'fullname': $scope.efullname,
+      'birthdate': $scope.ebirthdate,
+      'team_id': $scope.eteam,
+      'username': $scope.username,
+      'password': $scope.password,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
-      $scope.getData($scope.pageNum);
+      $scope.getData($scope.pageNum());
       alert("User successfully updated!");
     });
   }
@@ -130,13 +132,15 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $http.post("API/insert-people.php", {
       'efullname': $scope.efullname,
       'ebirthdate': $scope.ebirthdate,
+      'username': $scope.username,
+      'password': $scope.password,
       'eteam': $scope.eteam,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
       console.log(data);
       alert("User successfully added!");
 
-      $scope.getData($scope.pageNum);
+      $scope.getData($scope.pageNum());
 
     });
   }
@@ -151,7 +155,7 @@ $scope.deleteData = function(id) {
       alert("User successfully deleted!");
   
 
-    $scope.getData($scope.pageNum);
+    $scope.getData($scope.pageNum());
 
       //popup here
     });

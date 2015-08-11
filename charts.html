@@ -46,6 +46,31 @@
             return vars;
         }
 
+        function repositionTooltip(x, y){
+            $("#tooltip").css({
+                    top: x,
+                    left: y
+            });
+
+            var computedY = ( ($("#tooltip").css('top').replace('px','')*1 + $("#tooltip").height() +20) - $(window).scrollTop());
+
+
+            var computedDifference = $(window).height()*1 - computedY*1;
+            console.log($(window).height()*1 + "-" + computedY + " = " + computedDifference);
+
+            if(computedDifference < 0){
+                var newY = $(window).height() - (computedDifference * -1);
+                if(newY < $(window).scrollTop() + 100){
+                    newY = $(window).scrollTop() + 100;
+                }
+                console.log("yes " + newY);
+                $("#tooltip").css({
+                        top: newY
+                });
+            }
+            
+        }
+
         function plotChart($numdays, chartDate) {
 
             $.plot("#placeholder", chartDate, {
@@ -171,8 +196,11 @@
                 opacity: 0.80
             }).appendTo("body").fadeIn(200);
 
+            var plotclicked = false;
+
             $("#placeholder").bind("plotclick", function(event, pos, item) {
 
+                plotclicked = true;
                 console.log(item);
 
                 if ($("#enablePosition:checked").length > 0) {
@@ -229,72 +257,82 @@
 
                     //alert(item)
 
-                    $("#tooltip").html(htmlString)
-                     .css({
-                            top: item.pageY - 200,
-                            left: item.pageX - 40
-                        })
-                        .fadeIn(200);
-                } 
+                    $("#tooltip").html(htmlString);
+
+                    repositionTooltip(item.pageY,item.pageX);
+                    
+                    $("#tooltip").fadeIn(200);
+                } else {
+                    plotclicked = false;
+                    $("#tooltip").hide();    
+                }
 
             });
 
+
+            
             $("#placeholder").bind("plothover", function(event, pos, item) {
 
-                console.log(item);
+                if(!plotclicked){
+                    console.log(item);
 
-                if ($("#enablePosition:checked").length > 0) {
-                    var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
-                    $("#hoverdata").text(str);
-                }
-
-
-                if (item) {
-                    var x = item.datapoint[0],
-                        y = item.datapoint[1];
-
-
-                    var timestamp = Math.round(item.datapoint[0]);
-                    var date = convertToDate(timestamp);
-                    console.log(item.series.label + " ::: " + date);
-
-                    var user_id = item.series.custom_id;
-
-                    console.log("this is the user:");
-                    console.log(allData[user_id][date]['allocation_list']);
-
-                    console.log('allData');
-                    console.log(allData);
-
-                    var htmlString = "";
-                    htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b><br>");
-
-                    for(var e in allData){
-                        
-                        if (allData[e][date] && y == allData[e][date]['allocation_total']){
-
-                            htmlString += "<b>" + (allData[e].fullname + "</b><br>");
-                            htmlString += ("<b>" + allData[e][date]['allocation_total'] + "% </b> Allocation<br>");
-
-                            htmlString += ("</div>");
-
-                            htmlString += "<br>";
-                        }
+                    if ($("#enablePosition:checked").length > 0) {
+                        var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+                        $("#hoverdata").text(str);
                     }
 
-                    //alert(item)
 
-                    $("#tooltip").html(htmlString)
-                        .css({
-                            top: item.pageY - 70,
-                            left: item.pageX - 40
-                        })
-                        .fadeIn(200);
-                } else {
-                    $("#tooltip").hide();
+                    if (item) {
+                        var x = item.datapoint[0],
+                            y = item.datapoint[1];
+
+
+                        var timestamp = Math.round(item.datapoint[0]);
+                        var date = convertToDate(timestamp);
+                        console.log(item.series.label + " ::: " + date);
+
+                        var user_id = item.series.custom_id;
+
+                        console.log("this is the user:");
+                        console.log(allData[user_id][date]['allocation_list']);
+
+                        console.log('allData');
+                        console.log(allData);
+
+                        var htmlString = "";
+                        htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b><br><br>");
+
+                        for(var e in allData){
+                            
+                            if (allData[e][date] && y == allData[e][date]['allocation_total']){
+
+                                htmlString += "<b>" + (allData[e].fullname + "</b><br>");
+                                htmlString += ("<b>" + allData[e][date]['allocation_total'] + "% </b> Allocation<br>");
+
+                                htmlString += ("</div>");
+
+                                htmlString += "<br>";
+                            }
+                        }
+
+                        //alert(item)
+
+                        $("#tooltip").html(htmlString);
+
+                        repositionTooltip(item.pageY,item.pageX);
+
+                        /*
+                        console.log($(window).height() + " -- " + $("#tooltip").height() + " ---" + $("#tooltip").css('top').replace('px','') + " ---" + $(window).scrollTop() + " ----" + ($(window).scrollTop() - $("#tooltip").css('top').replace('px','')*1) + " ---" +  $(window).height() - );
+                        */
+
+
+                        $("#tooltip").fadeIn(200);
+                    } else {
+                        //$("#tooltip").hide();    
+                    }
                 }
-
             });
+            
 
         }
 
@@ -316,8 +354,6 @@
                 dataType: 'json',
                 async: false,
                 success: function(data) {
-
-                    console.log(data);
 
                     allData = data;
 
@@ -405,6 +441,14 @@
                                         </select>
                                     </div>
                                     <div class="chart_filter">
+                                        <label for='exe3'>Person</label>
+                                        <br>
+                                        <select name="user_id" ng-model="ename" id="user_id" class="col-lg">
+                                            <option value="">Choose a Person</option>
+                                            <option ng-repeat="(key,user) in users " value="{{ key }}" ng-selected="key == ename">{{user.fullname}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="chart_filter">
                                         <label>From:</label>
                                         <br>
 
@@ -412,8 +456,8 @@
                                             <input name="from_date" type='text' class="form-control" placeholder="YYYY-MM-DD" id="from_date" value="">
                                             <label class= "input-group-addon btn" for="from_date">
                                             <span ng-click="open" class="glyphicon glyphicon-calendar">
-                                    </span>
-                                </label>
+                                            </span>
+                                            </label>
 
                                         </div>
                                     </div>
@@ -426,17 +470,9 @@
                                             <label class= "input-group-addon btn" for="to_date">
                                             <span ng-click="open" class="glyphicon glyphicon-calendar">
 
-                                    </span>
-                                </label>
+                                            </span>
+                                            </label>
                                         </div>
-                                    </div>
-                                    <div class="chart_filter">
-                                        <label for='exe3'>People</label>
-                                        <br>
-                                        <select name="user_id" ng-model="ename" id="user_id" class="col-lg">
-                                            <option value="">Choose a Person</option>
-                                            <option ng-repeat="(key,user) in users " value="{{ key }}" ng-selected="key == ename">{{user.fullname}}</option>
-                                        </select>
                                     </div>
                                     <div class="chart_filter">
                                         <label for='exe3'></label>

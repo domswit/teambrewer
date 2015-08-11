@@ -1,5 +1,6 @@
 <?php
 include("../config/connection.php");
+include("../config/auth.php");
 $data = json_decode(file_get_contents("php://input"));
 $eproject_name = mysql_real_escape_string($data->eproject_name);
 
@@ -9,7 +10,7 @@ if ($conn->connect_error) {
 
 $created = date("Y-m-d h:i:s");
 
-$sql = "INSERT INTO projects(`name`, `created`)VALUES('".$eproject_name."','" . $created . "')";
+$sql = "INSERT INTO projects(`name`, `created`) VALUES('".$eproject_name."','" . $created . "')";
 
 $output = Array();
 

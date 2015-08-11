@@ -1,5 +1,6 @@
 <?php
 include("../config/connection.php");
+include("../config/auth.php");
 
 $output = Array('success'=>true, 'projects'=>null);
 

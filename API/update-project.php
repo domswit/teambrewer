@@ -1,5 +1,6 @@
 <?php
 include("../config/connection.php");
+include("../config/auth.php");
 
 $data = json_decode(file_get_contents("php://input"));
 $project_id = mysql_real_escape_string($data->project_id);

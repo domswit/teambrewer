@@ -3,17 +3,18 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.teams = '';
   $scope.updateData = {}
   $scope.pageArray = [];
-  $scope.pageNum = (($location.search().p) ? $location.search().p : 1);
+  $scope.pageNum = function(){
+    return (($location.search().p) ? $location.search().p : 1);
+  }
 
   var access_token = $cookies.get('access_token');
-
 
   $scope.fillPageArray = function(num, page) {
 
       $scope.pageArray.splice(0);
 
       for(var i = 1; i <= num; i++){
-        if (i >= page - 2 && i <= page + 2){
+        if (i >= page*1 - 2 && i <= page*1 + 2){
           $scope.pageArray.push(i);
         }
       }
@@ -44,7 +45,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   }
 
-  $scope.getData($scope.pageNum);
+  $scope.getData($scope.pageNum());
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
@@ -56,6 +57,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.name = '';
   };
   $scope.editTeam = function(id) {
+    $scope.team_id = id;
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Team Information";
     $scope.name = $scope.teams[id].name.toString();
@@ -81,7 +83,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'access_token': access_token,
     }).success(function(data, status, headers, config) {
 
-      $scope.getData($scope.pageNum);
+      $scope.getData($scope.pageNum());
       alert("Team successfully updated!");
 
     });
@@ -93,7 +95,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     }).success(function(data, status, headers, config) {
       console.log(data);
 
-      $scope.getData($scope.pageNum);
+      $scope.getData($scope.pageNum());
       alert("Team successfully added!");
 
     });
@@ -109,7 +111,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       console.log(data);
       alert("Team successfully deleted!");  
 
-      $scope.getData($scope.pageNum);
+      $scope.getData($scope.pageNum());
     });
   }
 });

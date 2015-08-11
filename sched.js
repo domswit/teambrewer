@@ -8,7 +8,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.first_name2 = "test";
   $scope.pageArray = [];
-  $scope.pageNum = (($location.search().p) ? $location.search().p : 1);
+  $scope.pageNum = function(){
+    return (($location.search().p) ? $location.search().p : 1);
+  }
 
 var access_token = $cookies.get('access_token');
 
@@ -17,7 +19,7 @@ $scope.fillPageArray = function(num, page) {
       $scope.pageArray.splice(0);
 
       for(var i = 1; i <= num; i++){
-        if (i >= page - 2 && i <= page + 2){
+        if (i >= page*1 - 2 && i <= page*1 + 2){
           $scope.pageArray.push(i);
         }
       }
@@ -99,8 +101,8 @@ $scope.fillPageArray = function(num, page) {
 
   }
   getAlloc();
-  getData($scope.pageNum);
-  $scope.getSched($scope.pageNum);
+  getData($scope.pageNum());
+  $scope.getSched($scope.pageNum());
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
@@ -145,7 +147,7 @@ $scope.fillPageArray = function(num, page) {
       'allocation': ealloc
     }).success(function(data, status, headers, config) {
       console.log(data);
-      $scope.getSched($scope.pageNum);
+      $scope.getSched($scope.pageNum());
       alert("Schedule successfully updated!");
     });
   }
@@ -157,7 +159,7 @@ $scope.fillPageArray = function(num, page) {
       'ealloc': $scope.ealloc
     }).success(function(data, status, headers, config) {
       console.log(data);
-      $scope.getSched($scope.pageNum);
+      $scope.getSched($scope.pageNum());
       alert("Schedule successfully added!");
     });
   }
@@ -169,7 +171,7 @@ $scope.fillPageArray = function(num, page) {
     }).success(function(data, status, headers, config) {
       console.log(data);
   
-      $scope.getSched($scope.pageNum);
+      $scope.getSched($scope.pageNum());
       alert("Schedule successfully deleted!");
       //popup here
     });

@@ -1,5 +1,6 @@
 <?php
 include("../config/connection.php");
+include("../config/auth.php");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

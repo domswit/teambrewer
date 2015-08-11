@@ -7,6 +7,7 @@
 <?php
 
 		include("../config/connection.php");
+		include("../config/auth.php");
 
 		function getUserIdByName($name){
 

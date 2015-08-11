@@ -1,5 +1,6 @@
 <?php
 include("../config/connection.php");
+include("../config/auth.php");
 
 $data = json_decode(file_get_contents("php://input"));
 $efullname = mysql_real_escape_string($data->efullname);
@@ -11,8 +12,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$username = "tempusername";
-$password = "temppassword";
+$username = mysql_real_escape_string($data->username);
+$password = mysql_real_escape_string($data->password);
 $password = md5($password);
 
 $created = date("Y-m-d h:i:s");

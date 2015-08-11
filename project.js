@@ -7,7 +7,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.first_name2 = "test";
   $scope.pageArray = [];
-  $scope.pageNum = (($location.search().p) ? $location.search().p : 1);
+  $scope.pageNum = function(){
+    return (($location.search().p) ? $location.search().p : 1);
+  }
 
   var access_token = $cookies.get('access_token');
 
@@ -17,11 +19,15 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
       $scope.pageArray.splice(0);
 
+      console.log("yay " + num + " - " + page);
+
       for(var i = 1; i <= num; i++){
-        if (i >= page - 2 && i <= page + 2){
+        if (i >= page*1 - 2 && i <= page*1 + 2){
           $scope.pageArray.push(i);
         }
       }
+
+      console.log($scope.pageArray);
 
       return $scope.pageArray;
   }
@@ -32,21 +38,21 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     if(page == undefined){
       page = 1;
     }
-  var response = $http.get(
-      "API/project-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page + "&access_token=" + access_token);
-    response.success(function(data, status, headers, config) {
-      console.log(data.projects);
-     $scope.projects = data.projects;
 
-     $scope.fillPageArray(data.total_rows, page);
-    });
-    response.error(function(data, status, headers, config) {
-      alert("AJAX failed!");
-    });
+    var response = $http.get(
+        "API/project-list.php?rand=" + new Date()
+        .getTime() + "&page=" + page + "&access_token=" + access_token);
+      response.success(function(data, status, headers, config) {
+        console.log(data.projects);
+        $scope.projects = data.projects;
+        $scope.fillPageArray(data.total_rows, page);
+      });
+      response.error(function(data, status, headers, config) {
+        alert("AJAX failed!");
+      });
   }
 
-  $scope.getData($scope.pageNum);
+  $scope.getData($scope.pageNum());
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
@@ -58,6 +64,7 @@ $scope.addProject = function() {
     $scope.eproject_name = '';
   };
   $scope.editProject = function(id) {
+    $scope.project_id = id;
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Project Information";
     $scope.eproject_name = $scope.projects[id].name.toString();
@@ -75,15 +82,13 @@ $scope.addProject = function() {
   }
 
   $scope.updateData = function() {
-    var edit_project_id = $scope.project_id;
-    var edit_project_name = $('#edit_project_name').val();
     $http.post("API/update-project.php", {
-      'project_id': edit_project_id,
-      'project_name': edit_project_name,
+      'project_id': $scope.project_id,
+      'project_name': $scope.eproject_name,
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      $scope.getData($scope.pageNum);
+      $scope.getData($scope.pageNum());
       alert("Project successfully updated!");
     });
   }
@@ -93,18 +98,17 @@ $scope.addProject = function() {
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      $scope.getData($scope.pageNum);
+      $scope.getData($scope.pageNum());
       alert("Project successfully added!");
     });
   }
   $scope.deleteData = function(id) {
     
-
     $http.post("API/delete-project.php?rand=" + new Date().getTime(), {
       'id': id
     }).success(function(data, status, headers, config) {
       console.log(data);
-     $scope.getData($scope.pageNum);
+     $scope.getData($scope.pageNum());
       alert("Project successfully deleted!");
       //popup here
     });

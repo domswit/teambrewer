@@ -1,5 +1,6 @@
 <?php
 include("../config/connection.php");
+include("../config/auth.php");
 
 $output = Array('success'=>true, 'teams'=>null);
 
@@ -7,7 +8,7 @@ $output = Array('success'=>true, 'teams'=>null);
 if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 	$max_per_page = $_GET['max_per_page'];	
 } else {
-	$max_per_page = 20;	
+	$max_per_page = 5;	
 }
 
 $page = getPage();

@@ -1,5 +1,7 @@
 <?php
 include("../config/connection.php");
+include("../config/auth.php");
+
 ini_set('max_execution_time', 0);
 set_time_limit(0);
 
