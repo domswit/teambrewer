@@ -1,8 +1,8 @@
 <?php
 $data = json_decode(file_get_contents("php://input"));
-$access_token = mysql_real_escape_string($data->access_token);
+$access_token = mysql_real_escape_string($_REQUEST['access_token']);
 
-$sql = "SELECT * FROM users WHERE access_token = '{$access_token}'";
+$sql = "SELECT * FROM users WHERE access_token = '{$access_token}' AND access_token != ''";
 
 $result = $conn->query($sql);
 

@@ -33,11 +33,13 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       "API/team-list.php?rand=" + new Date()
       .getTime() + "&page=" + page + "&access_token=" + access_token);
     response.success(function(data, status, headers, config) {
-      console.log(data.teams);
-
-     $scope.teams = data.teams;
-
-     $scope.fillPageArray(data.total_rows, page);
+      
+      if(data.success){
+        $scope.teams = data.teams;
+        $scope.fillPageArray(data.total_rows, page);
+      } else {
+        window.location.href = 'login.html';
+      }
 
     });
     response.error(function(data, status, headers, config) {

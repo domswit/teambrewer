@@ -17,9 +17,11 @@
     <link href="css/header.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="js/angular-cookies.js"></script>
     <link href="css/examples.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
         var allData = [];
+        var access_token;
 
         function convertToTimestamp(date) {
             myDate = date.split("-");
@@ -349,13 +351,20 @@
                     to_date: filters.to_date,
                     project_id: filters.project_id,
                     team_id: filters.team_id,
-                    user_id: filters.user_id
+                    user_id: filters.user_id,
+                    access_token: access_token
                 },
                 dataType: 'json',
                 async: false,
                 success: function(data) {
+                    if(!data.success){
+                        alert(data.message);
+                        window.location.href = 'login.html';
+                    }
 
-                    allData = data;
+                    allData = data.users;
+                    data = data.users;
+
 
                     for (var i in data) {
 
@@ -405,6 +414,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="charts.html">teambrewer</a>
             </div>
+            <div ng-include="'logout.html'"></div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <div ng-include="'navbar.html'"></div>
             </div>

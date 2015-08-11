@@ -64,9 +64,13 @@ $scope.fillPageArray = function(num, page) {
 
     response.success(function(data, status, headers, config) {
       console.log(data.sched);
-     $scope.sched = data.sched;
+      if(data.success){
+       $scope.sched = data.sched;
+       $scope.fillPageArray(data.total_rows, page);        
+      } else {
+        window.location.href = 'login.html';
+      }
 
-     $scope.fillPageArray(data.total_rows, page);
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");

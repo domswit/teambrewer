@@ -1,8 +1,12 @@
+var access_token;
+
 angular.module('myApp', ['ui.bootstrap']);
-angular.module('myApp', []).controller('userCtrl', function($scope, $http) {
+angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
   $scope.teams = '';
   $scope.updateData = {}
   var filters = getUrlVars();
+
+  access_token = $cookies.get('access_token');
 
   function getTeam() {
     var response = $http.get(

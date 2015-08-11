@@ -13,9 +13,8 @@ angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, 
         console.log(data);
 
         if (data.user){
-
 		      $cookies.put('access_token', data.user.access_token);
-          $window.location.href = '/teambrewer/charts.html';
+          window.location.href = '/teambrewer/charts.html';
         } 
 
         else  {

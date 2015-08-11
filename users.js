@@ -53,10 +53,13 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       .getTime() + "&page=" + page + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
-      console.log(data.users);
-     $scope.users = data.users;
-
-     $scope.fillPageArray(data.total_rows, page);
+      
+      if(data.success){
+        $scope.users = data.users;
+        $scope.fillPageArray(data.total_rows, page);        
+      } else {
+        window.location.href = 'login.html';
+      }
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");

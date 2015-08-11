@@ -7,6 +7,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
+$output = Array('success'=>true, 'users'=>null);
 
 function getUsers($project_id, $team_id, $user_id){
 	// $users = array();
@@ -220,6 +221,8 @@ if($form_fromdate != '' || $form_todate != ''){
 
 //print_r($users);
 
-echo json_encode ($users);
+$output['users'] = $users;
+
+echo json_encode ($output);
 
 $conn->close();
