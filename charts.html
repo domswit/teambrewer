@@ -48,8 +48,8 @@
 
         function repositionTooltip(x, y){
             $("#tooltip").css({
-                    top: x,
-                    left: y
+                    top: x + 5,
+                    left: y + 5
             });
 
             var computedY = ( ($("#tooltip").css('top').replace('px','')*1 + $("#tooltip").height() +20) - $(window).scrollTop());
@@ -260,7 +260,7 @@
                     $("#tooltip").html(htmlString);
 
                     repositionTooltip(item.pageY,item.pageX);
-                    
+
                     $("#tooltip").fadeIn(200);
                 } else {
                     plotclicked = false;
