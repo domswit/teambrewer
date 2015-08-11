@@ -142,7 +142,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   }
   
 $scope.deleteData = function(id) {
-
+  if (confirm("Do you want to delete this data?") == true) {
+       
     $http.post("API/delete-people.php", {
       'rand': new Date().getTime(),
       'id': id,
@@ -156,5 +157,6 @@ $scope.deleteData = function(id) {
       //popup here
     });
   }
+}
 
 });

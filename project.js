@@ -98,7 +98,7 @@ $scope.addProject = function() {
     });
   }
   $scope.deleteData = function(id) {
-    
+    if (confirm("Do you want to delete this data?") == true) {
 
     $http.post("API/delete-project.php?rand=" + new Date().getTime(), {
       'id': id
@@ -108,5 +108,6 @@ $scope.addProject = function() {
       alert("Project successfully deleted!");
       //popup here
     });
+  }
   }
 });

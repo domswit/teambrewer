@@ -100,7 +100,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   }
 
   $scope.deleteData = function(id) {
-    
+    if (confirm("Do you want to delete this data?") == true) {
     $http.post("API/delete-teams.php", {
       'rand': new Date().getTime(),
       'id': id,
@@ -111,5 +111,6 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
       $scope.getData($scope.pageNum);
     });
+  }
   }
 });

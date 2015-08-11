@@ -163,15 +163,16 @@ $scope.fillPageArray = function(num, page) {
   }
   $scope.deleteData = function(id) {
     
-
+if (confirm("Do you want to delete this data?") == true) {
     $http.post("API/delete-sched.php?rand=" + new Date().getTime(), {
       'id': id
     }).success(function(data, status, headers, config) {
       console.log(data);
   
       $scope.getSched($scope.pageNum);
-      alert("Schedule successfully deleted!");
+      
       //popup here
     });
   }
+}
 });
