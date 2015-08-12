@@ -127,6 +127,7 @@ $scope.fillPageArray = function(num, page) {
     $scope.efromdate = $scope.sched[id].fromdate.toString();
     $scope.etodate = $scope.sched[id].todate.toString();
     $scope.ename = $scope.sched[id].user_id.toString();
+    $scope.ealloc = $scope.sched[id].allocation.toString();
     $scope.sched_id = $scope.sched[id].sched_id.toString();
   };
   $scope.savedata = function() {
