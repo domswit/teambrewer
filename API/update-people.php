@@ -24,7 +24,6 @@ if ($conn->connect_error) {
 
 $sql = "UPDATE users SET username='" . $username . "', " . $password_str . " fullname='" . $efullname . "', birthdate='" . $ebirthdate . "' , team_id='" . $eteam . "' WHERE user_id='" . $user_id . "'";
 
-echo $sql;
 $output = Array();
 
 if ($conn->query($sql) === TRUE) {

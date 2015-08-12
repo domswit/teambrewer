@@ -31,7 +31,7 @@ if ($conn->query($sql) === TRUE) {
 	$update_sql = "UPDATE users SET access_token='" . $access_token . "' WHERE user_id='" . $last_id . "'";
 
 	if ($conn->query($update_sql) === TRUE) {
-		echo 'updated';
+		//echo 'updated';
 	}
 
 	$output['success'] = true;
