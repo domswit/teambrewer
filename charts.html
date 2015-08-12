@@ -271,7 +271,6 @@
 
             });
 
-
             
             $("#placeholder").bind("plothover", function(event, pos, item) {
 
@@ -330,7 +329,11 @@
 
                         $("#tooltip").fadeIn(200);
                     } else {
-                        //$("#tooltip").hide();    
+
+                        if(!plotclicked){
+                            $("#tooltip").hide();        
+                        }
+                        
                     }
                 }
             });

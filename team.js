@@ -86,9 +86,13 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'access_token': access_token,
     }).success(function(data, status, headers, config) {
 
-      $scope.getData($scope.pageNum());
-      alert("Team successfully updated!");
-
+      if(data.success){
+        $scope.getData($scope.pageNum());
+        alert("Team successfully updated!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
   }
   $scope.insertData = function() {
@@ -96,10 +100,15 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'name': $scope.name,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
-      console.log(data);
 
-      $scope.getData($scope.pageNum());
-      alert("Team successfully added!");
+      if(data.success){
+        console.log(data);
+        $scope.getData($scope.pageNum());
+        alert("Team successfully added!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
 
     });
   }
@@ -111,10 +120,16 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'id': id,
       'access_token' : access_token
     }).success(function(data, status, headers, config) {
-      console.log(data);
-      alert("Team successfully deleted!");  
 
-      $scope.getData($scope.pageNum());
+      if(data.success){
+        console.log(data);
+        alert("Team successfully deleted!");  
+
+        $scope.getData($scope.pageNum());
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
   }
   }

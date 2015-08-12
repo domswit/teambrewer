@@ -58,9 +58,7 @@ $scope.fillPageArray = function(num, page) {
     var response = $http.get(
 
       "API/sched-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page, {
-        'access_token': access_token
-      });
+      .getTime() + "&page=" + page + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
       console.log(data.sched);
@@ -68,6 +66,7 @@ $scope.fillPageArray = function(num, page) {
        $scope.sched = data.sched;
        $scope.fillPageArray(data.total_rows, page);        
       } else {
+        alert(data.message);
         window.location.href = 'login.html';
       }
 
@@ -91,13 +90,16 @@ $scope.fillPageArray = function(num, page) {
   }
 
   function getData() {
-    var response = $http.get(
-
-      "API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+    var response = $http.get("API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
-      console.log(data.users);
-      $scope.users = data.users;
+      if(data.success){
+        console.log(data.users);
+        $scope.users = data.users;
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -150,9 +152,13 @@ $scope.fillPageArray = function(num, page) {
       'todate': etodate,
       'allocation': ealloc
     }).success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.getSched($scope.pageNum());
-      alert("Schedule successfully updated!");
+      if(data.success){
+        $scope.getSched($scope.pageNum());
+        alert("Schedule successfully updated!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
   }
   $scope.insertData = function() {
@@ -162,9 +168,15 @@ $scope.fillPageArray = function(num, page) {
       'etodate': $scope.etodate,
       'ealloc': $scope.ealloc
     }).success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.getSched($scope.pageNum());
-      alert("Schedule successfully added!");
+      if(data.success){
+        console.log(data);
+        $scope.getSched($scope.pageNum());
+        alert("Schedule successfully added!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
+
     });
   }
   $scope.deleteData = function(id) {
@@ -173,10 +185,15 @@ if (confirm("Do you want to delete this data?") == true) {
     $http.post("API/delete-sched.php?rand=" + new Date().getTime(), {
       'id': id
     }).success(function(data, status, headers, config) {
-      console.log(data);
-  
-      $scope.getSched($scope.pageNum());
-      alert("Schedule successfully deleted!");
+      if(data.success){
+        console.log(data);
+    
+        $scope.getSched($scope.pageNum());
+        alert("Schedule successfully deleted!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
       //popup here
     });
   }

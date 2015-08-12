@@ -93,8 +93,13 @@ $scope.addProject = function() {
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      $scope.getData($scope.pageNum());
-      alert("Project successfully updated!");
+      if(data.success){
+        $scope.getData($scope.pageNum());
+        alert("Project successfully updated!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
   }
   $scope.insertData = function() {
@@ -103,18 +108,30 @@ $scope.addProject = function() {
       'access_token': $cookies.get('access_token')
     }).success(function(data, status, headers, config) {
       console.log(data);
-      $scope.getData($scope.pageNum());
-      alert("Project successfully added!");
+      if(data.success){
+        $scope.getData($scope.pageNum());
+        alert("Project successfully added!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
   }
   $scope.deleteData = function(id) {
     if (confirm("Do you want to delete this data?") == true) {
       $http.post("API/delete-project.php?rand=" + new Date().getTime(), {
-        'id': id
+        'id': id,
+        'access_token':  access_token
       }).success(function(data, status, headers, config) {
         console.log(data);
-       $scope.getData($scope.pageNum());
-        alert("Project successfully deleted!");
+        if(data.success){
+          $scope.getData($scope.pageNum());
+          alert("Project successfully deleted!");  
+        } else {
+          alert(data.message);
+          window.location.href = 'login.html';
+        }
+        
         //popup here
       });
     }

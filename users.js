@@ -71,8 +71,14 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       "API/team-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
-      console.log(data.teams);
-      $scope.teams = data.teams;
+
+      if(data.success){
+        console.log(data.teams);
+        $scope.teams = data.teams;
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -126,8 +132,13 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'password': $scope.epassword,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
-      $scope.getData($scope.pageNum());
-      alert("User successfully updated!");
+      if(data.success){
+        $scope.getData($scope.pageNum());
+        alert("User successfully updated!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
   }
    
@@ -140,10 +151,16 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'eteam': $scope.eteam,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
-      console.log(data);
-      alert("User successfully added!");
 
-      $scope.getData($scope.pageNum());
+      if(data.success){
+        console.log(data);
+        alert("User successfully added!");
+
+        $scope.getData($scope.pageNum());
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
 
     });
   }
@@ -156,10 +173,14 @@ $scope.deleteData = function(id) {
       'id': id,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
-      alert("User successfully deleted!");
-  
-
-    $scope.getData($scope.pageNum());
+      if(data.success){
+        alert("User successfully deleted!");
+    
+        $scope.getData($scope.pageNum());
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
 
       //popup here
     });

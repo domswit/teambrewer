@@ -1,5 +1,10 @@
 @import url("http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css");
 
+
+#tooltip{
+    z-index: 99;
+}
+
 #page-wrapper{
     min-height: 600px;
 }
