@@ -100,6 +100,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.elast_name = '';
     $scope.ebirthdate = '';
     $scope.eteam = '';
+    $scope.eusername = '';
   }
   $scope.editUser = function(id) {
     $scope.form_mode = 'update';
@@ -146,8 +147,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $http.post("API/insert-people.php", {
       'efullname': $scope.efullname,
       'ebirthdate': $scope.ebirthdate,
-      'username': $scope.username,
-      'password': $scope.password,
+      'username': $scope.eusername,
+      'password': $scope.epassword,
       'eteam': $scope.eteam,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
