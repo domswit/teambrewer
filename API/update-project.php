@@ -3,7 +3,7 @@ include("../config/connection.php");
 include("../config/auth.php");
 
 $data = json_decode(file_get_contents("php://input"));
-$eproject_name = mysql_real_escape_string($data->eproject_name);
+$project_name = mysql_real_escape_string($data->project_name);
 $project_id = mysql_real_escape_string($data->project_id);
 
 if ($conn->connect_error) {
@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 } 
 $updated = date("Y-m-d h:i:s");
 
-$sql = "UPDATE projects SET name='" . $eproject_name .  "', updated='" . $updated . "'  WHERE project_id='" . $project_id . "'";
+$sql = "UPDATE projects SET name='" . $project_name .  "', updated='" . $updated . "'  WHERE project_id='" . $project_id . "'";
 
 $output = Array();
 
