@@ -96,8 +96,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.addUser = function() {
     $scope.form_mode = 'insert';
     $scope.form_title = "Add User Information";
-    $scope.efirst_name = '';
-    $scope.elast_name = '';
+    $scope.eusername = '';
+    $scope.efullname = '';
     $scope.ebirthdate = '';
     $scope.eteam = '';
     $scope.eusername = '';
