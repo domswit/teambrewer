@@ -9,7 +9,7 @@
 		include("../config/connection.php");
 		include("../config/auth.php");
 			
-		function getUserIdByName($name){
+	function getUserIdByName($name){
  		$name=substr($name , 0 , 60);
 		global $conn;
 
