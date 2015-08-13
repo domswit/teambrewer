@@ -9,7 +9,7 @@
 		include("../config/connection.php");
 		include("../config/auth.php");
 			
-		function getUserIdByName($name){
+	function getUserIdByName($name){
  		$name=substr($name , 0 , 60);
 		global $conn;
 
@@ -52,7 +52,7 @@
 	}
 
 	function getProjectIdByName($project_name){
- 		$project_name=substr($project_name, 0 , 300)
+ 		$project_name=substr($project_name, 0 , 300);
 		global $conn;
 
 		if ($conn->connect_error) {
