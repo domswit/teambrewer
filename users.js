@@ -137,8 +137,15 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
         $scope.getData($scope.pageNum());
         alert("User successfully updated!");
       } else {
-        alert(data.message);
-        window.location.href = 'login.html';
+
+        switch(data.message_code){
+          case '1':
+            window.location.href = 'login.html';  
+          break;
+          case '2':
+            alert(data.message);
+            break;
+        }
       }
     });
   }
@@ -159,8 +166,16 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
         $scope.getData($scope.pageNum());
       } else {
-        alert(data.message);
-        window.location.href = 'login.html';
+        
+        switch(data.message_code){
+          case '1':
+            window.location.href = 'login.html';  
+          break;
+          case '2':
+            alert(data.message);
+            break;
+        }
+
       }
 
     });
