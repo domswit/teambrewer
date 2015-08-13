@@ -8,9 +8,9 @@
 
 		include("../config/connection.php");
 		include("../config/auth.php");
-
+			
 		function getUserIdByName($name){
-
+ 		$name=substr($name , 0 , 60);
 		global $conn;
 
 		if ($conn->connect_error) {
@@ -33,8 +33,9 @@
 			//if name was found, return its id
 			$result_id = $user[0]['user_id'];
 			echo "Existing User: ";
+
 		
-		} else {
+		} elseif( count($user) === 0 && trim($filesop[8]) !== "" ) {
 			//if name was not found, add to database and return inserted id
 			$sql = "INSERT INTO users (fullname) VALUES ('$name')";
 
@@ -44,13 +45,14 @@
 			
 			}
 		}
+		
 
 
 		return $result_id;
 	}
 
 	function getProjectIdByName($project_name){
-
+ 		$project_name=substr($project_name, 0 , 300)
 		global $conn;
 
 		if ($conn->connect_error) {
@@ -75,9 +77,7 @@
 			//if name was found, return its id
 			echo "Existing Project: ";
 			$result_id = $project[0]['project_id'];
-			
-		
-		} else {
+		} elseif( count($project) === 0 && trim($project_name) !== "" ) {
 			//if name was not found, add to database and return inserted id
 			$sql = "INSERT INTO projects (name) VALUES ('$project_name')";
 
@@ -171,7 +171,8 @@
 			$result_id = $sched[0]['sched_id'];
 			
 		
-		} else {
+		}
+		elseif( count($sched) === 0 && trim($filesop[8]) !== "" && trim($filesop[9]) !== "" ) {
 			//if name was not found, add to database and return inserted id
 			$sql = "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}')";
 
