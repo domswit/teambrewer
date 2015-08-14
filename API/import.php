@@ -37,7 +37,8 @@
 		
 		} elseif( count($user) === 0 && trim($filesop[8]) !== "" ) {
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO users (fullname) VALUES ('$name')";
+			$created = date("Y-m-d h:i:s");
+			$sql = "INSERT INTO users (fullname, created) VALUES ('$name','$created')";
 
 			if ($conn->query($sql) === TRUE) {
 				$result_id = $conn->insert_id;
@@ -45,8 +46,6 @@
 			
 			}
 		}
-		
-
 
 		return $result_id;
 	}
@@ -76,8 +75,9 @@
 			echo "Existing Project: ";
 			$result_id = $project[0]['project_id'];
 		} elseif( count($project) === 0 && trim($project_name) !== "" ) {
+			$created = date("Y-m-d h:i:s");
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO projects (name) VALUES ('$project_name')";
+			$sql = "INSERT INTO projects (name, created) VALUES ('{$project_name}','{$created}')";
 
 			if ($conn->query($sql) === TRUE) {
 				echo " New Project Inserted: "."</br>";
