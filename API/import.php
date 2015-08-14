@@ -52,6 +52,7 @@
 	}
 
 	function getProjectIdByName($project_name){
+ 		$project_name=substr($project_name, 0 , 300);
  		
 		global $conn;
 
@@ -79,9 +80,9 @@
 			$sql = "INSERT INTO projects (name) VALUES ('$project_name')";
 
 			if ($conn->query($sql) === TRUE) {
-				echo " New Project Inserted: ";
+				echo " New Project Inserted: "."</br>";
 				$result_id = $conn->insert_id;
-				
+				echo $result_id;
 			
 			}
 		}
