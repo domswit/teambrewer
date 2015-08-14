@@ -14,7 +14,7 @@ if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
-$sql = "SELECT a.sched_id, a.user_id, b.fullname as name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id)LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
+$sql = "SELECT a.sched_id, a.user_id, b.fullname as name, c.project_id, c.name as project_name, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id) LEFT JOIN projects as c ON(a.project_id = c.project_id) LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
 
 $count_sql = "SELECT COUNT(*) as total FROM sched";
 $result = $conn->query($sql);

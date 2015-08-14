@@ -169,16 +169,11 @@
 			//if name was found, return its id
 			echo "Existing Schedule (".$result_id .") " . $name . " " .$from_date. " to " .$to_date. " " .$alloc."<br>" . "<br>" ;
 			$result_id = $sched[0]['sched_id'];
-			
-		
 		}
 		elseif( count($sched) === 0 && trim($filesop[8]) !== "" && trim($filesop[9]) !== "" ) {
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}')";
-
-			
-
-				
+			$created = date("Y-m-d h:i:s");
+			$sql = "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`,`created`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}','{$created}')";
 
 				$c = $c + 1;
 

@@ -106,8 +106,26 @@ $scope.fillPageArray = function(num, page) {
     });
 
   }
+
+  function getProjects() {
+    var response = $http.get("API/project-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+
+    response.success(function(data, status, headers, config) {
+      if(data.success){
+        $scope.projects = data.projects;
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
+    });
+    response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+    });
+
+  }
   getAlloc();
-  getData($scope.pageNum());
+  getData();
+  getProjects();
   $scope.getSched($scope.pageNum());
   $scope.edit = true;
   $scope.error = false;
@@ -121,7 +139,7 @@ $scope.fillPageArray = function(num, page) {
     $scope.ealloc = '';
   }
 
-  $scope.editUser = function(id) {
+  $scope.editUser = function(id) {    
     $scope.form_mode = 'update';
     $scope.form_title = "Edit User Information";
     $scope.efromdate = $scope.sched[id].fromdate.toString();
@@ -129,6 +147,7 @@ $scope.fillPageArray = function(num, page) {
     $scope.ename = $scope.sched[id].user_id.toString();
     $scope.ealloc = $scope.sched[id].allocation.toString();
     $scope.sched_id = $scope.sched[id].sched_id.toString();
+    console.log($scope.sched[id]);
   };
   $scope.savedata = function() {
     switch ($scope.form_mode) {
@@ -167,7 +186,8 @@ $scope.fillPageArray = function(num, page) {
       'ename': $scope.ename,
       'efromdate': $scope.efromdate,
       'etodate': $scope.etodate,
-      'ealloc': $scope.ealloc
+      'ealloc': $scope.ealloc,
+      'eproject': $scope.eproject
     }).success(function(data, status, headers, config) {
       if(data.success){
         console.log(data);
