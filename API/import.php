@@ -52,7 +52,7 @@
 	}
 
 	function getProjectIdByName($project_name){
- 		$project_name=substr($project_name, 0 , 300);
+ 		
 		global $conn;
 
 		if ($conn->connect_error) {
@@ -69,15 +69,12 @@
     			$project[] = $row;
 		    }
 		} 
-
-		
-
 	
 		if( count($project) > 0 ){
 			//if name was found, return its id
 			echo "Existing Project: ";
 			$result_id = $project[0]['project_id'];
-		} elseif( count($project) === 0 && trim($filesop[9]) !== "" ) {
+		} elseif( count($project) === 0 && trim($project_name) !== "" ) {
 			//if name was not found, add to database and return inserted id
 			$sql = "INSERT INTO projects (name) VALUES ('$project_name')";
 
