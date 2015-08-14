@@ -82,7 +82,7 @@
 			if ($conn->query($sql) === TRUE) {
 				echo " New Project Inserted: "."</br>";
 				$result_id = $conn->insert_id;
-				echo $result_id;
+				
 			
 			}
 		}
