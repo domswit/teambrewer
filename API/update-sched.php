@@ -8,6 +8,7 @@ $ealloc = mysql_real_escape_string($data->allocation);
 $efromdate = mysql_real_escape_string($data->fromdate);
 $etodate = mysql_real_escape_string($data->todate);
 $sched_id = mysql_real_escape_string($data->sched_id);
+$project_id = mysql_real_escape_string($data->project_id);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -15,7 +16,7 @@ if ($conn->connect_error) {
 
 $updated = date("Y-m-d h:i:s");
 
-$sql = "UPDATE sched SET user_id='" . $ename . "', fromdate='" . $efromdate . "', todate='" . $etodate . "', allocation='" . $ealloc . "', updated='" . $updated ."' WHERE sched_id='" . $sched_id . "'";
+$sql = "UPDATE sched SET user_id='" . $ename . "', project_id='" . $project_id . "', fromdate='" . $efromdate . "', todate='" . $etodate . "', allocation='" . $ealloc . "', updated='" . $updated ."' WHERE sched_id='" . $sched_id . "'";
 
 $output = Array();
 

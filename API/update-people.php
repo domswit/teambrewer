@@ -18,25 +18,75 @@ if($password != ''){
 $eteam = mysql_real_escape_string($data->team_id);
 
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$checkUsername = getUserIdByUsername($username);
 
-$sql = "UPDATE users SET username='" . $username . "', " . $password_str . " fullname='" . $efullname . "', birthdate='" . $ebirthdate . "' , team_id='" . $eteam . "' WHERE user_id='" . $user_id . "'";
+if(!$checkUsername){
 
-$output = Array();
 
-if ($conn->query($sql) === TRUE) {
-	$output['success'] = true;
-	$output['message'] = "User has been updated.";
+
+	$sql = "UPDATE users SET username='" . $username . "', " . $password_str . " fullname='" . $efullname . "', birthdate='" . $ebirthdate . "' , team_id='" . $eteam . "' WHERE user_id='" . $user_id . "'";
+
+
+	$output = Array();
+
+	if ($conn->query($sql) === TRUE) {
+
+		$last_id = $conn->insert_id;
+
+		$access_token = md5($last_id . $password);
+
+		$update_sql = "UPDATE users SET access_token='" . $access_token . "' WHERE user_id='" . $last_id . "'";
+
+		if ($conn->query($update_sql) === TRUE) {
+			//echo 'updated';
+		}
+
+		$output['success'] = true;
+		$output['message'] = "User has been updated.";
+
+
+	} else {
+		$output['success'] = false;
+		$output['message'] = $conn->error;
+	}
 } else {
+	$output['message'] = 'Existing Username';
 	$output['success'] = false;
-	$output['message'] = $conn->error;
+	$output['message_code'] = '2'; 
 }
 
 echo json_encode ($output);
 
+
+
 $conn->close();
 
+function getUserIdByUsername($name){
+		$name=substr($name , 0 , 60);
+	global $conn;
+
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+
+	$sql = "SELECT `user_id` FROM `users` WHERE `username`= '".$name."'";
+	$result = $conn->query($sql);
+	$user = Array();
+	
+	if ($result ->num_rows > 0) {
+	    while($row = $result -> fetch_assoc()) {
+			$user[] = $row;
+	    }
+	} 
+	
+
+
+	if( count($user) > 0 ){
+		//if name was found, return its id
+		$result_id = $user[0]['user_id'];	
+	} 
+
+	return $result_id;
+}
 
 ?>

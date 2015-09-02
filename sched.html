@@ -63,6 +63,13 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Project</label>
+                                                    <select ng-model="eproject" id="eproject">
+                                                        <option value="">Choose Project</option>
+                                                        <option  id="eproject" ng-repeat="(key,project) in projects " value="{{ key }}">{{project.name}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
                                                     <label>From </label>
                                                      <div class='input-group date' id='datetimepicker2'>
                                                                 <input type='text' class="form-control" ng-model="efromdate" placeholder="YYYY-MM-DD" id="efromdate" value="">
@@ -113,6 +120,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
+                                                    <th>Project</td>
                                                     <th>From</th>
                                                     <th>To</th>
                                                     <th>Allocation</th>
@@ -122,6 +130,7 @@
                                             <tbody>
                                                 <tr class="active" ng-repeat="(key,shed) in sched">
                                                     <td>{{ shed.name }}</td>
+                                                    <td>{{ shed.project_name}}</td>
                                                     <td>{{ shed.fromdate }}</td>
                                                     <td>{{ shed.todate }}</td>
                                                     <td>{{ shed.allocation }}%</td>

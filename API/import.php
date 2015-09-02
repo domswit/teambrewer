@@ -8,9 +8,9 @@
 
 		include("../config/connection.php");
 		include("../config/auth.php");
-
-		function getUserIdByName($name){
-
+			
+	function getUserIdByName($name){
+ 		$name=substr($name , 0 , 60);
 		global $conn;
 
 		if ($conn->connect_error) {
@@ -33,10 +33,12 @@
 			//if name was found, return its id
 			$result_id = $user[0]['user_id'];
 			echo "Existing User: ";
+
 		
-		} else {
+		} elseif( count($user) === 0 && trim($filesop[8]) !== "" ) {
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO users (fullname) VALUES ('$name')";
+			$created = date("Y-m-d h:i:s");
+			$sql = "INSERT INTO users (fullname, created) VALUES ('$name','$created')";
 
 			if ($conn->query($sql) === TRUE) {
 				$result_id = $conn->insert_id;
@@ -45,12 +47,12 @@
 			}
 		}
 
-
 		return $result_id;
 	}
 
 	function getProjectIdByName($project_name){
-
+ 		$project_name=substr($project_name, 0 , 300);
+ 		
 		global $conn;
 
 		if ($conn->connect_error) {
@@ -67,22 +69,18 @@
     			$project[] = $row;
 		    }
 		} 
-
-		
-
 	
 		if( count($project) > 0 ){
 			//if name was found, return its id
 			echo "Existing Project: ";
 			$result_id = $project[0]['project_id'];
-			
-		
-		} else {
+		} elseif( count($project) === 0 && trim($project_name) !== "" ) {
+			$created = date("Y-m-d h:i:s");
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO projects (name) VALUES ('$project_name')";
+			$sql = "INSERT INTO projects (name, created) VALUES ('{$project_name}','{$created}')";
 
 			if ($conn->query($sql) === TRUE) {
-				echo " New Project Inserted: ";
+				echo " New Project Inserted: "."</br>";
 				$result_id = $conn->insert_id;
 				
 			
@@ -110,8 +108,12 @@
 
 		while(($filesop = fgetcsv($handle, 1000, ",")) !== false)
 		{	
+			
+			
+			echo "ROW:";
+			print_r($filesop);			
 			if($r > 3){
-				
+			
 				$fromdateArr = explode("/", $filesop[4]);
 				$fromdate = $fromdateArr[2]. "-" . $fromdateArr[0] . "-" . $fromdateArr[1];
 				$name = $filesop[8];
@@ -169,15 +171,11 @@
 			//if name was found, return its id
 			echo "Existing Schedule (".$result_id .") " . $name . " " .$from_date. " to " .$to_date. " " .$alloc."<br>" . "<br>" ;
 			$result_id = $sched[0]['sched_id'];
-			
-		
-		} else {
+		}
+		elseif( count($sched) === 0 && trim($filesop[8]) !== "" && trim($filesop[9]) !== "" ) {
 			//if name was not found, add to database and return inserted id
-			$sql = "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}')";
-
-			
-
-				
+			$created = date("Y-m-d h:i:s");
+			$sql = "INSERT INTO `sched`(`user_id`, `project_id`, `fromdate`, `todate`, `allocation`,`created`) VALUES ('{$user_id}','{$project_id}','{$from_date}','{$to_date}','{$alloc}','{$created}')";
 
 				$c = $c + 1;
 
