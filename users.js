@@ -96,10 +96,11 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.addUser = function() {
     $scope.form_mode = 'insert';
     $scope.form_title = "Add User Information";
-    $scope.efirst_name = '';
-    $scope.elast_name = '';
+    $scope.eusername = '';
+    $scope.efullname = '';
     $scope.ebirthdate = '';
     $scope.eteam = '';
+    $scope.eusername = '';
   }
   $scope.editUser = function(id) {
     $scope.form_mode = 'update';
@@ -136,8 +137,15 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
         $scope.getData($scope.pageNum());
         alert("User successfully updated!");
       } else {
-        alert(data.message);
-        window.location.href = 'login.html';
+
+        switch(data.message_code){
+          case '1':
+            window.location.href = 'login.html';  
+          break;
+          case '2':
+            alert(data.message);
+            break;
+        }
       }
     });
   }
@@ -146,8 +154,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $http.post("API/insert-people.php", {
       'efullname': $scope.efullname,
       'ebirthdate': $scope.ebirthdate,
-      'username': $scope.username,
-      'password': $scope.password,
+      'username': $scope.eusername,
+      'password': $scope.epassword,
       'eteam': $scope.eteam,
       'access_token': access_token
     }).success(function(data, status, headers, config) {
@@ -158,8 +166,16 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
         $scope.getData($scope.pageNum());
       } else {
-        alert(data.message);
-        window.location.href = 'login.html';
+        
+        switch(data.message_code){
+          case '1':
+            window.location.href = 'login.html';  
+          break;
+          case '2':
+            alert(data.message);
+            break;
+        }
+
       }
 
     });
