@@ -147,6 +147,7 @@ $scope.fillPageArray = function(num, page) {
     $scope.ename = $scope.sched[id].user_id.toString();
     $scope.ealloc = $scope.sched[id].allocation.toString();
     $scope.sched_id = $scope.sched[id].sched_id.toString();
+    $scope.project_id = $scope.sched[id].project_id.toString();
     console.log($scope.sched[id]);
   };
   $scope.savedata = function() {
@@ -165,9 +166,11 @@ $scope.fillPageArray = function(num, page) {
     var efromdate = $('#efromdate').val();
     var etodate = $('#etodate').val();
     var ealloc = $('#ealloc').val();
+    var eproject = $('#eproject').val();
     $http.post("API/update-sched.php", {
       'sched_id': sched_id,
       'name': ename,
+      'project_id': eproject,
       'fromdate': efromdate,
       'todate': etodate,
       'allocation': ealloc

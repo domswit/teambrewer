@@ -38,7 +38,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
         $scope.teams = data.teams;
         $scope.fillPageArray(data.total_rows, page);
       } else {
-        window.location.href = 'login.html';
+       window.location.href = 'login.html';
       }
 
     });
