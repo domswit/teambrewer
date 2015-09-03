@@ -19,14 +19,14 @@ $eteam = mysql_real_escape_string($data->team_id);
 
 
 $checkUsername = getUserIdByUsername($username);
-
-if(!$checkUsername){
+$check = getUserIdByUsername1($username);
+if($user_id === $checkUsername && $check === $username){
 
 
 
 	$sql = "UPDATE users SET username='" . $username . "', " . $password_str . " fullname='" . $efullname . "', birthdate='" . $ebirthdate . "' , team_id='" . $eteam . "' WHERE user_id='" . $user_id . "'";
 
-
+		
 	$output = Array();
 
 	if ($conn->query($sql) === TRUE) {
@@ -61,32 +61,52 @@ echo json_encode ($output);
 
 $conn->close();
 
-function getUserIdByUsername($name){
-		$name=substr($name , 0 , 60);
+function getUserIdByUsername($username){
+		$username=substr($username , 0 , 60);
 	global $conn;
 
 	if ($conn->connect_error) {
 	    die("Connection failed: " . $conn->connect_error);
 	} 
 
-	$sql = "SELECT `user_id` FROM `users` WHERE `username`= '".$name."'";
+	$sql = "SELECT `user_id`,`username` FROM `users` WHERE `username`= '".$username."'";
 	$result = $conn->query($sql);
 	$user = Array();
 	
 	if ($result ->num_rows > 0) {
 	    while($row = $result -> fetch_assoc()) {
 			$user[] = $row;
+			$usern = $row['username'];
 	    }
 	} 
 	
 
 
-	if( count($user) > 0 ){
+	if( $username === $usern ){
 		//if name was found, return its id
 		$result_id = $user[0]['user_id'];	
 	} 
 
 	return $result_id;
 }
+function getUserIdByUsername1($username){
+		$username=substr($username , 0 , 60);
+	global $conn;
 
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+
+	$sql = "SELECT `user_id`,`username` FROM `users` WHERE `username`= '".$username."'";
+	$result = $conn->query($sql);
+	$user = Array();
+	
+	if ($result ->num_rows > 0) {
+	    while($row = $result -> fetch_assoc()) {
+			$user[] = $row;
+			$usern = $row['username'];
+	    }
+	} 
+	return $usern;
+}
 ?>
