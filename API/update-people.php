@@ -19,8 +19,8 @@ $eteam = mysql_real_escape_string($data->team_id);
 
 
 $checkUsername = getUserIdByUsername($username);
-$check = getUserIdByUsername1($username);
-if($user_id === $checkUsername && $check === $username){
+
+if(!$checkUsername || $checkUsername == $user_id){
 
 
 
@@ -89,24 +89,5 @@ function getUserIdByUsername($username){
 
 	return $result_id;
 }
-function getUserIdByUsername1($username){
-		$username=substr($username , 0 , 60);
-	global $conn;
 
-	if ($conn->connect_error) {
-	    die("Connection failed: " . $conn->connect_error);
-	} 
-
-	$sql = "SELECT `user_id`,`username` FROM `users` WHERE `username`= '".$username."'";
-	$result = $conn->query($sql);
-	$user = Array();
-	
-	if ($result ->num_rows > 0) {
-	    while($row = $result -> fetch_assoc()) {
-			$user[] = $row;
-			$usern = $row['username'];
-	    }
-	} 
-	return $usern;
-}
 ?>
