@@ -348,7 +348,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "API/charts.php",
+                url: APIURL + "charts.php",
                 data: {
                     from_date: filters.from_date,
                     to_date: filters.to_date,
@@ -540,7 +540,7 @@
     </div>
     </div>
 
-   
+    <script src="js/commons.js"></script>    
     <script src="js/moment.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">

@@ -10,7 +10,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $
 
   function getTeam() {
     var response = $http.get(
-      "API/team-list.php?rand=" + new Date()
+      APIURL + "team-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999");
     response.success(function(data, status, headers, config) {
       console.log(data.teams);
@@ -24,7 +24,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $
 
   function getProject() {
     var response = $http.get(
-      "API/project-list.php?rand=" + new Date()
+      APIURL + "project-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999");
 
     response.success(function(data, status, headers, config) {
@@ -38,7 +38,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $
 
   function getData() {
     var response = $http.get(
-      "API/user-list.php?rand=" + new Date()
+      APIURL + "user-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999");
     response.success(function(data, status, headers, config) {
       console.log(data.users);
@@ -52,7 +52,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $
 function
    getSched() {
     var response = $http.get(
-      "API/sched-list.php?rand=" + new Date()
+      APIURL + "sched-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999");
     response.success(function(data, status, headers, config) {
       console.log(data.sched);

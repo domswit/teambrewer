@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Teambrewer</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script src="js/angular-cookies.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src="js/angular-min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" id="pwd-container">
+            <div ng-app='myApp' ng-controller='loginCtrl'>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <section class="login-form">
+                        <form method="post" role="login">
+                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSTcueVircdOX98QydFLFawA0Eg_usSQG-7jn-CCbKV1hz6vbRUpw" class="img-responsive" alt="" />
+                            <input type="username" name="username" id="usern" placeholder="Username" required class="form-control input-lg" ng-model="username" />
+                            <input type="password" name="password" class="form-control input-lg" id="pas" placeholder="Password" required="" ng-model="password" />
+                            <div><p class="text-danger">{{ message }}</p></div>
+                            <div class="pwstrength_viewport_progress"></div>
+                            <button name="go" class="btn btn-lg btn-primary btn-block" ng-click="authenticate()">Sign in</button>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/commons.js"></script>    
+    <script src="login.js"></script>
+</body>
+</html>

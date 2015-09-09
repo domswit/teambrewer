@@ -1,0 +1,1 @@
+var APIURL = "http://localhost/teambrewer/API/";
