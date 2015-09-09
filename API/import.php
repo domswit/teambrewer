@@ -108,8 +108,12 @@
 
 		while(($filesop = fgetcsv($handle, 1000, ",")) !== false)
 		{	
+			
+			
+			echo "ROW:";
+			print_r($filesop);			
 			if($r > 3){
-				
+			
 				$fromdateArr = explode("/", $filesop[4]);
 				$fromdate = $fromdateArr[2]. "-" . $fromdateArr[0] . "-" . $fromdateArr[1];
 				$name = $filesop[8];
