@@ -1,7 +1,7 @@
 var access_token;
 
 angular.module('myApp', ['ui.bootstrap']);
-angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $http, $cookies) {
+angular.module('myApp', ['ngCookies']).controller('chartsCtrl', function($scope, $http, $cookies) {
   $scope.teams = '';
   $scope.updateData = {}
   var filters = getUrlVars();
@@ -43,7 +43,18 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope, $
     response.success(function(data, status, headers, config) {
       console.log(data.users);
       $scope.users = data.users;
-      $scope.ename = filters.user_id;
+      var user_ids = [];
+
+      
+      var urlPeople = decodeURIComponent(filters.people);
+      var people = urlPeople.split(',');
+
+      for(var i in people){
+        user_ids.push(people[i]);
+      }
+      
+      $scope.selectedPeople = user_ids;
+      
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -62,6 +73,12 @@ function
       alert("AJAX failed!");
     });
   }
+
+  $scope.submit = function(){
+    $scope.people = $('#user_id').val();
+    $scope.$apply();
+  }
+
   getTeam();
   getProject();
   getData();
