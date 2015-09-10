@@ -6,12 +6,12 @@ $data = json_decode(file_get_contents("php://input"));
 
 $form_username = mysql_real_escape_string($data->username);
 $form_password = md5(mysql_real_escape_string($data->password));
-
+$b = "";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT user_id, username, access_token from users where  username = '" . $form_username . "' && password = '" . $form_password . "'";
+$sql = "SELECT user_id, username, access_token from users where  username = '" . $form_username . "' && password = '" . $form_password . "' && access_token != '" .$b ."'" ;
 
 $result = $conn->query($sql);
 

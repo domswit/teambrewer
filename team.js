@@ -1,5 +1,8 @@
-angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies, $location) {
+
+  var myApp = angular.module('myApp', ['ngCookies']);
+
+myApp.controller('userCtrl', function($scope, $http, $cookies, $location, auth) {
+  $scope.form_title = "yeah";
   $scope.teams = '';
   $scope.updateData = {}
   $scope.pageArray = [];
@@ -7,7 +10,16 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     return (($location.search().p) ? $location.search().p : 1);
   }
 
-  var access_token = $cookies.get('access_token');
+ var access_token = $cookies.get('access_token');
+auth.checkLogin();
+$scope.logout = function(){
+  
+  if(auth.logout() === true){
+    window.location.href = 'login.html';
+  }else{
+    alert("User still logged in");
+  }
+}
 
   $scope.fillPageArray = function(num, page) {
 

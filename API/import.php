@@ -8,6 +8,7 @@
 
 		include("../config/connection.php");
 		include("../config/auth.php");
+
 			
 	function getUserIdByName($name){
  		$name=substr($name , 0 , 60);
@@ -24,6 +25,7 @@
 		if ($result ->num_rows > 0) {
 		    while($row = $result -> fetch_assoc()) {
     			$user[] = $row;
+    			
 		    }
 		} 
 		
@@ -105,6 +107,8 @@
 		$c = 0;
 		$r = 0;
 		//echo "234";
+
+		clearExistingSched();
 
 		while(($filesop = fgetcsv($handle, 1000, ",")) !== false)
 		{	
@@ -228,6 +232,38 @@
       // array of days.  
       return $aDays;  
     }  
+
+	function clearExistingSched(){
+		global $conn;
+
+		//declare array for ids
+		//loop all names
+			//get user id of the name
+			//check if id is in array
+			//if not in array, push id
+		$clearsched = '';
+		if ($conn->connect_error) {
+		    die("Connection failed: " . $conn->connect_error);
+		} 
+ 
+		$sql = "SELECT `user_id` FROM `users` WHERE `fullname`= '".$name."'";
+		$result = $conn->query($sql);
+		$user = Array();
+		
+		if ($result ->num_rows > 0) {
+		    while($row = $result -> fetch_assoc()) {
+    			$user[] = $row;
+		    }
+		} 
+
+		if(	$user === $user){}
+			
+
+
+
+		//loop all ids in array
+			//delete all schedules of that user
+	}    
 
 	echo "Import Complete"."<br>"."<br>";
 ?>
