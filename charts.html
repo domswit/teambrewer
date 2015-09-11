@@ -12,12 +12,14 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
     <script src="js/jquery.js"></script>
     <link rel="stylesheet" href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css">
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-select.js"></script>
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <script src="js/angular-cookies.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-select.css">
     <link href="css/examples.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
         var allData = [];
@@ -348,13 +350,13 @@
 
             $.ajax({
                 type: "POST",
-                url: "API/charts.php",
+                url: APIURL + "charts.php",
                 data: {
                     from_date: filters.from_date,
                     to_date: filters.to_date,
                     project_id: filters.project_id,
                     team_id: filters.team_id,
-                    user_id: filters.user_id,
+                    people: filters.people,
                     access_token: access_token
                 },
                 dataType: 'json',
@@ -410,7 +412,7 @@
     </script>
 </head>
 
-<body ng-app="myApp" ng-controller="userCtrl">
+<body ng-app="myApp" ng-controller="chartsCtrl">
 
     <div id="wrapper">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -454,12 +456,13 @@
                                         </select>
                                     </div>
                                     <div class="chart_filter">
-                                        <label for='exe3'>Person</label>
+                                        <label for='exe3'>People</label>
                                         <br>
-                                        <select name="user_id" ng-model="ename" id="user_id" class="col-lg">
-                                            <option value="">Choose a Person</option>
-                                            <option ng-repeat="(key,user) in users " value="{{ key }}" ng-selected="key == ename">{{user.fullname}}</option>
-                                        </select>
+
+                                          <select id="user_id" ng-model="ename" class="selectpicker" data-live-search="true" multiple title='Choose People'>
+                                            <option ng-repeat="(key,user) in users " value="{{ key }}" ng-selected="selectedPeople.indexOf(key) > -1">{{user.fullname}}</option>
+                                          </select>
+                                          <input type="text" style="display:none" name="people" ng-model="people" />
                                     </div>
                                     <div class="chart_filter">
                                         <label>From:</label>
@@ -491,7 +494,7 @@
                                         <label for='exe3'></label>
                                         <br>
 
-                                        <button ng-click="submit" class="btn btn-primary btn-lg">&nbsp;&nbsp;Generate Chart</button>
+                                        <button ng-click="submit()" class="btn btn-primary btn-lg">Generate Chart</button>
                                         <!--
                                         <a class="btn btn-info btn-lg" role="button" data-toggle="collapse" data-target="#colps" aria-expanded="false" aria-controls="colps">
                                             Show List
@@ -540,7 +543,7 @@
     </div>
     </div>
 
-   
+    <script src="js/commons.js"></script>    
     <script src="js/moment.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript">
