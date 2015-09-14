@@ -7,14 +7,15 @@ $output = Array('success'=>true, 'projects'=>null);
 if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 	$max_per_page = $_GET['max_per_page'];	
 } else {
-	$max_per_page = 5;	
+	$max_per_page = 20;	
 }
 
+$search_string = getSearchString();
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
-$sql = "SELECT * FROM projects  LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
-$count_sql = "SELECT COUNT(*) as total FROM projects";
+$sql = "SELECT * FROM projects WHERE 1 " . $search_string . " LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
+$count_sql = "SELECT count(*) as total FROM projects WHERE 1 " . $search_string;
 $result = $conn->query($sql);
 
 
@@ -37,6 +38,19 @@ $output['total_rows'] = getTotalPageCount($conn, $count_sql, $max_per_page);
 echo json_encode ($output);
 
 $conn->close();
+
+function getSearchString(){
+	$search_string = '';
+	if(isset($_GET['search']) && $_GET['search'] != ''){
+		$search_term = $_GET['search'];
+		$search_string .= "AND ( ";
+		$search_string .= "name LIKE '%" . $search_term . "%' ";
+		$search_string .= ") ";
+	}
+
+	return $search_string;
+}
+
 
 function getTotalPageCount($conn, $count_sql, $max_per_page){
 	$result = $conn->query($count_sql);

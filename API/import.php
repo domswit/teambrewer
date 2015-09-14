@@ -34,8 +34,6 @@
 		if( count($user) > 0 ){
 			//if name was found, return its id
 			$result_id = $user[0]['user_id'];
-			echo "Existing User: ";
-
 		
 		} elseif( count($user) === 0 && trim($filesop[8]) !== "" ) {
 			//if name was not found, add to database and return inserted id
@@ -108,12 +106,35 @@
 		$r = 0;
 		//echo "234";
 
-		
+
+		//get all user ids
+		$user_ids = array();
+		while(($filesop = fgetcsv($handle, 1000, ",")) !== false)
+		{	
+			if($r > 3){
+				$name = $filesop[8];
+				$id = getUserIdByName($name);
+				if(!in_array($id, $user_ids)){
+					array_push($user_ids, $id);
+				}
+			}
+
+			$r++;
+		}		
+
+
+		//clear all existing scheds of all user ids
+		foreach($user_ids as $id){
+			clearExistingSched($id);
+		}
+
+		$handle = fopen($file, "r");
+		$c = 0;
+		$r = 0;
 
 		while(($filesop = fgetcsv($handle, 1000, ",")) !== false)
 		{	
-			clearExistingSched($user_id,$from_date,$to_date);	
-			
+			//clearExistingSched($user_id,$from_date,$to_date);
 				
 			if($r > 3){
 			
@@ -232,7 +253,7 @@
       return $aDays;  
     }  
 
-	function clearExistingSched($user_id,$from_date,$to_date){
+	function clearExistingSched($user_id){
 		
 
 		//declare array for ids
@@ -271,7 +292,7 @@
 				if ($conn->query($sql) === TRUE) {
 					$output['success'] = true;
 					$output['message'] = "Schedule has been deleted.";
-					echo "Deleted".$sql."<br>"."<br>";
+					echo "Cleared schedule of user:" .$user_id . "<br>";
 
 				} else {
 					$output['success'] = false;

@@ -5,20 +5,12 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth)
 
   $scope.teams = '';
   $scope.updateData = {}
+  $scope.auth = auth;
   var filters = getUrlVars();
 
   access_token = $cookies.get('access_token');
 
   auth.checkLogin();
-  $scope.logout = function(){
-  
-  if(auth.logout() === true){
-    window.location.href = 'login.html';
-  }else{
-    alert("User still logged in");
-  }
-}
-
 
   function getTeam() {
     var response = $http.get(

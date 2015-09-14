@@ -4,18 +4,19 @@ include("../config/auth.php");
 
 $output = Array('success'=>true, 'teams'=>null);
 
+$search_string = getSearchString();
 
 if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 	$max_per_page = $_GET['max_per_page'];	
 } else {
-	$max_per_page = 5;	
+	$max_per_page = 20;	
 }
 
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
-$sql = "SELECT * FROM teams LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
-$count_sql = "SELECT COUNT(*) as total FROM teams";
+$sql = "SELECT * FROM teams WHERE 1 " . $search_string . " LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
+$count_sql = "SELECT count(*) as total FROM teams WHERE 1 " . $search_string;
 
 $result = $conn->query($sql);
 
@@ -37,6 +38,17 @@ echo json_encode ($output);
 
 $conn->close();
 
+function getSearchString(){
+	$search_string = '';
+	if(isset($_GET['search']) && $_GET['search'] != ''){
+		$search_term = $_GET['search'];
+		$search_string .= "AND ( ";
+		$search_string .= "name LIKE '%" . $search_term . "%' ";
+		$search_string .= ") ";
+	}
+
+	return $search_string;
+}
 
 function getTotalPageCount($conn, $count_sql, $max_per_page){
 	$result = $conn->query($count_sql);

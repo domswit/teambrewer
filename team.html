@@ -46,36 +46,32 @@
                     </h1>
                     <div class="import">
                         <div class="modal fade" id="ModalImport" role="dialog">
+                            <form name="import" method="post" enctype="multipart/form-data" action="API/import-team.php" target="_blank">
                             <div class="modal-dialog modal-md">
                                 <div class="modal-content">
                                     <div class="modal-header modal-header-success">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <h4 class="modal-title">Import Data</h4>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-lg-8">
-                                                <form role="form">
-                                                    <div class="form-group">
-                                                       Choose file: 
-                                                    </div>
-                                                </form>
+                                    <div class="modal-footer">
+                                            <span class="pull-left">Choose a file: </span>
+                                            <input type="file" name="file" /><br/>
+                                            <input type="text" name="access_token" ng-model="access_token" style="display:none"/>
+                                            <div class="pull-left">
+                                            Here is a <a href="_project-files/sample-import-teams.csv">sample csv file</a> you may use to update teams in batches
                                             </div>
-                                        </div>
                                     </div>
                                     <div class="modal-footer">
-                                         <form name="import" method="post" enctype="multipart/form-data" action="API/import-team.php" target="_blank">
-                                            <input type="file" name="file" /><br/>
                                             <button ng-click="submit" class="btn btn-primary btn-md" name="submit">
                                                 <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Submit
                                             </button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">
                                                 <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Close
                                             </button>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
 
@@ -104,7 +100,7 @@
                                                             <label>Team Members</label>
                                                             <select id="members" class="selectpicker" data-live-search="true" data-live-search-placeholder="Select Members" multiple="" data-width="100%">
                                                                 <option ng-repeat="(key,user) in users" value="{{ key }}"
-                                                                ng-model="members" ng-selected="selectedMembers.indexOf(key) > -1">{{user.fullname}}</option>
+                                                                ng-model="members">{{user.fullname}}</option>
                                                             </select>
                                                         </div>
                                                     </form>
@@ -137,6 +133,13 @@
                                     <li><a ng-click="getData(pagination.getNext())" href="#/?p={{pagination.getNext()}}">Next</a></li>
                                     <li><a ng-click="getData(pagination.getLast())" href="#/?p={{pagination.getLast()}}">Last</a></li>
                                 </ul>
+
+                                <div class="input-group pull-left marg-right-5 width-250">
+                                  <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                  </span>
+                                  <input type="text" class="form-control" placeholder="Search for..." ng-keydown = "search($event)" ng-model="searchString">
+                                </div><!-- /input-group -->
 
                                 <table class="table table-bordered table-hover table-striped">
                                     <thead>

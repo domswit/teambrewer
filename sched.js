@@ -2,37 +2,48 @@
 var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $http, $cookies, $location, pagination, auth) {
 
-  $scope.form_title = "yeah";
-  $scope.fName = '';
-  $scope.lName = '';
-  $scope.passw1 = '';
-  $scope.passw2 = '';
-  $scope.updateData = {}
-  $scope.first_name2 = "test";
-  $scope.pageArray = [];
-  $scope.pagination = pagination;
-  
-  var access_token = $cookies.get('access_token');
+  $scope.init = function(){
+    $scope.access_token = $cookies.get('access_token');
+    auth.checkLogin();   
+    $scope.auth = auth;
+    $scope.form_title = "yeah";
+    $scope.fName = '';
+    $scope.lName = '';
+    $scope.passw1 = '';
+    $scope.passw2 = '';
+    $scope.updateData = {}
+    $scope.first_name2 = "test";
+    $scope.pageArray = [];
+    $scope.pagination = pagination; 
 
-  auth.checkLogin();    
+    getAlloc();
+    $scope.getUsers();
+    getProjects();
+    $scope.getData();
+    $scope.edit = true;
+    $scope.error = false;
+    $scope.incomplete = false;
 
-  $scope.pageNum = function(){
-    var page = (($location.search().p) ? $location.search().p : 1);   
-    return page;
+    $(document).ready(function() {
+      $('#datetimepicker2').datetimepicker({
+        format: 'YYYY-MM-DD hh:mm:ss'
+      });
+      $("#datetimepicker2").on("dp.change", function(e) {
+        $scope.efromdate = $('#efromdate').val();
+      });
+    });
+    $(document).ready(function() {
+      $('#datetimepicker3').datetimepicker({
+        format: 'YYYY-MM-DD hh:mm:ss'
+      });
+      $("#datetimepicker3").on("dp.change", function(e) {
+        $scope.etodate = $('#etodate').val();
+      });
+    });
+
   }
 
-
-
-$scope.logout = function(){
-  
-  if(auth.logout() === true){
-    window.location.href = 'login.html';
-  }else{
-    alert("User still logged in");
-  }
-}
-
-$scope.fillPageArray = function(num, page) {
+  $scope.fillPageArray = function(num, page) {
 
       $scope.pageArray.splice(0);
 
@@ -44,36 +55,50 @@ $scope.fillPageArray = function(num, page) {
 
       return $scope.pageArray;
   }
-  
-  $(document).ready(function() {
-    $('#datetimepicker2').datetimepicker({
-      format: 'YYYY-MM-DD hh:mm:ss'
-    });
-    $("#datetimepicker2").on("dp.change", function(e) {
-      $scope.efromdate = $('#efromdate').val();
-    });
-  });
-  $(document).ready(function() {
-    $('#datetimepicker3').datetimepicker({
-      format: 'YYYY-MM-DD hh:mm:ss'
-    });
-    $("#datetimepicker3").on("dp.change", function(e) {
-      $scope.etodate = $('#etodate').val();
-    });
-  });
 
 
-  $scope.getSched = function(page) {
+  $scope.search = function(keyEvent){
+    var keyCode = window.event ? keyEvent.keyCode : keyEvent.which;
 
-    if(page == undefined){
-      page = 1;
+    if(keyCode == 13){
+      $scope.pageNum = 1;
+      $scope.getData();
     }
+  }
 
+  $scope.getPageNum = function(){
+    var queryPage = (($location.search().p) ? $location.search().p : 1);
+
+    if($scope.pageNum != '' && $scope.pageNum != undefined){
+      return $scope.pageNum;
+    } else if( queryPage != '' ){
+      return queryPage;
+    } else {
+      return '';
+    }
+  }
+
+  $scope.getSearchString = function(){
+
+    var querySearch = (($location.search().search) ? $location.search().search : '');
+
+    if($scope.searchString != '' && $scope.searchString != undefined){
+      return $scope.searchString;
+    } else if( querySearch != '' ){
+      return querySearch;
+    } else {
+      return '';
+    }
+  }
+
+  $scope.getData = function(page) {
+
+    var page = ( page ? page : $scope.getPageNum() );
 
     var response = $http.get(
 
       "API/sched-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page + "&access_token=" + access_token);
+      .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
 
     response.success(function(data, status, headers, config) {
       console.log(data);
@@ -96,7 +121,7 @@ $scope.fillPageArray = function(num, page) {
 
   function getAlloc() {
     var response = $http.get(
-      "API/allocation.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+      "API/allocation.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
       console.log(data.allocation);
@@ -107,8 +132,45 @@ $scope.fillPageArray = function(num, page) {
     });
   }
 
-  function getData() {
-    var response = $http.get("API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+  $scope.search = function(keyEvent){
+    var keyCode = window.event ? keyEvent.keyCode : keyEvent.which;
+
+    if(keyCode == 13){
+      $scope.pageNum = 1;
+      $scope.getData();
+    }
+  }
+
+  $scope.getPageNum = function(){
+    var queryPage = (($location.search().p) ? $location.search().p : 1);
+
+    if($scope.pageNum != '' && $scope.pageNum != undefined){
+      return $scope.pageNum;
+    } else if( queryPage != '' ){
+      return queryPage;
+    } else {
+      return '';
+    }
+  }
+
+  $scope.getSearchString = function(){
+
+    var querySearch = (($location.search().search) ? $location.search().search : '');
+
+    if($scope.searchString != '' && $scope.searchString != undefined){
+      return $scope.searchString;
+    } else if( querySearch != '' ){
+      return querySearch;
+    } else {
+      return '';
+    }
+  }
+
+  $scope.getUsers = function(page) {
+
+    var page = ( page ? page : $scope.getPageNum() );
+
+    var response = $http.get("API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
 
     response.success(function(data, status, headers, config) {
       if(data.success){
@@ -126,7 +188,7 @@ $scope.fillPageArray = function(num, page) {
   }
 
   function getProjects() {
-    var response = $http.get("API/project-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+    var response = $http.get("API/project-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
       if(data.success){
@@ -141,13 +203,7 @@ $scope.fillPageArray = function(num, page) {
     });
 
   }
-  getAlloc();
-  getData();
-  getProjects();
-  $scope.getSched($scope.pageNum());
-  $scope.edit = true;
-  $scope.error = false;
-  $scope.incomplete = false;
+
   $scope.addUser = function() {
     $scope.form_mode = 'insert';
     $scope.form_title = "Add User Information";
@@ -223,7 +279,7 @@ $scope.fillPageArray = function(num, page) {
   }
   $scope.deleteData = function(id) {
     
-if (confirm("Do you want to delete this data?") == true) {
+    if (confirm("Do you want to delete this data?") == true) {
     $http.post("API/delete-sched.php?rand=" + new Date().getTime(), {
       'id': id
     }).success(function(data, status, headers, config) {
@@ -240,4 +296,5 @@ if (confirm("Do you want to delete this data?") == true) {
     });
   }
 }
+  $scope.init();
 });

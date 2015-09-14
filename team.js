@@ -1,31 +1,39 @@
 
 var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $http, $cookies, $location, pagination, auth) {
-  $scope.form_title = "yeah";
-  $scope.teams = '';
-  $scope.updateData = {}
-  $scope.pageArray = [];
-  $scope.pagination = pagination;
-  $scope.selectedMembers = [];
+
+  $scope.init = function(){
+
+    $scope.access_token = $cookies.get('access_token');
+    auth.checkLogin();
+
+    $scope.auth = auth;
+    $scope.form_title = "yeah";
+    $scope.teams = '';
+    $scope.pageArray = [];
+    $scope.pagination = pagination;
+    $scope.selectedPeople = [];
+
+    $scope.getData($scope.pageNum());
+    $scope.getUsers();
+    $scope.edit = true;
+    $scope.error = false;
+    $scope.incomplete = false;
+  }
 
   $scope.pageNum = function(){
     var page = (($location.search().p) ? $location.search().p : 1);   
     return page;
   }
-
-  var access_token = $cookies.get('access_token');
-
-auth.checkLogin();
-$scope.logout = function(){
   
-  if(auth.logout() === true){
-    window.location.href = 'login.html';
-  }else{
-    alert("User still logged in");
+  $scope.search = function(keyEvent){
+    var keyCode = window.event ? keyEvent.keyCode : keyEvent.which;
+
+    if(keyCode == 13){
+      $scope.pageNum = 1;
+      $scope.getData();
+    }
   }
-  
-
-}
 
   $scope.fillPageArray = function(num, page) {
 
@@ -40,16 +48,38 @@ $scope.logout = function(){
       return $scope.pageArray;
   }
 
-   $scope.getData = function(page) {
+  $scope.getPageNum = function(){
+    var queryPage = (($location.search().p) ? $location.search().p : 1);
 
-    if(page == undefined){
-      page = 1;
+    if($scope.pageNum != '' && $scope.pageNum != undefined){
+      return $scope.pageNum;
+    } else if( queryPage != '' ){
+      return queryPage;
+    } else {
+      return '';
     }
+  }
 
+  $scope.getSearchString = function(){
+
+    var querySearch = (($location.search().search) ? $location.search().search : '');
+
+    if($scope.searchString != '' && $scope.searchString != undefined){
+      return $scope.searchString;
+    } else if( querySearch != '' ){
+      return querySearch;
+    } else {
+      return '';
+    }
+  }
+
+  $scope.getData = function(page) {
+
+    var page = ( page ? page : $scope.getPageNum() );
 
     var response = $http.get(
       "API/team-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page + "&access_token=" + access_token);
+      .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
     response.success(function(data, status, headers, config) {
       
       if(data.success){
@@ -69,7 +99,7 @@ $scope.logout = function(){
 
   $scope.getUsers =function() {
     var response = $http.get(
-      "API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+      "API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
 
@@ -96,12 +126,6 @@ $scope.logout = function(){
 
   }
 
-  $scope.getData($scope.pageNum());
-  $scope.getUsers();
-  $scope.edit = true;
-  $scope.error = false;
-  $scope.incomplete = false;
-
   $scope.addTeam = function() {
     $scope.form_mode = 'insert';
     $scope.form_title = "Add Team Information";
@@ -118,7 +142,7 @@ $scope.logout = function(){
 
   $scope.setSelectedMembers = function(team_id) {
 
-    var response = $http.get("API/team-members-list.php?rand=" + new Date().getTime()  + "&team_id=" + team_id + "&access_token=" + access_token);
+    var response = $http.get("API/team-members-list.php?rand=" + new Date().getTime()  + "&team_id=" + team_id + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
       
@@ -135,11 +159,13 @@ $scope.logout = function(){
             memberArray.push(data.members[x].user_id);
           }
           
-          $scope.selectedMembers = memberArray;
+          $scope.selectedPeople = memberArray;
+
 
           console.log('members:');
-          console.log($scope.selectedMembers);
-    
+          console.log($scope.selectedPeople);
+          $('#members').selectpicker('val', memberArray);
+          $('#members').selectpicker('render');
       } else {
        window.location.href = 'login.html';
       }
@@ -148,6 +174,28 @@ $scope.logout = function(){
 
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
+    });
+  }
+
+  $scope.updateData = function() {
+    var team_id = $scope.team_id;
+    var name = $('#name').val();
+    var members = $('#members').val().join();
+    console.log(members);
+    $http.post("API/update-team.php", {
+      'team_id': team_id,
+      'name': name,
+      'members': members,
+      'access_token': $scope.access_token,
+    }).success(function(data, status, headers, config) {
+
+      if(data.success){
+        $scope.getData($scope.pageNum());
+        alert("Team successfully updated!");
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
     });
   }
 
@@ -162,32 +210,10 @@ $scope.logout = function(){
     }
   }
 
-  $scope.updateData = function() {
-    var team_id = $scope.team_id;
-    var name = $('#name').val();
-    var members = $('#members').val().join();
-    console.log(members);
-    $http.post("API/update-team.php", {
-      'team_id': team_id,
-      'name': name,
-      'members': members,
-      'access_token': access_token,
-    }).success(function(data, status, headers, config) {
-
-      if(data.success){
-        $scope.getData($scope.pageNum());
-        alert("Team successfully updated!");
-      } else {
-        alert(data.message);
-        window.location.href = 'login.html';
-      }
-    });
-  }
-
   $scope.insertData = function() {
     $http.post("API/insert-team.php", {
       'name': $scope.name,
-      'access_token': access_token
+      'access_token': $scope.access_token
     }).success(function(data, status, headers, config) {
 
       if(data.success){
@@ -207,7 +233,7 @@ $scope.logout = function(){
     $http.post("API/delete-teams.php", {
       'rand': new Date().getTime(),
       'id': id,
-      'access_token' : access_token
+      'access_token' : $scope.access_token
     }).success(function(data, status, headers, config) {
 
       if(data.success){
@@ -222,4 +248,6 @@ $scope.logout = function(){
     });
   }
   }
+
+  $scope.init();
 });

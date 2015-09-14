@@ -1,9 +1,14 @@
 myApp.factory('auth', function($cookies,$http) {
     return {
         logout: function() {
-        	 $cookies.put('access_token', '');
+        	var logoutYes = confirm("Do you want to logout?");
+
+        	if(logoutYes){
+        		$cookies.put('access_token', '');	
+        		window.location.href = 'login.html';
+        	}
 				
-				return true;
+			return true;
 		},
 		checkLogin: function(){
 			var access_token = $cookies.get('access_token');
