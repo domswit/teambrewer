@@ -23,7 +23,7 @@
     <link href="css/examples.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
         var allData = [];
-        var access_token;
+
 
         function convertToTimestamp(date) {
             myDate = date.split("-");
@@ -362,10 +362,6 @@
                 dataType: 'json',
                 async: false,
                 success: function(data) {
-                    if(!data.success){
-                        alert(data.message);
-                        window.location.href = 'login.html';
-                    }
 
                     allData = data.users;
                     data = data.users;
@@ -572,7 +568,11 @@
     <script src="js/plugins/flot-dashed/jquery-flot-resize.js"></script>
     <script src="js/plugins/flot-dashed/jquery-flot-pie.js"></script>
     <script src="js/plugins/flot-dashed/flot-data.js"></script>
+  <script src="js/moment.js"></script>
+<script src="js/bootstrap-datetimepicker.min.js"></script>
+
     <script src="charts.js"></script>
+    <script src="js/factories/auth.js"></script> 
 </body>
 
 </html>

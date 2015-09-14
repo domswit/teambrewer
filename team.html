@@ -36,6 +36,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
+                    <h1 class="page-header">Team</h1>
                     <h1 class="page-header">
                         <div class="dropdown">
                             Team
@@ -58,8 +59,6 @@
                                                 <form role="form">
                                                     <div class="form-group">
                                                        Choose file: 
-                                                      
-                                                       </form>
                                                     </div>
                                                 </form>
                                             </div>
@@ -67,13 +66,14 @@
                                     </div>
                                     <div class="modal-footer">
                                          <form name="import" method="post" enctype="multipart/form-data" action="API/import-team.php" target="_blank">
-                                                            <input type="file" name="file" /><br/>
-                                        <button ng-click="submit" class="btn btn-primary btn-md" name="submit">
-                                            <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Submit
-                                        </button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">
-                                            <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Close
-                                        </button>
+                                            <input type="file" name="file" /><br/>
+                                            <button ng-click="submit" class="btn btn-primary btn-md" name="submit">
+                                                <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Submit
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Close
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -100,6 +100,13 @@
                                                         <div class="form-group">
                                                             <label>Team Name</label>
                                                             <input id="name" class="form-control" ng-model="name" placeholder="Team Name">
+                                                        </div>
+                                                        <div class="spicker">
+                                                            <label>Team Members</label>
+                                                            <select id="members" class="selectpicker" data-live-search="true" data-live-search-placeholder="Select Members" multiple="" data-width="100%">
+                                                                <option ng-repeat="(key,user) in users" value="{{ key }}"
+                                                                ng-model="members" ng-selected="selectedMembers.indexOf(key) > -1">{{user.fullname}}</option>
+                                                            </select>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -165,7 +172,13 @@
     </div>
 </div>
 </div>
-    <script src="team.js"></script>
+<script src="team.js"></script>
+  <script src="js/moment.js"></script>
+<script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/factories/auth.js"></script> 
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"></script>
+
 </body>
 
 </html>

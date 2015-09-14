@@ -1,13 +1,27 @@
-angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies, $location) {
+
+  var myApp = angular.module('myApp', ['ngCookies']);
+
+myApp.controller('userCtrl', function($scope, $http, $cookies, $location, auth) {
+  $scope.form_title = "yeah";
   $scope.teams = '';
   $scope.updateData = {}
   $scope.pageArray = [];
+  $scope.selectedMembers = [];
+
   $scope.pageNum = function(){
     return (($location.search().p) ? $location.search().p : 1);
   }
 
-  var access_token = $cookies.get('access_token');
+ var access_token = $cookies.get('access_token');
+auth.checkLogin();
+$scope.logout = function(){
+  
+  if(auth.logout() === true){
+    window.location.href = 'login.html';
+  }else{
+    alert("User still logged in");
+  }
+}
 
   $scope.fillPageArray = function(num, page) {
 
@@ -47,24 +61,89 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   }
 
+  $scope.getUsers =function() {
+    var response = $http.get(
+      "API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+
+    response.success(function(data, status, headers, config) {
+
+      if(data.success){
+        console.log(data.users);
+        $scope.users = data.users;
+
+        setTimeout(function(){
+          $scope.$apply();  
+          $('.selectpicker').selectpicker(
+          {
+              size: 4
+          });          
+        },1);
+        
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
+    });
+    response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+    });
+
+  }
+
   $scope.getData($scope.pageNum());
+  $scope.getUsers();
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
 
-
- $scope.addTeam = function() {
+  $scope.addTeam = function() {
     $scope.form_mode = 'insert';
     $scope.form_title = "Add Team Information";
     $scope.name = '';
   };
+
   $scope.editTeam = function(id) {
     $scope.team_id = id;
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Team Information";
-    $scope.team_id = id;
     $scope.name = $scope.teams[id].name.toString();
+    $scope.setSelectedMembers(id);
   };
+
+  $scope.setSelectedMembers = function(team_id) {
+
+    var response = $http.get("API/team-members-list.php?rand=" + new Date().getTime()  + "&team_id=" + team_id + "&access_token=" + access_token);
+
+    response.success(function(data, status, headers, config) {
+      
+      if(data.success){
+        //declare id array
+        //loop data.members
+          //push item to id array data.members[i].user_id
+
+        //$('.selectpicker').selectpicker('val', id...);
+
+        var memberArray = [];
+
+          for(var x = 0; x < data.members.length; x++){
+            memberArray.push(data.members[x].user_id);
+          }
+          
+          $scope.selectedMembers = memberArray;
+
+          console.log('members:');
+          console.log($scope.selectedMembers);
+    
+      } else {
+       window.location.href = 'login.html';
+      }
+
+    });
+
+    response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+    });
+  }
 
   $scope.saveData = function() {
     switch ($scope.form_mode) {
@@ -80,9 +159,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = function() {
     var team_id = $scope.team_id;
     var name = $('#name').val();
+    var members = $('#members').val().join();
+    console.log(members);
     $http.post("API/update-team.php", {
       'team_id': team_id,
       'name': name,
+      'members': members,
       'access_token': access_token,
     }).success(function(data, status, headers, config) {
 
@@ -95,6 +177,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       }
     });
   }
+
   $scope.insertData = function() {
     $http.post("API/insert-team.php", {
       'name': $scope.name,

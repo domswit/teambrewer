@@ -1,41 +1,51 @@
-angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies, $location) {
-  $scope.fName = '';
-  $scope.lName = '';
-  $scope.passw1 = '';
-  $scope.passw2 = '';
-  $scope.updateData = {}
-  $scope.first_name2 = "test";
-  $scope.searchString = "123";
+var myApp = angular.module('myApp', ['ngCookies']);
 
-  $scope.search = function(keyEvent){
-    var keyCode = window.event ? keyEvent.keyCode : keyEvent.which;
+myApp.controller('userCtrl', function($scope,$http, $cookies, $location, auth, pagination) {
 
-    if(keyCode == 13){
-      $scope.getData( $scope.pageNum() );
-    }
+  $scope.init = function(){
+
+    $scope.access_token = $cookies.get('access_token');
+    auth.checkLogin();
+
+    $scope.fName = '';
+    $scope.lName = '';
+    $scope.passw1 = '';
+    $scope.passw2 = '';
+    $scope.updateData = {}
+    $scope.searchString = "";
+    $scope.pageArray = [];
+    $scope.pagination = pagination;
+
+    $scope.getData();
+    $scope.getTeams();
+    $scope.edit = true;
+    $scope.error = false;
+    $scope.incomplete = false;
+
+    $(document).ready(function() {
+
+      $('#datetimepicker1').datetimepicker({
+        format: 'YYYY-MM-DD hh:mm:ss'
+      });
+      $("#datetimepicker1").on("dp.change", function(e) {
+        $scope.ebirthdate = $('#ebirthdate').val();
+      });
+    });
   }
 
   $scope.pageNum = function(){
-    return (($location.search().p) ? $location.search().p : 1);
+    var page = (($location.search().p) ? $location.search().p : 1);   
+    return page;
   }
 
-  var access_token = $cookies.get('access_token');
-
-   $scope.pageArray = [];
-
-   $(document).ready(function() {
-
-
-
-    $('#datetimepicker1').datetimepicker({
-      format: 'YYYY-MM-DD hh:mm:ss'
-    });
-    $("#datetimepicker1").on("dp.change", function(e) {
-      $scope.ebirthdate = $('#ebirthdate').val();
+  $scope.logout = function(){
     
-    });
-  });
+    if(auth.logout() === true){
+      window.location.href = 'login.html';
+    }else{
+      alert("User still logged in");
+    }
+  }
 
   $scope.fillPageArray = function(num, page) {
 
@@ -50,25 +60,37 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       return $scope.pageArray;
   }
 
-   $scope.getData = function(page, searchString) {
+  $scope.search = function(keyEvent){
+    var keyCode = window.event ? keyEvent.keyCode : keyEvent.which;
 
-    $scope.searchString;
-
-    if(page == undefined){
-      page = 1;
+    if(keyCode == 13){
+      $scope.getData();
     }
+  }
 
+  $scope.getSearchString = function(){
+    if($scope.searchString != ''){
+      return "&search=" + $scope.searchString;
+    } else {
+      return '';
+    }
+  }
 
+  $scope.getData = function() {
+
+    var page = $scope.pageNum();
     var response = $http.get(
 
       "API/user-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page + "&access_token=" + access_token + "&search=" + $scope.searchString);
+      .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + $scope.getSearchString());
 
     response.success(function(data, status, headers, config) {
       
       if(data.success){
         $scope.users = data.users;
-        $scope.fillPageArray(data.total_rows, page);        
+        $scope.fillPageArray(data.total_rows, page);  
+        pagination.setCurrentPage(page);
+        pagination.setMaxPage(data.total_rows);      
       } else {
         window.location.href = 'login.html';
       }
@@ -78,9 +100,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   }
 
-  function getTeams() {
+  $scope.getTeams = function() {
     var response = $http.get(
-      "API/team-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+      "API/team-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
 
@@ -97,13 +119,6 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
 
   }
-
-  $scope.getData($scope.pageNum());
-  getTeams();
-  $scope.edit = true;
-  $scope.error = false;
-  $scope.incomplete = false;
-
   
   $scope.addUser = function() {
     $scope.form_mode = 'insert';
@@ -114,6 +129,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.eteam = '';
     $scope.eusername = '';
   }
+
   $scope.editUser = function(id) {
     $scope.form_mode = 'update';
     $scope.form_title = "Edit User Information";
@@ -124,6 +140,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.eusername = $scope.users[id].username.toString();
     $scope.password = $scope.users[id].password.toString();
   };
+
   $scope.savedata = function() {
     switch ($scope.form_mode) {
       case 'update':
@@ -143,10 +160,10 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'team_id': $scope.eteam,
       'username': $scope.eusername,
       'password': $scope.epassword,
-      'access_token': access_token
+      'access_token': $scope.access_token
     }).success(function(data, status, headers, config) {
       if(data.success){
-        $scope.getData($scope.pageNum());
+        $scope.getData();
         alert("User successfully updated!");
       } else {
 
@@ -169,14 +186,14 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       'username': $scope.eusername,
       'password': $scope.epassword,
       'eteam': $scope.eteam,
-      'access_token': access_token
+      'access_token': $scope.access_token
     }).success(function(data, status, headers, config) {
 
       if(data.success){
         console.log(data);
         alert("User successfully added!");
 
-        $scope.getData($scope.pageNum());
+        $scope.getData();
       } else {
         
         switch(data.message_code){
@@ -193,26 +210,27 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   }
   
-$scope.deleteData = function(id) {
-  if (confirm("Do you want to delete this data?") == true) {
-       
-    $http.post("API/delete-people.php", {
-      'rand': new Date().getTime(),
-      'id': id,
-      'access_token': access_token
-    }).success(function(data, status, headers, config) {
-      if(data.success){
-        alert("User successfully deleted!");
-    
-        $scope.getData($scope.pageNum());
-      } else {
-        alert(data.message);
-        window.location.href = 'login.html';
-      }
+  $scope.deleteData = function(id) {
+    if (confirm("Do you want to delete this data?") == true) {
+         
+      $http.post("API/delete-people.php", {
+        'rand': new Date().getTime(),
+        'id': id,
+        'access_token': $scope.access_token
+      }).success(function(data, status, headers, config) {
+        if(data.success){
+          alert("User successfully deleted!");
+      
+          $scope.getData();
+        } else {
+          alert(data.message);
+          window.location.href = 'login.html';
+        }
 
-      //popup here
-    });
+        //popup here
+      });
+    }
   }
-}
 
+  $scope.init();
 });
