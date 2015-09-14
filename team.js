@@ -1,18 +1,20 @@
 
-  var myApp = angular.module('myApp', ['ngCookies']);
-
-myApp.controller('userCtrl', function($scope, $http, $cookies, $location, auth) {
+var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
+  $http, $cookies, $location, pagination, auth) {
   $scope.form_title = "yeah";
   $scope.teams = '';
   $scope.updateData = {}
   $scope.pageArray = [];
+  $scope.pagination = pagination;
   $scope.selectedMembers = [];
 
   $scope.pageNum = function(){
-    return (($location.search().p) ? $location.search().p : 1);
+    var page = (($location.search().p) ? $location.search().p : 1);   
+    return page;
   }
 
- var access_token = $cookies.get('access_token');
+  var access_token = $cookies.get('access_token');
+
 auth.checkLogin();
 $scope.logout = function(){
   
@@ -21,6 +23,8 @@ $scope.logout = function(){
   }else{
     alert("User still logged in");
   }
+  
+
 }
 
   $scope.fillPageArray = function(num, page) {
@@ -51,6 +55,8 @@ $scope.logout = function(){
       if(data.success){
         $scope.teams = data.teams;
         $scope.fillPageArray(data.total_rows, page);
+        pagination.setCurrentPage(page);
+        pagination.setMaxPage(data.total_rows);
       } else {
        window.location.href = 'login.html';
       }

@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp', ['ngCookies']);
 
-myApp.controller('userCtrl', function($scope,$http, $cookies, $location, auth, pagination) {
+var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
+  $http, $cookies, $location, pagination, auth) {
 
   $scope.init = function(){
 
