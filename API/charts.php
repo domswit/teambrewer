@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors','false');
+// ini_set('display_errors','false');
 include("../config/connection.php");
 include("../config/auth.php");
 

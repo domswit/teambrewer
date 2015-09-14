@@ -1,5 +1,7 @@
-angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies, $location) {
+var myApp = angular.module('myApp', ['ngCookies']);
+
+myApp.controller('userCtrl', function($scope, $http, $cookies, $location, auth, pagination) {
+
   $scope.form_title = "yeah";
   $scope.fName = '';
   $scope.lName = '';
@@ -8,11 +10,22 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.updateData = {}
   $scope.first_name2 = "test";
   $scope.pageArray = [];
-  $scope.pageNum = function(){
-    return (($location.search().p) ? $location.search().p : 1);
-  }
+  $scope.pagination = pagination;
+ $scope.pageNum = function(){
+    var page = (($location.search().p) ? $location.search().p : 1);   
+    return page;
 
 var access_token = $cookies.get('access_token');
+
+auth.checkLogin();
+$scope.logout = function(){
+  
+  if(auth.logout() === true){
+    window.location.href = 'login.html';
+  }else{
+    alert("User still logged in");
+  }
+}
 
 $scope.fillPageArray = function(num, page) {
 
@@ -27,9 +40,6 @@ $scope.fillPageArray = function(num, page) {
       return $scope.pageArray;
   }
   
-
-
-
   $(document).ready(function() {
     $('#datetimepicker2').datetimepicker({
       format: 'YYYY-MM-DD hh:mm:ss'
@@ -61,10 +71,13 @@ $scope.fillPageArray = function(num, page) {
       .getTime() + "&page=" + page + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
+      console.log(data);
       console.log(data.sched);
       if(data.success){
        $scope.sched = data.sched;
        $scope.fillPageArray(data.total_rows, page);        
+        pagination.setCurrentPage(page);
+        pagination.setMaxPage(data.total_rows);
       } else {
         alert(data.message);
         window.location.href = 'login.html';

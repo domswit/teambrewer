@@ -49,7 +49,7 @@ function getPage(){
 	if(!empty($_GET['page']) && $_GET['page'] != 'undefined') {
 		$page = $_GET['page'];
 	} else {
-		$page = 1;
+		$page = 4;
 	}
 
 	return $page;
