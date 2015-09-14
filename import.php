@@ -15,7 +15,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
 <script src="js/angular-cookies.js"></script>
 <script src="js/angular-route.js"></script>
-<body ng-app="myApp" ng-controller="userCtrl">
+<body ng-app="myApp" ng-controller="importCtrl">
 </head>
 <div id="wrapper">
     <style type="text/css">
@@ -86,6 +86,7 @@
                         <div class="bodybar">
                             <p>Choose file:</p>
                             <form name="import" method="post" enctype="multipart/form-data" action="API/import.php" target="_blank">
+                                <input type="text" style="display:none" ng-model="access_token" name="access_token"/>
                                 <input type="file" name="file" /><br/>
                                 <button ng-click="submit" class="btn btn-primary btn-md" name="submit">Submit</button>
                             </form>
@@ -97,10 +98,9 @@
         </div>
     </div>
     <script type="text/javascript" src="js/moment.js"></script>
-    <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="css/bootstrap.css"></script>
-    <script type="text/javascript" src="css/bootstrap-datetimepicker.min.css"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src = "project.js"></script>
+    <script src = "import.js"></script>
+
+    <script src="js/factories/auth.js"></script>    
 </body>
 </html>

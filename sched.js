@@ -1,5 +1,7 @@
-var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies, $location, pagination) {
+var myApp = angular.module('myApp', ['ngCookies']);
+
+myApp.controller('userCtrl', function($scope, $http, $cookies, $location, auth, pagination) {
+
   $scope.form_title = "yeah";
   $scope.fName = '';
   $scope.lName = '';
@@ -7,15 +9,23 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
-
   $scope.pageArray = [];
   $scope.pagination = pagination;
  $scope.pageNum = function(){
     var page = (($location.search().p) ? $location.search().p : 1);   
     return page;
-  }
 
 var access_token = $cookies.get('access_token');
+
+auth.checkLogin();
+$scope.logout = function(){
+  
+  if(auth.logout() === true){
+    window.location.href = 'login.html';
+  }else{
+    alert("User still logged in");
+  }
+}
 
 $scope.fillPageArray = function(num, page) {
 

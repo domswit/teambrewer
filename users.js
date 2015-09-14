@@ -1,5 +1,7 @@
-var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies, $location, pagination) {
+var myApp = angular.module('myApp', ['ngCookies']);
+
+myApp.controller('userCtrl', function($scope,$http, $cookies, $location, auth, pagination) {
+
   $scope.fName = '';
   $scope.lName = '';
   $scope.passw1 = '';
@@ -14,7 +16,6 @@ $scope.pageNum = function(){
     return page;
   }
 
-  var access_token = $cookies.get('access_token');
 
  
 
@@ -31,6 +32,18 @@ $scope.pageNum = function(){
     });
   });
 
+var access_token = $cookies.get('access_token');
+auth.checkLogin();
+$scope.logout = function(){
+  
+  if(auth.logout() === true){
+    window.location.href = 'login.html';
+  }else{
+    alert("User still logged in");
+  }
+  
+
+}
   $scope.fillPageArray = function(num, page) {
 
       $scope.pageArray.splice(0);
