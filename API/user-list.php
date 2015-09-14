@@ -13,18 +13,16 @@ $search_string = getSearchString();
 if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 	$max_per_page = $_GET['max_per_page'];	
 } else {
-	$max_per_page = 20;	
+	$max_per_page = 10;
 }
 
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
 $sql = "SELECT  a.user_id, a.fullname, a.first_name, a.last_name, a.fullname, a.birthdate, b.name, a.username, a.password, a.team_id FROM users as a LEFT JOIN teams as b ON (a.team_id = b.team_id) WHERE 1 " . $search_string . " LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
-$count_sql = "SELECT COUNT(*) as total FROM users";
+$count_sql = "SELECT  count(*) as total FROM users as a LEFT JOIN teams as b ON (a.team_id = b.team_id) WHERE 1 " . $search_string;
 
 $result = $conn->query($sql);
-
-
 
 $users = Array();
 if ($result->num_rows > 0) {

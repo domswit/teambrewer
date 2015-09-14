@@ -33,10 +33,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     });
   }
 
-  $scope.pageNum = function(){
-    var page = (($location.search().p) ? $location.search().p : 1);   
-    return page;
-  }
+
 
   $scope.logout = function(){
     
@@ -64,25 +61,43 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     var keyCode = window.event ? keyEvent.keyCode : keyEvent.which;
 
     if(keyCode == 13){
+      $scope.pageNum = 1;
       $scope.getData();
     }
   }
 
-  $scope.getSearchString = function(){
-    if($scope.searchString != ''){
-      return "&search=" + $scope.searchString;
+  $scope.getPageNum = function(){
+    var queryPage = (($location.search().p) ? $location.search().p : 1);
+
+    if($scope.pageNum != '' && $scope.pageNum != undefined){
+      return $scope.pageNum;
+    } else if( queryPage != '' ){
+      return queryPage;
     } else {
       return '';
     }
   }
 
-  $scope.getData = function() {
+  $scope.getSearchString = function(){
 
-    var page = $scope.pageNum();
+    var querySearch = (($location.search().search) ? $location.search().search : '');
+
+    if($scope.searchString != '' && $scope.searchString != undefined){
+      return $scope.searchString;
+    } else if( querySearch != '' ){
+      return querySearch;
+    } else {
+      return '';
+    }
+  }
+
+  $scope.getData = function(page) {
+
+    var page = ( page ? page : $scope.getPageNum() );
+
     var response = $http.get(
-
       "API/user-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + $scope.getSearchString());
+      .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
 
     response.success(function(data, status, headers, config) {
       
