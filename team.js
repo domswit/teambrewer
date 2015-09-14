@@ -59,24 +59,88 @@ $scope.logout = function(){
     });
   }
 
+  function getUsers() {
+    var response = $http.get(
+      "API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+
+    response.success(function(data, status, headers, config) {
+
+      if(data.success){
+        console.log(data.users);
+        $scope.users = data.users;
+
+        setTimeout(function(){
+          $scope.$apply();  
+          $('.selectpicker').selectpicker(
+          {
+              size: 4
+          });          
+        },1);
+        
+      } else {
+        alert(data.message);
+        window.location.href = 'login.html';
+      }
+    });
+    response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+    });
+
+  }
+
   $scope.getData($scope.pageNum());
+  getUsers();
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
 
-
- $scope.addTeam = function() {
+  $scope.addTeam = function() {
     $scope.form_mode = 'insert';
     $scope.form_title = "Add Team Information";
     $scope.name = '';
   };
+
   $scope.editTeam = function(id) {
     $scope.team_id = id;
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Team Information";
     $scope.team_id = id;
     $scope.name = $scope.teams[id].name.toString();
+    $scope.setSelectedMembers(id);
   };
+
+  $scope.setSelectedMembers = function() {
+    var response = $http.get("API/team-members-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
+    
+    response.success(function(data, status, headers, config) {
+      
+      if(data.success){
+        $scope.team_id = data.team_id;
+
+        //declare id array
+        //loop data.members
+          //push item to id array data.members[i].user_id
+
+        //$('.selectpicker').selectpicker('val', id...);
+
+        var memberArray = data.members;
+
+          for(var x = 0; x < data.members.length; x++){
+            memberArray = data.members[x].user_id;
+            }
+
+          return ($('.selectpicker').selectpicker('val', memberArray));
+
+      } else {
+       window.location.href = 'login.html';
+      }
+
+    });
+
+    response.error(function(data, status, headers, config) {
+      alert("AJAX failed!");
+    });
+  }
 
   $scope.saveData = function() {
     switch ($scope.form_mode) {
@@ -92,9 +156,12 @@ $scope.logout = function(){
   $scope.updateData = function() {
     var team_id = $scope.team_id;
     var name = $('#name').val();
+    var members = $('#members').val().join();
+    console.log(members);
     $http.post("API/update-team.php", {
       'team_id': team_id,
       'name': name,
+      'members': members,
       'access_token': access_token,
     }).success(function(data, status, headers, config) {
 
@@ -107,6 +174,7 @@ $scope.logout = function(){
       }
     });
   }
+
   $scope.insertData = function() {
     $http.post("API/insert-team.php", {
       'name': $scope.name,

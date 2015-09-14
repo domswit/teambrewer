@@ -108,14 +108,13 @@
 		$r = 0;
 		//echo "234";
 
-		clearExistingSched();
+		
 
 		while(($filesop = fgetcsv($handle, 1000, ",")) !== false)
 		{	
+			clearExistingSched($user_id,$from_date,$to_date);	
 			
-			
-			echo "ROW:";
-			print_r($filesop);			
+				
 			if($r > 3){
 			
 				$fromdateArr = explode("/", $filesop[4]);
@@ -199,7 +198,7 @@
 		
 				}	
 				$r = $r + 1;
-			}
+		}
 			
 		}
 	}
@@ -233,37 +232,59 @@
       return $aDays;  
     }  
 
-	function clearExistingSched(){
-		global $conn;
+	function clearExistingSched($user_id,$from_date,$to_date){
+		
 
 		//declare array for ids
 		//loop all names
 			//get user id of the name
 			//check if id is in array
 			//if not in array, push id
-		$clearsched = '';
+			global $conn;
+
 		if ($conn->connect_error) {
 		    die("Connection failed: " . $conn->connect_error);
 		} 
  
-		$sql = "SELECT `user_id` FROM `users` WHERE `fullname`= '".$name."'";
+		$sql = "SELECT `user_id` FROM `sched` WHERE `user_id`= '" .$user_id. "'";
+			
 		$result = $conn->query($sql);
-		$user = Array();
+		$sched = Array();
 		
 		if ($result ->num_rows > 0) {
 		    while($row = $result -> fetch_assoc()) {
-    			$user[] = $row;
+    			$sched[] = $row;
 		    }
 		} 
 
-		if(	$user === $user){}
+		
+
+	
+		if( count($sched) > 0 ){
+			//if name was found, return its id
 			
+			$result_id = $sched[0]['user_id'];
+			$sql = $sql = "DELETE FROM `sched` WHERE `user_id`='".$user_id."'"	;
 
+				$c = $c + 1;
 
+				if ($conn->query($sql) === TRUE) {
+					$output['success'] = true;
+					$output['message'] = "Schedule has been deleted.";
+					echo "Deleted".$sql."<br>"."<br>";
+
+				} else {
+					$output['success'] = false;
+					$output['message'] = $conn->error;
+					echo $conn->error;
+					}
+		}
+		}
+		
 
 		//loop all ids in array
 			//delete all schedules of that user
-	}    
+	    
 
 	echo "Import Complete"."<br>"."<br>";
 ?>

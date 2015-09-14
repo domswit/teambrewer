@@ -1,6 +1,8 @@
 var myApp = angular.module('myApp', ['ngCookies']);
 var access_token;
-myApp.controller('userCtrl', function($scope,$http, $cookies, $location, auth) {
+
+myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth) {
+
   $scope.teams = '';
   $scope.updateData = {}
   var filters = getUrlVars();
@@ -20,8 +22,10 @@ myApp.controller('userCtrl', function($scope,$http, $cookies, $location, auth) {
 
   function getTeam() {
     var response = $http.get(
-      "API/team-list.php?rand=" + new Date()
+
+      APIURL + "team-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999" + "&access_token=" + access_token);
+
     response.success(function(data, status, headers, config) {
       console.log(data.teams);
       $scope.teams = data.teams;
@@ -34,8 +38,10 @@ myApp.controller('userCtrl', function($scope,$http, $cookies, $location, auth) {
 
   function getProject() {
     var response = $http.get(
-      "API/project-list.php?rand=" + new Date()
+
+      APIURL + "project-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999" + "&access_token=" + access_token);
+
 
     response.success(function(data, status, headers, config) {
       $scope.projects = data.projects;
@@ -48,12 +54,25 @@ myApp.controller('userCtrl', function($scope,$http, $cookies, $location, auth) {
 
   function getData() {
     var response = $http.get(
-      "API/user-list.php?rand=" + new Date()
+
+      APIURL + "user-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999" + "&access_token=" + access_token);
+
     response.success(function(data, status, headers, config) {
       console.log(data.users);
       $scope.users = data.users;
-      $scope.ename = filters.user_id;
+      var user_ids = [];
+
+      
+      var urlPeople = decodeURIComponent(filters.people);
+      var people = urlPeople.split(',');
+
+      for(var i in people){
+        user_ids.push(people[i]);
+      }
+      
+      $scope.selectedPeople = user_ids;
+      
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -62,8 +81,10 @@ myApp.controller('userCtrl', function($scope,$http, $cookies, $location, auth) {
 function
    getSched() {
     var response = $http.get(
-      "API/sched-list.php?rand=" + new Date()
+
+      APIURL + "sched-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999" + "&access_token=" + access_token);
+
     response.success(function(data, status, headers, config) {
       console.log(data.sched);
       $scope.sched = data.sched;
@@ -72,6 +93,12 @@ function
       alert("AJAX failed!");
     });
   }
+
+  $scope.submit = function(){
+    $scope.people = $('#user_id').val();
+    $scope.$apply();
+  }
+
   getTeam();
   getProject();
   getData();

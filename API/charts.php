@@ -9,18 +9,16 @@ if ($conn->connect_error) {
 
 $output = Array('success'=>true, 'users'=>null);
 
-function getUsers($project_id, $team_id, $user_id){
-	// $users = array();
-	// $users[1] = array();
-	// $users[2] = array();
-	// $users[3] = array();
+function getUsers($project_id, $team_id, $people){
 
-	
-$user_str = '';
-	if($user_id != ''){
+	$user_str = '';
+	$user_str_array = array();
 
-		$user_str = "AND c.user_id = {$user_id}";
-
+	if(count($people) > 0){
+		foreach($people as $person){
+			array_push($user_str_array, " c.user_id = {$person} ");			
+		}
+		$user_str = 'AND (' . implode(' OR ', $user_str_array) . ') ';
 	} else {
 
 		$project_str = '';
@@ -40,8 +38,7 @@ $user_str = '';
 
 	global $conn;
 
-		$sql = "SELECT a.user_id, c.fullname, c.team_id, a.project_id,  a.fromdate, a.todate FROM sched as a, projects as b, users as c WHERE a.project_id = b.project_id AND a.user_id = c.user_id " . $project_str . " " . $team_str. " " . $user_str;
-
+	$sql = "SELECT c.user_id, c.fullname, c.team_id FROM users as c WHERE 1 ". $user_str;
 		 
 	$result = $conn->query($sql);
 
@@ -80,16 +77,6 @@ function getDates($startDate, $endDate)
     return $return;
 }
 
-// function getScheds($user_id){
-// 	return(array(
-// 		array('id'=>'1','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'10'),
-// 		array('id'=>'2','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'20'),
-// 		array('id'=>'3','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'30'),
-// 		array('id'=>'4','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'40'),
-// 		array('id'=>'5','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'50'),
-// 		array('id'=>'6','fromdate'=>'2011-01-21','todate'=>'2011-01-23','allocation'=>'60'),
-// 	));
-// }
 function getScheds($user_id, $fromdate, $todate)
 {
 
@@ -116,11 +103,7 @@ function getScheds($user_id, $fromdate, $todate)
 	return $scheds;
 }
 
-
-
-
-//$users = getUsers();
-$user_id = $_POST['user_id']; 
+$people = explode(',',urldecode($_POST['people'])); 
 $form_fromdate = $_POST['from_date'];
 $form_todate = $_POST['to_date'];
 $project_id = $_POST['project_id'];
@@ -139,7 +122,7 @@ $users = [];
 $dates =  getDates($form_fromdate, $form_todate);
 
 if($form_fromdate != '' || $form_todate != ''){
-	$users = getUsers($project_id, $team_id,$user_id);  
+	$users = getUsers($project_id, $team_id, $people);
 
 	$scheds = array();
 	$scheds[] = array('allocation' <= '50');
@@ -148,22 +131,8 @@ if($form_fromdate != '' || $form_todate != ''){
 
 	$allDates = array();
 
-
-	//echo $fromdate;
-
-
-	// print_r($dates);
-	// die(); 
-
-
-
 	foreach($users as $key => $user){
 
-		// echo $e;
-		// echo "<br>";
-		//preparation
-
-		//echo "<BR><BR>USER " . $key . "<BR>" ;
 		for($x=0; $x<count($dates); $x++){
 			$date = $dates[$x];
 			$users[$key][$date] = array(
@@ -183,18 +152,12 @@ if($form_fromdate != '' || $form_todate != ''){
 
 	            if (strtotime($fromdate) < strtotime($todate)){
 	                $sched_dates = getDates($fromdate , $todate);
-
-	                
-	                //$users[$e][$date] = array();
-
 	                $allocation = $scheds[$x]['allocation'];
 	                $project_id = $scheds[$x]['project_id'];
 	                $project_name = $scheds[$x]['project_name'];
 
 
 	                for($i=0; $i<count($sched_dates); $i++){
-
-	                    //echo 'UID: ' . $key . ' -- DATE:' . $sched_dates[$i] . 'ALLOCATION: ' . $allocation . '<br>';
 
 	                    $sched_date = date('Y-m-d', strtotime($sched_dates[$i]));
 
@@ -216,10 +179,6 @@ if($form_fromdate != '' || $form_todate != ''){
 
 	}
 }
-
-
-
-//print_r($users);
 
 $output['users'] = $users;
 

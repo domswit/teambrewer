@@ -4,7 +4,7 @@ angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, 
     
   $scope.authenticate = function(id) {
 
-    $http.post("API/authentication.php?rand=" + new Date().getTime(),{
+    $http.post(APIURL + "authentication.php?rand=" + new Date().getTime(),{
       'username' : $scope.username,
       'password' : $scope.password,
       'access_token' : $scope.access_token
@@ -14,7 +14,7 @@ angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, 
 
         if (data.user){
 		      $cookies.put('access_token', data.user.access_token);
-          window.location.href = '/teambrewer/charts.html';
+          window.location.href = 'charts.html';
         } 
 
         else  {
