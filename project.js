@@ -1,19 +1,21 @@
-angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies, $location) {
+var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
+  $http, $cookies, $location, pagination) {
   $scope.fName = '';
   $scope.lName = '';
   $scope.passw1 = '';
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
+
   $scope.pageArray = [];
+  $scope.pagination = pagination;
+
   $scope.pageNum = function(){
-    return (($location.search().p) ? $location.search().p : 1);
+    var page = (($location.search().p) ? $location.search().p : 1);   
+    return page;
   }
 
   var access_token = $cookies.get('access_token');
-
-
 
  $scope.fillPageArray = function(num, page) {
 
@@ -31,31 +33,33 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
 
       return $scope.pageArray;
   }
-  
 
   $scope.getData = function(page) {
 
     if(page == undefined){
       page = 1;
-    }
+    }      
 
     var response = $http.get(
-        "API/project-list.php?rand=" + new Date()
+        "API/project-list.php?rapnd=" + new Date()
         .getTime() + "&page=" + page + "&access_token=" + access_token);
       response.success(function(data, status, headers, config) {
         console.log(data.projects);
         if(data.success){
           $scope.projects = data.projects;
           $scope.fillPageArray(data.total_rows, page);
+          pagination.setCurrentPage(page);
+          pagination.setMaxPage(data.total_rows);
         } else {
           window.location.href = 'login.html';
         }
       });
       response.error(function(data, status, headers, config) {
         alert("AJAX failed!");
-      });
+      }); 
   }
 
+ $scope.query = $scope.users;
   $scope.getData($scope.pageNum());
   $scope.edit = true;
   $scope.error = false;
@@ -136,4 +140,5 @@ $scope.addProject = function() {
       });
     }
   }
+
 });

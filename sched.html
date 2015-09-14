@@ -114,7 +114,11 @@
                                     <br>
                                     <div class="table-responsive">
                                         <ul class="pagination no-margin pull-right">
-                                            <li ng-repeat="i in pageArray"><a ng-click="getSched(i)" href="#/?p={{i}}">{{i}}</a></li>
+                                    <li><a ng-click="getSched(pagination.getFirst())" href="#/?p={{pagination.getFirst()}}">First</a></li>
+                                    <li><a ng-click="getSched(pagination.getPrevious())" href="#/?p={{pagination.getPrevious()}}">Previous</a></li>
+                                    <li ng-repeat="i in pageArray"><a ng-click="getSched(i)" href="#/?p={{i}}">{{i}}</a></li>
+                                    <li><a ng-click="getSched(pagination.getNext())" href="#/?p={{pagination.getNext()}}">Next</a></li>
+                                    <li><a ng-click="getSched(pagination.getLast())" href="#/?p={{pagination.getLast()}}">Last</a></li>
                                         </ul>
                                         <table class="table table-bordered table-hover table-striped">
                                             <thead>
@@ -145,9 +149,13 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <ul class="pagination no-margin pull-right">
-                                            <li ng-repeat="i in pageArray"><a ng-click="getSched(i)" href="#/?p={{i}}">{{i}}</a></li>
-                                        </ul>
+                                <ul class="pagination no-margin pull-right">
+                                    <li><a ng-click="getSched(pagination.getFirst())" href="#/?p={{pagination.getFirst()}}">First</a></li>
+                                    <li><a ng-click="getSched(pagination.getPrevious())" href="#/?p={{pagination.getPrevious()}}">Previous</a></li>
+                                    <li ng-repeat="i in pageArray"><a ng-click="getSched(i)" href="#/?p={{i}}">{{i}}</a></li>
+                                    <li><a ng-click="getSched(pagination.getNext())" href="#/?p={{pagination.getNext()}}">Next</a></li>
+                                    <li><a ng-click="getSched(pagination.getLast())" href="#/?p={{pagination.getLast()}}">Last</a></li>
+                                </ul>
                         </table>
                         </div>
                         </div>
@@ -157,10 +165,10 @@
             </div>
         </div>
     </div>
-   <script src="js/moment.js"></script>
-<script src="js/bootstrap-datetimepicker.min.js"></script>
-
+    <script src="js/moment.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
     <script src="sched.js"></script>
+    <script src="js/factories/pagination.js"></script>
     </body>
 
 </html>

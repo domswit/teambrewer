@@ -1,3 +1,15 @@
 <div class="nav navbar-right top-nav">
-    <a class="navbar-brand" id="logout_btn" href="login.html" data-toggle="tooltip" data-placement="left" title="Logout"><i class="glyphicon glyphicon-remove"></i></a>
+    <a class="navbar-brand" id="logout_btn" href="login.html" data-toggle="tooltip" data-placement="left" title="Logout"><i class="glyphicon glyphicon-remove" ng-click="myFunction()"></i></a>
 </div>
+
+<script>
+function myFunction() {
+    var x;
+    if (confirm("Press a button!") == true) {
+        x = "You pressed OK!";
+    } else {
+        x = "You pressed Cancel!";
+    }
+
+}
+</script>

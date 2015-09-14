@@ -1,18 +1,22 @@
-angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
-  $http, $cookies, $location) {
+var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
+  $http, $cookies, $location, pagination) {
   $scope.fName = '';
   $scope.lName = '';
   $scope.passw1 = '';
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
-  $scope.pageNum = function(){
-    return (($location.search().p) ? $location.search().p : 1);
+  $scope.pageArray = [];
+  $scope.pagination = pagination;
+
+$scope.pageNum = function(){
+    var page = (($location.search().p) ? $location.search().p : 1);   
+    return page;
   }
 
   var access_token = $cookies.get('access_token');
 
-   $scope.pageArray = [];
+ 
 
    $(document).ready(function() {
 
@@ -56,7 +60,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       
       if(data.success){
         $scope.users = data.users;
-        $scope.fillPageArray(data.total_rows, page);        
+        $scope.fillPageArray(data.total_rows, page);  
+        pagination.setCurrentPage(page);
+        pagination.setMaxPage(data.total_rows);      
       } else {
         window.location.href = 'login.html';
       }
