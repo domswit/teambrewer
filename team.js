@@ -123,14 +123,14 @@ $scope.logout = function(){
 
         //$('.selectpicker').selectpicker('val', id...);
 
-        var memberArray = data.members;
+        var memberArray = [];
 
           for(var x = 0; x < data.members.length; x++){
-            memberArray = data.members[x].user_id;
-            }
-
-          return ($('.selectpicker').selectpicker('val', memberArray));
-
+            memberArray.push(data.members[x].user_id);
+          }
+          console.log(memberArray);
+          $('.selectpicker').selectpicker('val', memberArray);
+            
       } else {
        window.location.href = 'login.html';
       }
