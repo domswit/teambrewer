@@ -6,6 +6,16 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.passw2 = '';
   $scope.updateData = {}
   $scope.first_name2 = "test";
+  $scope.searchString = "123";
+
+  $scope.search = function(keyEvent){
+    var keyCode = window.event ? keyEvent.keyCode : keyEvent.which;
+
+    if(keyCode == 13){
+      $scope.getData( $scope.pageNum() );
+    }
+  }
+
   $scope.pageNum = function(){
     return (($location.search().p) ? $location.search().p : 1);
   }
@@ -40,7 +50,9 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
       return $scope.pageArray;
   }
 
-   $scope.getData = function(page) {
+   $scope.getData = function(page, searchString) {
+
+    $scope.searchString;
 
     if(page == undefined){
       page = 1;
@@ -50,7 +62,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     var response = $http.get(
 
       "API/user-list.php?rand=" + new Date()
-      .getTime() + "&page=" + page + "&access_token=" + access_token);
+      .getTime() + "&page=" + page + "&access_token=" + access_token + "&search=" + $scope.searchString);
 
     response.success(function(data, status, headers, config) {
       

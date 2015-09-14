@@ -1,6 +1,14 @@
 @import url("http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css");
 
 
+.marg-right-5{
+    margin-right: 5px;
+}
+
+.width-250{
+    width: 250px;
+}
+
 #tooltip{
     z-index: 99;
 }

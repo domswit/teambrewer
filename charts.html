@@ -429,9 +429,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-    Resource Allocation
-
-    </h1>
+                            Resource Allocation
+                        </h1>
                     </div>
                 </div>
                 <div class="row">
@@ -443,7 +442,7 @@
                                         <label>Project</label>
                                         <br>
                                         <select id="project_id" name="project_id" ng-model="project_name" class="col-lg">
-                                            <option value="">Choose a Project {{project_name}}</option>
+                                            <option value="">Any</option>
                                             <option ng-repeat="(key,project) in projects" value="{{ key }}" ng-selected="key == project_name">{{ project.name }}</option>
                                         </select>
                                     </div>
@@ -451,7 +450,7 @@
                                         <label>Team</label>
                                         <br>
                                         <select id="team_id" name="team_id" ng-model="eteam" class="col-lg">
-                                            <option value="">Choose a Team</option>
+                                            <option value="">Any</option>
                                             <option ng-repeat="(key,team) in teams" value="{{ key }}" ng-selected="key == eteam">{{ team.name}}</option>
                                         </select>
                                     </div>
@@ -459,7 +458,7 @@
                                         <label for='exe3'>People</label>
                                         <br>
 
-                                          <select id="user_id" ng-model="ename" class="selectpicker" data-live-search="true" multiple title='Choose People'>
+                                          <select id="user_id" ng-model="ename" class="selectpicker" data-live-search="true" multiple title='Any'>
                                             <option ng-repeat="(key,user) in users " value="{{ key }}" ng-selected="selectedPeople.indexOf(key) > -1">{{user.fullname}}</option>
                                           </select>
                                           <input type="text" style="display:none" name="people" ng-model="people" />
@@ -535,7 +534,7 @@
             </div>
             <div id="content">
                 <div class="demo-container">
-                    <div id="placeholder" class="demo-placeholder"></div>
+                    <div id="placeholder" class="demo-placeholder" style="cursor: pointer"></div>
                 </div>
             </div>
             <div id="legend-container"></div>

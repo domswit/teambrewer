@@ -7,6 +7,9 @@ set_time_limit(0);
 
 $output = Array('success'=>true, 'users'=>null);
 
+
+$search_string = getSearchString();
+
 if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 	$max_per_page = $_GET['max_per_page'];	
 } else {
@@ -16,7 +19,7 @@ if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 $page = getPage();
 $pagingVars = getPagingVars($page, $max_per_page);
 
-$sql = "SELECT  a.user_id, a.fullname, a.first_name, a.last_name, a.fullname, a.birthdate, b.name, a.username, a.password, a.team_id FROM users as a LEFT JOIN teams as b ON (a.team_id = b.team_id) LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
+$sql = "SELECT  a.user_id, a.fullname, a.first_name, a.last_name, a.fullname, a.birthdate, b.name, a.username, a.password, a.team_id FROM users as a LEFT JOIN teams as b ON (a.team_id = b.team_id) WHERE 1 " . $search_string . " LIMIT " . $pagingVars['offset_start'] . ", " . $pagingVars['max_per_page'];
 $count_sql = "SELECT COUNT(*) as total FROM users";
 
 $result = $conn->query($sql);
@@ -41,6 +44,21 @@ echo json_encode ($output);
 
 $conn->close();
 
+
+function getSearchString(){
+	$search_string = '';
+	if(isset($_GET['search']) && $_GET['search'] != ''){
+		$search_term = $_GET['search'];
+		$search_string .= "AND ( ";
+		$search_string .= "a.fullname LIKE '%" . $search_term . "%' ";
+		$search_string .= "OR b.name LIKE '%" . $search_term . "%' ";
+		$search_string .= "OR a.username LIKE '%" . $search_term . "%' ";
+		$search_string .= "OR a.birthdate LIKE '%" . $search_term . "%' ";
+		$search_string .= ") ";
+	}
+
+	return $search_string;
+}
 
 function getTotalPageCount($conn, $count_sql, $max_per_page){
 	$result = $conn->query($count_sql);
