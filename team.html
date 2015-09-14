@@ -104,7 +104,7 @@
                                                             <label>Team Members</label>
                                                             <select id="members" class="selectpicker" data-live-search="true" data-live-search-placeholder="Select Members" multiple="" data-width="100%">
                                                                 <option ng-repeat="(key,user) in users" value="{{ key }}"
-                                                                ng-model="members">{{user.fullname}}</option>
+                                                                ng-model="members" ng-selected="selectedMembers.indexOf(key) > -1">{{user.fullname}}</option>
                                                             </select>
                                                         </div>
                                                     </form>

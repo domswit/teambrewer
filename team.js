@@ -3,6 +3,8 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $scope.teams = '';
   $scope.updateData = {}
   $scope.pageArray = [];
+  $scope.selectedMembers = [];
+
   $scope.pageNum = function(){
     return (($location.search().p) ? $location.search().p : 1);
   }
@@ -47,7 +49,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     });
   }
 
-  function getUsers() {
+  $scope.getUsers =function() {
     var response = $http.get(
       "API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
 
@@ -77,7 +79,7 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   }
 
   $scope.getData($scope.pageNum());
-  getUsers();
+  $scope.getUsers();
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;
@@ -92,19 +94,17 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
     $scope.team_id = id;
     $scope.form_mode = 'update';
     $scope.form_title = "Edit Team Information";
-    $scope.team_id = id;
     $scope.name = $scope.teams[id].name.toString();
     $scope.setSelectedMembers(id);
   };
 
-  $scope.setSelectedMembers = function() {
-    var response = $http.get("API/team-members-list.php?rand=" + new Date().getTime() + "&access_token=" + access_token);
-    
+  $scope.setSelectedMembers = function(team_id) {
+
+    var response = $http.get("API/team-members-list.php?rand=" + new Date().getTime()  + "&team_id=" + team_id + "&access_token=" + access_token);
+
     response.success(function(data, status, headers, config) {
       
       if(data.success){
-        $scope.team_id = data.team_id;
-
         //declare id array
         //loop data.members
           //push item to id array data.members[i].user_id
@@ -116,9 +116,12 @@ angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
           for(var x = 0; x < data.members.length; x++){
             memberArray.push(data.members[x].user_id);
           }
-          console.log(memberArray);
-          $('.selectpicker').selectpicker('val', memberArray);
-            
+          
+          $scope.selectedMembers = memberArray;
+
+          console.log('members:');
+          console.log($scope.selectedMembers);
+    
       } else {
        window.location.href = 'login.html';
       }
