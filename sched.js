@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp', ['ngCookies']);
 
-myApp.controller('userCtrl', function($scope, $http, $cookies, $location, auth, pagination) {
+var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
+  $http, $cookies, $location, pagination, auth) {
 
   $scope.form_title = "yeah";
   $scope.fName = '';
@@ -11,13 +11,18 @@ myApp.controller('userCtrl', function($scope, $http, $cookies, $location, auth, 
   $scope.first_name2 = "test";
   $scope.pageArray = [];
   $scope.pagination = pagination;
- $scope.pageNum = function(){
+  
+  var access_token = $cookies.get('access_token');
+
+  auth.checkLogin();    
+
+  $scope.pageNum = function(){
     var page = (($location.search().p) ? $location.search().p : 1);   
     return page;
+  }
 
-var access_token = $cookies.get('access_token');
 
-auth.checkLogin();
+
 $scope.logout = function(){
   
   if(auth.logout() === true){
