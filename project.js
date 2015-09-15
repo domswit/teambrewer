@@ -11,7 +11,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     $scope.lName = '';
     $scope.passw1 = '';
     $scope.passw2 = '';
-    $scope.updateData = {}
+    
     $scope.first_name2 = "test";
 
     $scope.pageArray = [];

@@ -11,7 +11,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     $scope.lName = '';
     $scope.passw1 = '';
     $scope.passw2 = '';
-    $scope.updateData = {}
+   
     $scope.first_name2 = "test";
     $scope.pageArray = [];
     $scope.pagination = pagination; 
@@ -247,10 +247,11 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
       'project_id': eproject,
       'fromdate': efromdate,
       'todate': etodate,
-      'allocation': ealloc
+      'allocation': ealloc,
+      'access_token' : $scope.access_token
     }).success(function(data, status, headers, config) {
       if(data.success){
-        $scope.getSched($scope.pageNum());
+        $scope.getData($scope.getPageNum());
         alert("Schedule successfully updated!");
       } else {
         alert(data.message);
@@ -268,7 +269,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     }).success(function(data, status, headers, config) {
       if(data.success){
         console.log(data);
-        $scope.getSched($scope.pageNum());
+        $scope.getData($scope.pageNum());
         alert("Schedule successfully added!");
       } else {
         alert(data.message);
@@ -286,7 +287,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
       if(data.success){
         console.log(data);
     
-        $scope.getSched($scope.pageNum());
+        $scope.getData($scope.pageNum());
         alert("Schedule successfully deleted!");
       } else {
         alert(data.message);

@@ -4,13 +4,22 @@ var access_token;
 myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth) {
 
   $scope.teams = '';
+   $scope.projects = '';
   $scope.updateData = {}
-  $scope.auth = auth;
   var filters = getUrlVars();
 
   access_token = $cookies.get('access_token');
 
   auth.checkLogin();
+  $scope.logout = function(){
+  
+  if(auth.logout() === true){
+    window.location.href = 'login.html';
+  }else{
+    alert("User still logged in");
+  }
+}
+
 
   function getTeam() {
     var response = $http.get(
@@ -28,21 +37,22 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth)
     });
   }
 
-  function getProject() {
+ function getProject() {
     var response = $http.get(
-
-      APIURL + "project-list.php?rand=" + new Date()
+      "API/project-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999" + "&access_token=" + access_token);
 
-
     response.success(function(data, status, headers, config) {
+      console.log(data.projects);
       $scope.projects = data.projects;
       $scope.project_name = filters.project_id;
     });
+
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
     });
   }
+
 
   function getData() {
     var response = $http.get(

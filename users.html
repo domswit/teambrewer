@@ -65,7 +65,7 @@
                                                             <div class='input-group date' id='datetimepicker1'>
                                                                 <input type='text' class="form-control" ng-model="ebirthdate" placeholder="YYYY-MM-DD" id="ebirthdate" value="">
                                                                 <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -88,7 +88,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" ng-click="savedata()" class="btn btn-primary" data-dismiss="modal">
+                                            <button type="button" ng-click="saveData()" class="btn btn-primary" data-dismiss="modal">
                                                 <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Save
                                             </button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -101,12 +101,12 @@
                             <!-- end modal -->
 
 
-                            <div class="row">
-                                <br>
-                                <div class="col-lg-12">
-                                    <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <br>
+                            <div class="table-responsive">
 
-                                       <ul class="pagination no-margin pull-right">
+                               <ul class="pagination no-margin pull-right">
                                     <li><a ng-click="getData(pagination.getFirst())" href="#/?p={{pagination.getFirst()}}">First</a></li>
                                     <li><a ng-click="getData(pagination.getPrevious())" href="#/?p={{pagination.getPrevious()}}">Previous</a></li>
                                     <li ng-repeat="i in pageArray"><a ng-click="getData(i)" href="#/?p={{i}}">{{i}}</a></li>
@@ -114,12 +114,12 @@
                                     <li><a ng-click="getData(pagination.getLast())" href="#/?p={{pagination.getLast()}}">Last</a></li>
                                 </ul>
 
-                                        <div class="input-group pull-left marg-right-5 width-250">
-                                          <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-search"></i>
-                                          </span>
-                                          <input type="text" class="form-control" placeholder="Search for..." ng-keydown = "search($event)" ng-model="searchString">
-                                        </div><!-- /input-group -->
+                                <div class="input-group pull-left marg-right-5 width-250">
+                                  <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                  </span>
+                                  <input type="text" class="form-control" placeholder="Search for..." ng-keydown = "search($event)" ng-model="searchString">
+                                </div><!-- /input-group -->
 
                                         <table class="table table-bordered table-hover table-striped">
                                             <thead>
@@ -148,7 +148,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                       <ul class="pagination no-margin pull-right">
+                                               <ul class="pagination no-margin pull-right">
                                     <li><a ng-click="getData(pagination.getFirst())" href="#/?p={{pagination.getFirst()}}">First</a></li>
                                     <li><a ng-click="getData(pagination.getPrevious())" href="#/?p={{pagination.getPrevious()}}">Previous</a></li>
                                     <li ng-repeat="i in pageArray"><a ng-click="getData(i)" href="#/?p={{i}}">{{i}}</a></li>
@@ -176,10 +176,11 @@
 </div>
  <script src="js/moment.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
-<script src="users.js"></script>
+
     <script src="users.js"></script>
-    <script src="js/factories/pagination.js"></script>  
-    <script src="js/factories/auth.js"></script>     
+    <script src="js/factories/auth.js"></script> 
+    <script src="js/factories/pagination.js"></script>   
+    
 </body>
 
 </html>
