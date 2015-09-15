@@ -1,4 +1,3 @@
-
 var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', function($scope,
   $http, $cookies, $location, pagination, auth) {
 
@@ -12,7 +11,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     $scope.lName = '';
     $scope.passw1 = '';
     $scope.passw2 = '';
-    $scope.updateData = {}
+
     $scope.searchString = "";
     $scope.pageArray = [];
     $scope.pagination = pagination;
@@ -127,7 +126,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   
   $scope.addUser = function() {
     $scope.form_mode = 'insert';
-    $scope.form_title = "Add User Information";
+    $scope.form_title = "Add User Information";2
     $scope.eusername = '';
     $scope.efullname = '';
     $scope.ebirthdate = '';
@@ -146,18 +145,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     $scope.password = $scope.users[id].password.toString();
   };
 
-  $scope.savedata = function() {
-    switch ($scope.form_mode) {
-      case 'update':
-        $scope.updateData();
-        break;
-      case 'insert':
-        $scope.insertData();
-        break;  
-    }
-  }
-
-  $scope.updateData = function() {
+ $scope.updateData = function() {
     $http.post("API/update-people.php", {
       'user_id': $scope.user_id,
       'fullname': $scope.efullname,
@@ -168,7 +156,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
       'access_token': $scope.access_token
     }).success(function(data, status, headers, config) {
       if(data.success){
-        $scope.getData();
+        $scope.getData($scope.getPageNum());
         alert("User successfully updated!");
       } else {
 
@@ -183,6 +171,18 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
       }
     });
   }
+
+  $scope.saveData = function() {
+    switch ($scope.form_mode) {
+      case 'update':
+        $scope.updateData();
+        break;
+      case 'insert':
+        $scope.insertData();
+        break;  
+    }
+  }
+ 
    
   $scope.insertData = function() {
     $http.post("API/insert-people.php", {
