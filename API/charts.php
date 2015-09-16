@@ -11,34 +11,26 @@ $output = Array('success'=>true, 'users'=>null);
 
 function getUsers($project_id, $team_id, $people){
 
+	//echo $project_id . ":" . $team_id . ":" . $people;
+
 	$user_str = '';
 	$user_str_array = array();
 
-	if(count($people) > 0){
+	if(is_array($people) && count($people) > 0){
 		foreach($people as $person){
 			array_push($user_str_array, " c.user_id = {$person} ");			
 		}
-		$user_str = 'AND (' . implode(' OR ', $user_str_array) . ') ';
-	} else {
+		$user_str = ' AND (' . implode(' OR ', $user_str_array) . ') ';
+	}
 
-		$project_str = '';
-		
-		if($project_id != ''){
-
-			$project_str = "AND a.project_id = {$project_id}";
-		}
-		
-		$team_str = '';
-
-		if($team_id != ''){
-
-			$team_str = "AND c.team_id = {$team_id}";
-		}
+	$team_str = '';
+	if($team_id != ''){
+		$team_str = " AND c.team_id = '{$team_id}'";
 	}
 
 	global $conn;
 
-	$sql = "SELECT c.user_id, c.fullname, c.team_id FROM users as c WHERE 1 ". $user_str;
+	$sql = "SELECT c.user_id, c.fullname, c.team_id FROM users as c WHERE 1 ". $user_str . $team_str;
 		 
 	$result = $conn->query($sql);
 
@@ -77,12 +69,17 @@ function getDates($startDate, $endDate)
     return $return;
 }
 
-function getScheds($user_id, $fromdate, $todate)
+function getScheds($user_id, $fromdate, $todate, $project_id)
 {
 
 	global $conn;
 
-	$sql = "SELECT a.sched_id, a.user_id, a.project_id, c.name as project_name , b.fullname, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) INNER JOIN projects as c ON(a.project_id = c.project_id) WHERE a.user_id = '{$user_id}' && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate')) ORDER BY a.project_id ASC, a.fromdate ASC";
+	$project_str = '';
+	if($project_id != ''){
+		$project_str = " AND a.project_id = '{$project_id}' ";
+	}
+
+	$sql = "SELECT a.sched_id, a.user_id, a.project_id, c.name as project_name , b.fullname, a.fromdate, a.todate, a.allocation FROM sched as a LEFT JOIN users as b ON (a.user_id = b.user_id ) INNER JOIN projects as c ON(a.project_id = c.project_id) WHERE a.user_id = '{$user_id}' " . $project_str . " && ((a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate <= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate <='$todate') or (a.fromdate >= '{$fromdate}' && a.fromdate <='$todate') && (a.todate >= '{$fromdate}' && a.todate >='$todate')) ORDER BY a.project_id ASC, a.fromdate ASC";
 
 
 	$result = $conn->query($sql);
@@ -103,7 +100,11 @@ function getScheds($user_id, $fromdate, $todate)
 	return $scheds;
 }
 
-$people = explode(',',urldecode($_POST['people'])); 
+$people = null;
+if($_POST['people'] != ''){
+	$people = explode(',',urldecode($_POST['people'])); 	
+}
+
 $form_fromdate = $_POST['from_date'];
 $form_todate = $_POST['to_date'];
 $project_id = $_POST['project_id'];
@@ -140,7 +141,7 @@ if($form_fromdate != '' || $form_todate != ''){
 			);
 		}
 
-		$scheds = getScheds($key, $form_fromdate, $form_todate);
+		$scheds = getScheds($key, $form_fromdate, $form_todate, $project_id);
 
 		if(count($scheds) > 0){
 
