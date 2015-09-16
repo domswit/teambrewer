@@ -14,18 +14,13 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     $scope.pagination = pagination;
     $scope.selectedPeople = [];
 
-    $scope.getData($scope.pageNum());
+    $scope.getData($scope.getPageNum());
     $scope.getUsers();
     $scope.edit = true;
     $scope.error = false;
     $scope.incomplete = false;
   }
 
-  $scope.pageNum = function(){
-    var page = (($location.search().p) ? $location.search().p : 1);   
-    return page;
-  }
-  
   $scope.search = function(keyEvent){
     var keyCode = window.event ? keyEvent.keyCode : keyEvent.which;
 
@@ -190,7 +185,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     }).success(function(data, status, headers, config) {
 
       if(data.success){
-        $scope.getData($scope.pageNum());
+        $scope.getData($scope.getPageNum());
         alert("Team successfully updated!");
       } else {
         alert(data.message);
@@ -218,7 +213,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
       if(data.success){
         console.log(data);
-        $scope.getData($scope.pageNum());
+        $scope.getData($scope.getPageNum());
         alert("Team successfully added!");
       } else {
         alert(data.message);
@@ -240,7 +235,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
         console.log(data);
         alert("Team successfully deleted!");  
 
-        $scope.getData($scope.pageNum());
+        $scope.getData($scope.getPageNum());
       } else {
         alert(data.message);
         window.location.href = 'login.html';

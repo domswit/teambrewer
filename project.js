@@ -18,15 +18,10 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     $scope.pagination = pagination;
 
     $scope.query = $scope.users;
-    $scope.getData($scope.pageNum());
+    $scope.getData($scope.getPageNum());
     $scope.edit = true;
     $scope.error = false;
     $scope.incomplete = false;
-  }
-
-  $scope.pageNum = function(){
-    var page = (($location.search().p) ? $location.search().p : 1);   
-    return page;
   }
 
   $scope.fillPageArray = function(num, page) {
@@ -137,7 +132,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     }).success(function(data, status, headers, config) {
       console.log(data);
       if(data.success){
-        $scope.getData($scope.pageNum());
+        $scope.getData($scope.getPageNum());
         alert("Project successfully updated!");
       } else {
         alert(data.message);
@@ -153,7 +148,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     }).success(function(data, status, headers, config) {
       console.log(data);
       if(data.success){
-        $scope.getData($scope.pageNum());
+        $scope.getData($scope.getPageNum());
         alert("Project successfully added!");
       } else {
         alert(data.message);
@@ -170,7 +165,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
       }).success(function(data, status, headers, config) {
         console.log(data);
         if(data.success){
-          $scope.getData($scope.pageNum());
+          $scope.getData($scope.getPageNum());
           alert("Project successfully deleted!");  
         } else {
           alert(data.message);
