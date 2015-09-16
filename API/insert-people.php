@@ -30,7 +30,7 @@ if(!$checkUsername){
 
 		$last_id = $conn->insert_id;
 
-		$access_token = md5($last_id . $password);
+		$access_token = md5("thisisasecretteambrewerstring" . $password);
 
 		$update_sql = "UPDATE users SET access_token='" . $access_token . "' WHERE user_id='" . $last_id . "'";
 
