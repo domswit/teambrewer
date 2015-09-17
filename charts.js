@@ -5,7 +5,9 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth)
 
   $scope.teams = '';
    $scope.projects = '';
-  $scope.updateData = {}
+  $scope.updateData = {};
+  $scope.auth = auth;
+  
   var filters = getUrlVars();
 
   access_token = $cookies.get('access_token');
