@@ -203,8 +203,10 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   }
 
   $scope.insertData = function() {
+    var members = $('#members').val().join();
     $http.post("API/insert-team.php", {
       'name': $scope.name,
+      'members': members,
       'access_token': $scope.access_token
     }).success(function(data, status, headers, config) {
 

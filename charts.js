@@ -77,12 +77,10 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth)
       
       $scope.selectedPeople = user_ids;
 
-
         setTimeout(function(){
           $scope.$apply();  
           $('#user_id').selectpicker();          
         },1);
-      
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
