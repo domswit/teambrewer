@@ -104,10 +104,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
         setTimeout(function(){
           $scope.$apply();  
-          $('.selectpicker').selectpicker(
-          {
-              size: 4
-          });          
+          $('.selectpicker').selectpicker();          
         },1);
         
       } else {

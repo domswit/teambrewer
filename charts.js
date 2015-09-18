@@ -7,7 +7,7 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth)
    $scope.projects = '';
   $scope.updateData = {};
   $scope.auth = auth;
-  
+
   var filters = getUrlVars();
 
   access_token = $cookies.get('access_token');
@@ -76,14 +76,20 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth)
       }
       
       $scope.selectedPeople = user_ids;
+
+
+        setTimeout(function(){
+          $scope.$apply();  
+          $('#user_id').selectpicker();          
+        },1);
       
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
     });
   }
-function
-   getSched() {
+  
+  function getSched() {
     var response = $http.get(
 
       APIURL + "sched-list.php?rand=" + new Date()
