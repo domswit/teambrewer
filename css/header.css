@@ -13,10 +13,6 @@
     z-index: 99;
 }
 
-#page-wrapper{
-    min-height: 600px;
-}
-
 .no-margin{
     margin: 0;
 }
