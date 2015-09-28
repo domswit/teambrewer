@@ -33,7 +33,7 @@ $conn->close();
 
 
 function removeMembers($conn, $team_id){
-	$sql = "UPDATE users SET team_id='' WHERE user_id = '" . $member_id . "'";
+	$sql = "UPDATE users SET team_id='' WHERE team_id = '" . $team_id . "'";
 
 	if ($conn->query($sql) === TRUE) {
 			return true;

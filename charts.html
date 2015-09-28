@@ -21,6 +21,13 @@
     <script src="js/angular-cookies.js"></script>
     <link rel="stylesheet" href="css/bootstrap-select.css">
     <link href="css/examples.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+   
+    </style>
     <script type="text/javascript">
         var allData = [];
 
@@ -60,14 +67,14 @@
 
 
             var computedDifference = $(window).height()*1 - computedY*1;
-            console.log($(window).height()*1 + "-" + computedY + " = " + computedDifference);
+
 
             if(computedDifference < 0){
                 var newY = $(window).height() - (computedDifference * -1);
                 if(newY < $(window).scrollTop() + 100){
                     newY = $(window).scrollTop() + 100;
                 }
-                console.log("yes " + newY);
+
                 $("#tooltip").css({
                         top: newY
                 });
@@ -109,6 +116,22 @@
                 }
             });
 
+              $(function () {
+                    var d1 = [];
+                    for (var i = 0; i < 14; i += 0.5)
+                        d1.push([i, Math.sin(i)]);
+                 
+                    var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+                 
+                    // a null signifies separate line segments
+                    var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
+                    
+                    $.plot($("#placeholder"), [ d1, d2, d3 ]);
+                    
+                    window.onresize = function(event) {
+                        $.plot($("#placeholder"), [ d1, d2, d3 ]);
+                    }
+                });
             /*
 
             if ($numdays <= 7) {
@@ -205,7 +228,6 @@
             $("#placeholder").bind("plotclick", function(event, pos, item) {
 
                 plotclicked = true;
-                console.log(item);
 
                 if ($("#enablePosition:checked").length > 0) {
                     var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
@@ -220,15 +242,9 @@
 
                     var timestamp = Math.round(item.datapoint[0]);
                     var date = convertToDate(timestamp);
-                    console.log(item.series.label + " ::: " + date);
 
                     var user_id = item.series.custom_id;
 
-                    console.log("this is the user:");
-                    console.log(allData[user_id][date]['allocation_list']);
-
-                    console.log('allData');
-                    console.log(allData);
 
                     var htmlString = "";
                     htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b><br><br>");
@@ -244,8 +260,6 @@
 
                             htmlString += ("<div style='font-size: 11px'>");
                             htmlString += ("<b>Breakdown:</b><br>");
-                            console.log("alloc list:");
-                            console.log(allData[e][date]['allocation_list']);
 
                             for(var i in allData[e][date]['allocation_list']){
                                 var project_name = allData[e][date]['allocation_list'][i]['project_name'];
@@ -277,13 +291,11 @@
             $("#placeholder").bind("plothover", function(event, pos, item) {
 
                 if(!plotclicked){
-                    console.log(item);
 
                     if ($("#enablePosition:checked").length > 0) {
                         var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
                         $("#hoverdata").text(str);
                     }
-
 
                     if (item) {
                         var x = item.datapoint[0],
@@ -292,15 +304,9 @@
 
                         var timestamp = Math.round(item.datapoint[0]);
                         var date = convertToDate(timestamp);
-                        console.log(item.series.label + " ::: " + date);
 
                         var user_id = item.series.custom_id;
 
-                        console.log("this is the user:");
-                        console.log(allData[user_id][date]['allocation_list']);
-
-                        console.log('allData');
-                        console.log(allData);
 
                         var htmlString = "";
                         htmlString += ( "<b>" + moment(date).format('MMMM D, YYYY') + "</b><br><br>");
@@ -323,11 +329,6 @@
                         $("#tooltip").html(htmlString);
 
                         repositionTooltip(item.pageY,item.pageX);
-
-                        /*
-                        console.log($(window).height() + " -- " + $("#tooltip").height() + " ---" + $("#tooltip").css('top').replace('px','') + " ---" + $(window).scrollTop() + " ----" + ($(window).scrollTop() - $("#tooltip").css('top').replace('px','')*1) + " ---" +  $(window).height() - );
-                        */
-
 
                         $("#tooltip").fadeIn(200);
                     } else {
@@ -369,10 +370,6 @@
 
                     for (var i in data) {
 
-                        console.log("USER: " + i);
-                        console.log(data[i]);
-
-
                         var userData = [];
 
                         for (var e in data[i]) {
@@ -381,12 +378,8 @@
                             if (allocation_total == undefined)
                                 allocation_total = 0;
 
-                            console.log("DATE: " + e + " ALLOC:" + allocation_total);
-
                             userData.push([convertToTimestamp(e), allocation_total]);
                         }
-
-                        //console.log(data);
 
                         chartDate.push({
                             data: userData,
@@ -406,13 +399,14 @@
             // }
         });
     </script>
+
 </head>
 
 <body ng-app="myApp" ng-controller="chartsCtrl">
 
     <div id="wrapper">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="navbar-header">
+            <div class="navbar-header col-xs-3" >
                 <a class="navbar-brand" href="charts.html">teambrewer</a>
             </div>
             <div ng-include="'logout.html'"></div>
@@ -437,7 +431,7 @@
                                     <div class="chart_filter">
                                         <label>Project</label>
                                         <br>
-                                        <select id="project_id" name="project_id" ng-model="project_name" class="col-lg">
+                                        <select id="project_id" name="project_id" class="selectpicker" ng-model="project_name" class="col-lg">
                                             <option value="">Any</option>
                                             <option ng-repeat="(key,project) in projects" value="{{ key }}" ng-selected="key == project_name">{{ project.name }}</option>
                                         </select>
@@ -445,7 +439,7 @@
                                     <div class="chart_filter">
                                         <label>Team</label>
                                         <br>
-                                        <select id="team_id" name="team_id" ng-model="eteam" class="col-lg">
+                                        <select id="team_id" name="team_id" class="selectpicker" ng-model="eteam" class="col-lg">
                                             <option value="">Any</option>
                                             <option ng-repeat="(key,team) in teams" value="{{ key }}" ng-selected="key == eteam">{{ team.name}}</option>
                                         </select>
@@ -528,11 +522,7 @@
                     </div>
                 </div>
             </div>
-            <div id="content">
-                <div class="demo-container">
-                    <div id="placeholder" class="demo-placeholder" style="cursor: pointer"></div>
-                </div>
-            </div>
+                <div id="placeholder" style="width:100%;height:500px;"></div>
             <div id="legend-container"></div>
         </div>
     </div>

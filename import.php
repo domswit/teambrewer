@@ -15,6 +15,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
 <script src="js/angular-cookies.js"></script>
 <script src="js/angular-route.js"></script>
+    <style type="text/css">
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+   
+    </style>
 <body ng-app="myApp" ng-controller="importCtrl">
 </head>
 <div id="wrapper">
