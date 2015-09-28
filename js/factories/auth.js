@@ -1,17 +1,17 @@
-myApp.factory('auth', function($cookies,$http) {
+myApp.factory('auth', function($cookies,$http, session) {
     return {
         logout: function() {
         	var logoutYes = confirm("Do you want to logout?");
 
         	if(logoutYes){
-        		$cookies.put('access_token', '');	
+        		session.put('access_token', '');	
         		window.location.href = 'login.html';
         	}
 				
 			return true;
 		},
 		checkLogin: function(){
-			var access_token = $cookies.get('access_token');
+			var access_token = session.get('access_token');
 
    		    var response = $http.get(
      		 "API/check-auth.php?rand=" + new Date()
@@ -25,7 +25,8 @@ myApp.factory('auth', function($cookies,$http) {
 		    response.error(function(data, status, headers, config) {
 		      alert("AJAX failed!");
 		    });
-		    return true;
+
+		    return access_token;
 		  }
 	
     };

@@ -1,16 +1,16 @@
 var myApp = angular.module('myApp', ['ngCookies']);
 var access_token;
 
-myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth) {
+myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth, session) {
 
   $scope.teams = '';
-   $scope.projects = '';
+  $scope.projects = '';
   $scope.updateData = {};
   $scope.auth = auth;
 
   var filters = getUrlVars();
 
-  access_token = $cookies.get('access_token');
+  access_token = session.get('access_token');
 
   auth.checkLogin();
   $scope.logout = function(){

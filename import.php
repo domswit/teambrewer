@@ -101,6 +101,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src = "import.js"></script>
 
-    <script src="js/factories/auth.js"></script>    
+    <script src="js/factories/auth.js"></script>   
+    <script src="js/factories/session.js"></script>   
 </body>
 </html>

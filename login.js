@@ -1,6 +1,8 @@
-angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, $cookies, $http, $window) {
+var myApp = angular.module('myApp', ['ngCookies']);
 
-  $cookies.put('access_token', '');
+myApp.controller('loginCtrl', function($scope, $cookies, $http, $window, session) {
+
+  session.put('access_token', '');
     
   $scope.authenticate = function(id) {
 
@@ -13,7 +15,7 @@ angular.module('myApp', ['ngCookies']).controller('loginCtrl', function($scope, 
         console.log(data);
 
         if (data.user){
-		      $cookies.put('access_token', data.user.access_token);
+		      session.put('access_token', data.user.access_token);
           window.location.href = 'charts.html';
         } 
 
