@@ -14,7 +14,7 @@ myApp.factory('auth', function($cookies,$http, session) {
 			var access_token = session.get('access_token');
 
    		    var response = $http.get(
-     		 "API/check-auth.php?rand=" + new Date()
+     		 APIURL + "check-auth.php?rand=" + new Date()
 		      .getTime() + "&access_token=" + access_token);
 		    response.success(function(data, status, headers, config) {
 		    	if (!data.success){
