@@ -1,0 +1,86 @@
+<!-- <div class="navbar-header col-sm-12">
+	<div class="navbar-header">
+	    <a class="navbar-brand" href="charts.html">teambrewer</a>
+
+		<a class="navbar-brand-right" id="logout_btn"  data-toggle="tooltip" data-placement="left" title="Logout"  ng-click="auth.logout()"><i class="glyphicon glyphicon-remove"></i></a>
+	</div>
+	<div class="nav navbar-right top-nav col-sm-2">
+	</div>
+</div> -->
+<div class="navbar-header col-sm-12 hidden-xs">
+  	<a class="navbar-brand" href="charts.html">teambrewer</a>
+
+
+	<div class="nav navbar-nav navbar-right" id="navbar-collapse-3">
+		<a class="navbar-brand" id="logout_btn" data-toggle="tooltip" data-placement="left" title="Logout"  ng-click="auth.logout()"><i class="glyphicon glyphicon-remove"></i></a>
+	</div>
+</div>
+
+<div class="navbar-header col-sm-12 visible-xs">
+  	<a class="navbar-brand" href="charts.html">teambrewer</a>
+
+  	<div id="navbar-collapse-3" class="nav navbar-nav navbar-right">
+		<a class="navbar-brand" data-target="#ddnav" data-toggle="collapse">
+			<i class="glyphicon glyphicon-menu-hamburger"></i></a>
+	</div>
+</div>
+
+<div class="col-sm-12 hidden-xs">
+    <ul class="nav navbar-nav side-nav">
+	    <li>
+	        <a href="charts.html"><i class="fa fa-fw fa-bar-chart"></i> Resource Allocation </a>
+	    </li>
+	    <li>
+	        <a href="javascript:;" data-target="#demo"><i class="fa fa-fw fa-user"></i> Data Manager <i class="fa fa-fw fa-caret-down"></i></a>
+	        <ul id="demo">
+	            <li>
+	                <a href="users.html" data-target="#demo"><i class="fa fa-fw fa-male"></i> People </a>
+	            </li>
+	            <li>
+	                <a href="team.html" data-target="#demo"><i class="fa fa-fw fa-link"></i> Team </a>
+	            </li>
+	            <li>
+	                <a href="project.html" data-target="#demo"><i class="fa fa-fw fa-inbox"></i> Project </a>
+	            </li>
+	            <li>
+	                <a href="sched.html" data-target="#demo"><i class="fa fa-fw fa-clock-o"></i> Schedule </a>
+	            </li>
+	             <li>
+	                <a href="import.php" data-target="#demo"><i class="fa fa-download"></i> Import </a>
+	            </li>
+	        </ul>
+	    </li>
+	</ul>
+</div>
+
+<div id="ddnav" class="col-sm-12 collapse" aria-expanded="false">
+	<ul  class="nav navbar-nav side-nav">
+	    <li>
+	        <a href="charts.html"><i class="fa fa-fw fa-bar-chart"></i> Resource Allocation </a>
+	    </li>
+	    <li>
+	        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-user"></i> Data Manager <i class="fa fa-fw fa-caret-down"></i></a>
+	        <ul id="demo">
+	            <li>
+	                <a href="users.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-male"></i> People </a>
+	            </li>
+	            <li>
+	                <a href="team.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-link"></i> Team </a>
+	            </li>
+	            <li>
+	                <a href="project.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-inbox"></i> Project </a>
+	            </li>
+	            <li>
+	                <a href="sched.html" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-clock-o"></i> Schedule </a>
+	            </li>
+	             <li>
+	                <a href="import.php" data-toggle="collapse" data-target="#demo"><i class="fa fa-download"></i> Import </a>
+	            </li>
+	        </ul>
+	    </li>
+	    <li role="separator" class="divider"></li>
+         <li>
+            <a id="logout_btn" data-toggle="tooltip" data-placement="left" title="Logout"  ng-click="auth.logout()"><i class="fa fa-sign-out"></i> Logout </a>
+        </li>
+	</ul>
+</div>
