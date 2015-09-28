@@ -13,7 +13,7 @@ $search_string = getSearchString();
 if(isset($_GET['max_per_page']) && $_GET['max_per_page'] != ''){
 	$max_per_page = $_GET['max_per_page'];	
 } else {
-	$max_per_page = 20;
+	$max_per_page = 10;
 }
 
 $page = getPage();

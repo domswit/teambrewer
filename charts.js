@@ -22,6 +22,22 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth)
   }
 }
 
+  function resizeChart(){
+    var wrapperWidth = $('#page-wrapper').width();
+    var legendWidth = $('#legend-container').width();
+    var graphWidth = wrapperWidth*1 - legendWidth*1 - 50;
+
+    $('#placeholder').css('width', graphWidth + 'px');     
+  }
+
+  $(window).resize(function(){
+    resizeChart();
+  });
+
+  $(window).ready(function(){
+    resizeChart();    
+  })
+
 
   function getTeam() {
     var response = $http.get(

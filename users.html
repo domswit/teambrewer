@@ -13,13 +13,19 @@
     <script src="js/jquery.js"></script>
     <link rel="stylesheet" href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
     <script src="js/angular-cookies.js"></script>
     <script src="js/angular-route.js"></script>
-
+       <style type="text/css">
+    html, body {
+        width: 100%;
+        height: 100%;
+    }  
+    </style>
     <body ng-app="myApp" ng-controller="userCtrl">
 </head>
 <div id="wrapper">
@@ -31,13 +37,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">People</h1>
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#mydModal" ng-click="addUser()">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add User
+                            </button></div>
+                            <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-striped">
-                            <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#mydModal" ng-click="addUser()">
-                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add User
-                            </button>
-                            </button>
-                            </button>
+                            
                             <div class="modal fade" id="mydModal" role="dialog">
                                 <div class="modal-dialog modal-md">
                                     <div class="modal-content">
@@ -92,12 +99,14 @@
                                     </div>
                                 </div>
                             </div>
+                          </div> 
+                          </div>   
                             <!-- end modal -->
 
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <br>
+                      
                             <div class="table-responsive">
 
                                <ul class="pagination no-margin pull-right">
@@ -153,7 +162,6 @@
                         </div>
                         </div>
                         <!-- end row -->
-
 
                         </div>
                     </div>
