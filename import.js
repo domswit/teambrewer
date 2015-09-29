@@ -1,7 +1,7 @@
 var myApp = angular.module('myApp', ['ngCookies']);
 
 myApp.controller('importCtrl', function($scope, $http, $cookies, $location, auth, session) {
-$scope.access_token = $cookies.get('access_token');
+$scope.access_token = session.get('access_token');
 auth.checkLogin();
   $scope.auth = auth;
 $scope.logout = function(){

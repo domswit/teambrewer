@@ -3,7 +3,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   $http, $cookies, $location, pagination, auth, session) {
 
   $scope.init = function(){
-    $scope.access_token = $cookies.get('access_token');
+    $scope.access_token = session.get('access_token');
     $scope.auth = auth;
     auth.checkLogin();
 
@@ -80,7 +80,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     var page = ( page ? page : $scope.getPageNum() );
 
     var response = $http.get(
-        "API/project-list.php?rapnd=" + new Date()
+        APIURL + "project-list.php?rapnd=" + new Date()
         .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
       response.success(function(data, status, headers, config) {
         console.log(data.projects);
@@ -125,7 +125,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   }
 
   $scope.updateData = function() {
-    $http.post("API/update-project.php", {
+    $http.post(APIURL + "update-project.php", {
       'project_id': $scope.project_id,
       'project_name': $scope.eproject_name,
       'access_token': $scope.access_token
@@ -142,7 +142,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   }
 
   $scope.insertData = function() {
-    $http.post("API/insert-project.php", {
+    $http.post(APIURL + "insert-project.php", {
       'eproject_name': $scope.eproject_name,
       'access_token': $scope.access_token
     }).success(function(data, status, headers, config) {
@@ -159,7 +159,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   $scope.deleteData = function(id) {
     if (confirm("Do you want to delete this data?") == true) {
-      $http.post("API/delete-project.php?rand=" + new Date().getTime(), {
+      $http.post(APIURL + "delete-project.php?rand=" + new Date().getTime(), {
         'id': id,
         'access_token':  $scope.access_token
       }).success(function(data, status, headers, config) {

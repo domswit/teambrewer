@@ -1,6 +1,14 @@
 var myApp = angular.module('myApp', ['ngCookies']);
 var access_token;
 
+  function resizeChart(){
+    var wrapperWidth = $('#page-wrapper').width();
+    var legendWidth = $('#legend-container').width();
+    var graphWidth = wrapperWidth*1 - legendWidth*1 - 50;
+
+    $('#placeholder').css('width', graphWidth + 'px');     
+  }
+
 myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth, session) {
 
   $scope.teams = '';
@@ -22,14 +30,6 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
   }
 }
 
-  function resizeChart(){
-    var wrapperWidth = $('#page-wrapper').width();
-    var legendWidth = $('#legend-container').width();
-    var graphWidth = wrapperWidth*1 - legendWidth*1 - 50;
-
-    $('#placeholder').css('width', graphWidth + 'px');     
-  }
-
   $(window).resize(function(){
     resizeChart();
   });
@@ -39,7 +39,7 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
   })
 
 
-  function getTeam() {
+  $scope.getTeam = function() {
     var response = $http.get(
 
       APIURL + "team-list.php?rand=" + new Date()
@@ -49,21 +49,30 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
       console.log(data.teams);
       $scope.teams = data.teams;
       $scope.eteam = filters.team_id;
+
+      setTimeout(function(){
+        $scope.$apply();  
+      }, 1);
+      
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
     });
   }
 
- function getProject() {
+ $scope.getProject = function() {
     var response = $http.get(
-      "API/project-list.php?rand=" + new Date()
+      APIURL + "project-list.php?rand=" + new Date()
       .getTime() + "&max_per_page=99999999" + "&access_token=" + access_token);
 
     response.success(function(data, status, headers, config) {
       console.log(data.projects);
       $scope.projects = data.projects;
       $scope.project_name = filters.project_id;
+
+      setTimeout(function(){
+        $scope.$apply();  
+      }, 1);
     });
 
     response.error(function(data, status, headers, config) {
@@ -72,7 +81,7 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
   }
 
 
-  function getData() {
+  $scope.getUsers = function() {
     var response = $http.get(
 
       APIURL + "user-list.php?rand=" + new Date()
@@ -93,17 +102,18 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
       
       $scope.selectedPeople = user_ids;
 
-        setTimeout(function(){
-          $scope.$apply();  
-          $('#user_id').selectpicker();          
-        },1);
+      setTimeout(function(){
+        $scope.$apply();  
+        $('#user_id').selectpicker('val', $scope.selectedPeople);
+        $('#user_id').selectpicker();          
+      },1);
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
     });
   }
   
-  function getSched() {
+  $scope.getSched = function() {
     var response = $http.get(
 
       APIURL + "sched-list.php?rand=" + new Date()
@@ -123,10 +133,10 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
     $scope.$apply();
   }
 
-  getTeam();
-  getProject();
-  getData();
-  getSched();
+  $scope.getTeam();
+  $scope.getProject();
+  $scope.getUsers();
+  $scope.getSched();
   $scope.edit = true;
   $scope.error = false;
   $scope.incomplete = false;

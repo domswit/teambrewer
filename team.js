@@ -4,7 +4,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   $scope.init = function(){
 
-    $scope.access_token = $cookies.get('access_token');
+    $scope.access_token = session.get('access_token');
     auth.checkLogin();
 
     $scope.auth = auth;
@@ -73,7 +73,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     var page = ( page ? page : $scope.getPageNum() );
 
     var response = $http.get(
-      "API/team-list.php?rand=" + new Date()
+      APIURL + "team-list.php?rand=" + new Date()
       .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
     response.success(function(data, status, headers, config) {
       
@@ -94,7 +94,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   $scope.getUsers =function() {
     var response = $http.get(
-      "API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
+      APIURL + "user-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
 
@@ -134,7 +134,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   $scope.setSelectedMembers = function(team_id) {
 
-    var response = $http.get("API/team-members-list.php?rand=" + new Date().getTime()  + "&team_id=" + team_id + "&access_token=" + $scope.access_token);
+    var response = $http.get(APIURL + "team-members-list.php?rand=" + new Date().getTime()  + "&team_id=" + team_id + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
       
@@ -174,7 +174,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     var name = $('#name').val();
     var members = $('#members').val().join();
     console.log(members);
-    $http.post("API/update-team.php", {
+    $http.post(APIURL + "update-team.php", {
       'team_id': team_id,
       'name': name,
       'members': members,
@@ -204,7 +204,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   $scope.insertData = function() {
     var members = $('#members').val().join();
-    $http.post("API/insert-team.php", {
+    $http.post(APIURL + "insert-team.php", {
       'name': $scope.name,
       'members': members,
       'access_token': $scope.access_token
@@ -224,7 +224,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   $scope.deleteData = function(id) {
     if (confirm("Do you want to delete this data?") == true) {
-    $http.post("API/delete-teams.php", {
+    $http.post(APIURL + "delete-teams.php", {
       'rand': new Date().getTime(),
       'id': id,
       'access_token' : $scope.access_token

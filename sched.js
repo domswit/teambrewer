@@ -3,7 +3,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   $http, $cookies, $location, pagination, auth, session) {
 
   $scope.init = function(){
-    $scope.access_token = $cookies.get('access_token');
+    $scope.access_token = session.get('access_token');
     auth.checkLogin();   
     $scope.auth = auth;
     $scope.form_title = "yeah";
@@ -96,8 +96,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     var page = ( page ? page : $scope.getPageNum() );
 
     var response = $http.get(
-
-      "API/sched-list.php?rand=" + new Date()
+      APIURL + "sched-list.php?rand=" + new Date()
       .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
 
     response.success(function(data, status, headers, config) {
@@ -121,7 +120,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   function getAlloc() {
     var response = $http.get(
-      "API/allocation.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
+      APIURL + "allocation.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
       console.log(data.allocation);
@@ -170,7 +169,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
     var page = ( page ? page : $scope.getPageNum() );
 
-    var response = $http.get("API/user-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
+    var response = $http.get(APIURL + "user-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
 
     response.success(function(data, status, headers, config) {
       if(data.success){
@@ -188,7 +187,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   }
 
   function getProjects() {
-    var response = $http.get("API/project-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
+    var response = $http.get(APIURL + "project-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
       if(data.success){
@@ -241,7 +240,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     var etodate = $('#etodate').val();
     var ealloc = $('#ealloc').val();
     var eproject = $('#eproject').val();
-    $http.post("API/update-sched.php", {
+    $http.post(APIURL + "update-sched.php", {
       'sched_id': sched_id,
       'name': ename,
       'project_id': eproject,
@@ -260,7 +259,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     });
   }
   $scope.insertData = function() {
-    $http.post("API/insert-sched.php", {
+    $http.post(APIURL + "insert-sched.php", {
       'ename': $scope.ename,
       'efromdate': $scope.efromdate,
       'etodate': $scope.etodate,
@@ -281,7 +280,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   $scope.deleteData = function(id) {
     
     if (confirm("Do you want to delete this data?") == true) {
-    $http.post("API/delete-sched.php?rand=" + new Date().getTime(), {
+    $http.post(APIURL + "delete-sched.php?rand=" + new Date().getTime(), {
       'id': id
     }).success(function(data, status, headers, config) {
       if(data.success){

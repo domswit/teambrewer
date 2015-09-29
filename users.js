@@ -3,7 +3,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   $scope.init = function(){
 
-    $scope.access_token = $cookies.get('access_token');
+    $scope.access_token = session.get('access_token');
     auth.checkLogin();
 
     $scope.auth = auth;
@@ -85,7 +85,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
     var page = ( page ? page : $scope.getPageNum() );
 
     var response = $http.get(
-      "API/user-list.php?rand=" + new Date()
+      APIURL + "user-list.php?rand=" + new Date()
       .getTime() + "&page=" + page + "&access_token=" + $scope.access_token + "&search=" + $scope.getSearchString());
 
     response.success(function(data, status, headers, config) {
@@ -106,7 +106,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
 
   $scope.getTeams = function() {
     var response = $http.get(
-      "API/team-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
+      APIURL + "team-list.php?rand=" + new Date().getTime() + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {
 
@@ -146,7 +146,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   };
 
  $scope.updateData = function() {
-    $http.post("API/update-people.php", {
+    $http.post(APIURL + "update-people.php", {
       'user_id': $scope.user_id,
       'fullname': $scope.efullname,
       'birthdate': $scope.ebirthdate,
@@ -185,7 +185,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
  
    
   $scope.insertData = function() {
-    $http.post("API/insert-people.php", {
+    $http.post(APIURL + "insert-people.php", {
       'efullname': $scope.efullname,
       'ebirthdate': $scope.ebirthdate,
       'username': $scope.eusername,
@@ -218,7 +218,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   $scope.deleteData = function(id) {
     if (confirm("Do you want to delete this data?") == true) {
          
-      $http.post("API/delete-people.php", {
+      $http.post(APIURL + "delete-people.php", {
         'rand': new Date().getTime(),
         'id': id,
         'access_token': $scope.access_token
