@@ -103,7 +103,7 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
         $scope.users = data.users;
 
         setTimeout(function(){
-          $scope.$apply();  
+          $scope.$apply();
           $('.selectpicker').selectpicker();          
         },1);
         
@@ -133,7 +133,6 @@ var myApp = angular.module('myApp', ['ngCookies']).controller('userCtrl', functi
   };
 
   $scope.setSelectedMembers = function(team_id) {
-
     var response = $http.get(APIURL + "team-members-list.php?rand=" + new Date().getTime()  + "&team_id=" + team_id + "&access_token=" + $scope.access_token);
 
     response.success(function(data, status, headers, config) {

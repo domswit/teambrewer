@@ -420,7 +420,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <form action="charts.html" method="GET">
+                        <form id="filter-form" action="charts.html" method="GET">
                             <div class="row">
                                 <div class="chart-filter-container" class="class_filter" style="text-align:center">
                                     <div class="chart_filter">
@@ -444,9 +444,9 @@
                                         <br>
 
                                           <select id="user_id" ng-model="ename" class="selectpicker" data-live-search="true" multiple title='Any'>
-                                            <option ng-repeat="(key,user) in users " value="{{ key }}" ng-selected="selectedPeople.indexOf(key) > -1">{{user.fullname}}</option>
+                                            <option ng-repeat="(key,user) in users " value="{{ key }}">{{user.fullname}}</option>
                                           </select>
-                                          <input type="text" style="display:none" name="people" ng-model="people" />
+                                          <input type="text" id="people" name="people" style="display: none" />
                                     </div>
                                     <div class="chart_filter">
                                         <label>From:</label>
@@ -478,7 +478,7 @@
                                         <label for='exe3'></label>
                                         <br>
 
-                                        <button ng-click="submit()" class="btn btn-primary btn-lg">Generate Chart</button>
+                                        <div ng-click="submitForm()" class="btn btn-primary btn-lg">Generate Chart</div>
                                         <!--
                                         <a class="btn btn-info btn-lg" role="button" data-toggle="collapse" data-target="#colps" aria-expanded="false" aria-controls="colps">
                                             Show List

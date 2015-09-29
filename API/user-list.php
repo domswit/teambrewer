@@ -2,8 +2,8 @@
 include("../config/connection.php");
 include("../config/auth.php");
 
-ini_set('max_execution_time', 0);
-set_time_limit(0);
+//ini_set('max_execution_time', 0);
+//set_time_limit(0);
 
 $output = Array('success'=>true, 'users'=>null);
 
