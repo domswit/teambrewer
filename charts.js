@@ -10,7 +10,7 @@ function resizeChart(){
 
 var access_token;
 
-myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth, session) {
+myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth, session, browser) {
 
   var filters = getUrlVars();
 
@@ -22,7 +22,7 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
 
   $(window).ready(function(){
     resizeChart();    
-  })
+  });
 
   $scope.init = function(){
 
@@ -57,10 +57,9 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
 
       setTimeout(function(){
         $scope.$apply();
-        $('#team_id').selectpicker('val', $scope.selectedPeople);
+        $('#team_id').selectpicker('val', [filters.team_id]);
         $('#team_id').selectpicker('refresh');
       }, 13);
-      
     });
     response.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -79,7 +78,7 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
 
       setTimeout(function(){
         $scope.$apply();
-        $('#project_id').selectpicker('val', $scope.selectedPeople);
+        $('#project_id').selectpicker('val', [filters.project_id]);
         $('#project_id').selectpicker('refresh');
       }, 13);
     });
@@ -180,8 +179,13 @@ myApp.controller('chartsCtrl', function($scope,$http, $cookies, $location, auth,
 
   $scope.submitForm = function(){
     
-    var people = $('#user_id').selectpicker('val').join(',');
-    $('#people').val(people);
+    var pickerVal = $('#user_id').selectpicker('val');
+
+    if(pickerVal != null){
+      var people = pickerVal.join(',');
+      $('#people').val(people);
+    }
+
     $('#filter-form').submit();
   }
 
